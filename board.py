@@ -31,4 +31,25 @@ class board():
 
         raise NotImplementedError
     
-    def get
+    def setLane(y, laneType):
+        '''
+        Sets the type of the lane along the given y axis.
+        @param y The y coordinate to set.
+        @param laneType A string indicating the type of lane that it is.
+        '''
+
+        raise NotImplementedError
+    
+    def addSubObject(id, type, x = 0, y = 0, segment = "na", direction = "na", velocity = (0, 0)):
+        '''
+        Adds a new subObject. Please see the documentation for subObjects for more details regarding each of the parameters... (TODO documentation regarding subObjects :P)
+        @param id The id of the subObject.
+        @param type The type of the subObject.
+        @param x (optional) The initial X position. (defaults to 0)
+        @param y (optional) The initial Y position. (defaults to 0)
+        @param segment (optional) The segment. (defaults to 'na')
+        @param direction (optional) The direction that it is going. (defaults to 'na')
+        @param velocity (optional) The velocity (defaults to (0,0))
+        '''
+
+        raise NotImplementedError
