@@ -12,6 +12,8 @@ class board():
         self.lanes = ["" for i in range(y)] #This is a list of all of the lane types of the board. Thus, lanes[5] is a string representing the lane type at y = 5. (This is a list comprehension, by the way.)
         self.subObjects = [] #All subobjects in the board. Subobjects are objects tht fit within a single square.
     
+    ##PUBLIC
+    #General
     def getXY(self, x, y):
         '''
         Returns a data structure representing what is at the requested x and y coordinates.
@@ -31,7 +33,7 @@ class board():
 
         raise NotImplementedError
     
-    def setLane(y, laneType):
+    def setLane(self, y, laneType):
         '''
         Sets the type of the lane along the given y axis.
         @param y The y coordinate to set.
@@ -40,7 +42,22 @@ class board():
 
         raise NotImplementedError
     
-    def addSubObject(id, type, x = 0, y = 0, segment = "na", direction = "na", velocity = (0, 0)):
+    def update(self):
+        '''
+        Updates the board. Currently, this has the following functionalities:
+        -Move all subobjects with a velocity.
+        '''
+
+        raise NotImplementedError
+    
+    def getCollisionsSinceLastUpdate(self):
+        '''
+        Returns a list of collisions that have occured since the last update. The format that is returned is a list of tuples. Each tuple contains two elements. The idea is that each element indicates the id of the subobject that collided with the other subobject.
+        @return A list, as formatted above.
+        '''
+
+    #SubObjects
+    def addSubObject(self, id, type, x = 0, y = 0, segment = "na", direction = "na", velocity = (0, 0)):
         '''
         Adds a new subObject. Please see the documentation for subObjects for more details regarding each of the parameters... (TODO documentation regarding subObjects :P)
         @param id The id of the subObject.
@@ -50,6 +67,33 @@ class board():
         @param segment (optional) The segment. (defaults to 'na')
         @param direction (optional) The direction that it is going. (defaults to 'na')
         @param velocity (optional) The velocity (defaults to (0,0))
+        '''
+
+        raise NotImplementedError
+    
+    def getSubObject(self, id):
+        '''
+        Returns the subobject with the given id, formatted as a dictionary
+        @param id The id of the subobject to lookup
+        @raise KeyError If the id is not in the board.
+        @return The subobject with this id.
+        '''
+
+        raise NotImplementedError
+
+    def editSubObject(self, id, type = None, x = None, y = None, segment = None, direction = None, velocity = None):
+        '''
+        Edits the selected subobject.
+        @param id The id to edit.
+        @param {All other attributes} {The attribute}
+        '''
+        
+        raise NotImplementedError
+
+    def deleteSubObject(self, id):
+        '''
+        Deletes the subobject with the given id.
+        @param id The id to delete
         '''
 
         raise NotImplementedError
