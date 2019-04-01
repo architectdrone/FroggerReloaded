@@ -41,7 +41,7 @@ class board():
         '''
         self.size = (x, y) #The size of the board. Obviously, size[0] is the size in the x direction while size[1] is size in the y direction.
         self.lanes = ["" for i in range(y)] #This is a list of all of the lane types of the board. Thus, lanes[5] is a string representing the lane type at y = 5. (This is a list comprehension, by the way.)
-        self.subObjects = [] #All subobjects in the board. Subobjects are objects tht fit within a single square.
+        self.subObjects = [] #All subobjects in the board. Stored in dictionaries.
     
     ##PUBLIC
     #General
@@ -102,8 +102,16 @@ class board():
         @param direction (optional) The direction that it is going. (defaults to 'na')
         @param velocity (optional) The velocity (defaults to (0,0))
         '''
-
-        raise NotImplementedError
+        newSubObject = {
+            'id': id,
+            'type': type,
+            'x': x,
+            'y': y,
+            'segment': segment,
+            'direction': direction,
+            'velocity': velocity
+        }
+        self.subObjects.append(newSubObject)
     
     def getSubObject(self, id):
         '''
