@@ -88,6 +88,8 @@ class board():
         @return A list, as formatted above.
         '''
 
+        raise NotImplementedError
+
     #SubObjects
     def addSubObject(self, id, type, x = 0, y = 0, segment = "na", direction = "na", velocity = (0, 0)):
         '''
