@@ -1,6 +1,37 @@
 #board.py
 #This file has the "board" object, which is a useful data structure for implementing Frogger.
 
+'''
+SUBOBJECTS
+Subobjects are parts of the game board that occupy exactly one square. Each subobject has an id, which is used for referencing it. The following is a list of data stored for each subobject.
+
+Data for each subobject:
+X: The X position of the subobject.
+Y: The Y position of the subobject.
+Segment: The segment state of the subobject. The idea here is that a larger object could hold multiple subobjects. For example, a long bus may have a front, middle, and back. Note: This has no effect on the board's handling of the object. 
+    ALLOWED VALUES FOR SEGMENT
+    -front
+    -middle
+    -back
+    -na (Shorthand for "N/A", this means that there is no segment state.)
+Direction: The direction of the subobject. 
+    ALLOWED VALUES FOR DIRECTION
+    -left
+    -right
+    -up
+    -down
+    -na (Shorthand for "N/A", this means that there is no direction state.)
+Velocity: This stores the velocity of the subobject. The velocity is stored in a 2-tuple (IE '(a, b)'). The first element of the velocity is the change in x coordinate every time .update() is called. The second is the change in the y coordinate.
+
+Some use cases that have been taken care of:
+-Getting the state of a certain position
+-Adding new subobjects
+-Editting certain subobjects
+-Rudimentary Physics: Collisions can be detected by calling .getCollisionsSinceLastUpdate()
+
+Tips and tricks:
+-Don't lose ids. These are the only way to refer to subobjects.
+'''
 class board():
     def __init__(self, x, y):
         '''
@@ -24,6 +55,7 @@ class board():
             'segment': (string) The segment of the subobject that is found at this coordinate. If there is a subobject there, this will be one of the following: [front, middle, back, na]. If there isn't, this will be an empty string.
             'direction': (string) The direction of the subobject that is found at this coordinate. If there is a subobject there, this will be one of the following: [left, right, up, down, na]. If there isn't, this will be an empty string.
             'id': (int) The id of the subobject that is found at this coordinate. If there is no sub object, this will be -1.
+            'velocity': (int) The velocity of the subobject at the position.
             'lane': (string) The lane at this coordinate.
         }
         @param x The x coordinate.
