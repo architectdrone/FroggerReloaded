@@ -135,18 +135,18 @@ class Board():
         
         #Get the index of the subObject
         subObjectIndex = self.indexOfSubObject(id)
-        if (type not None):
-            self.subObjects['type'] = type
-        if (x not None):
-            self.subObjects['x'] = x
-        if (y not None):
-            self.subObjects['y'] = y
-        if (segment not None):
-            self.subObjects['segment'] = segment
-        if (direction not None):
-            self.subObjects['direction'] = direction
-        if (velocity not None):
-            self.subObjects['velocity'] = velocity
+        if (type != None):
+            self.subObjects[subObjectIndex]['type'] = type
+        if (x != None):
+            self.subObjects[subObjectIndex]['x'] = x
+        if (y != None):
+            self.subObjects[subObjectIndex]['y'] = y
+        if (segment != None):
+            self.subObjects[subObjectIndex]['segment'] = segment
+        if (direction != None):
+            self.subObjects[subObjectIndex]['direction'] = direction
+        if (velocity != None):
+            self.subObjects[subObjectIndex]['velocity'] = velocity
 
     def deleteSubObject(self, id):
         '''
