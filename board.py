@@ -88,8 +88,7 @@ class Board():
         Returns a list of collisions that have occured since the last update. The format that is returned is a list of tuples. Each tuple contains two elements. The idea is that each element indicates the id of the subobject that collided with the other subobject.
         @return A list, as formatted above.
         '''
-
-        raise NotImplementedError
+        return self.collisionsSinceLastUpdate
 
     #SubObjects
     def addSubObject(self, id, type, x = 0, y = 0, segment = "na", direction = "na", velocity = (0, 0)):
