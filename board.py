@@ -43,7 +43,7 @@ class Board():
         self.lanes = ["" for i in range(y)] #This is a list of all of the lane types of the board. Thus, lanes[5] is a string representing the lane type at y = 5. (This is a list comprehension, by the way.)
         self.subObjects = [] #All subobjects in the board. Stored in dictionaries.
         self.collisionsSinceLastUpdate = []
-        
+
     ##PUBLIC
     #General
     def getXY(self, x, y):
@@ -73,8 +73,8 @@ class Board():
         @param laneType A string indicating the type of lane that it is.
         '''
 
-        raise NotImplementedError
-    
+        self.lanes[y] = laneType
+            
     def update(self):
         '''
         Updates the board. Currently, this has the following functionalities:
