@@ -74,14 +74,14 @@ class Board():
         '''
 
         self.lanes[y] = laneType
-            
+
     def update(self):
         '''
         Updates the board. Currently, this has the following functionalities:
         -Move all subobjects with a velocity.
         '''
 
-        raise NotImplementedError
+        self.updatePosition()
     
     def getCollisionsSinceLastUpdate(self):
         '''
@@ -159,7 +159,7 @@ class Board():
         subObjectIndex = self.indexOfSubObject(id)
         self.subObjects.pop(subObjectIndex)
 
-    #PRIVATE
+    ##PRIVATE
     def indexOfSubObject(self, id):
         '''
         Get the index of the subobject.
@@ -169,3 +169,10 @@ class Board():
             if i['id'] == id:
                 return n
         raise KeyError
+
+    def updatePosition(self):
+        '''
+        Update positions based off of velocity
+        '''
+
+        raise NotImplementedError
