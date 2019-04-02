@@ -122,7 +122,7 @@ class Board():
         '''
 
         #There may be a cleaner way to do this, but I don't care enough to find out.
-        results = [i for i in self.subObjects if i.id == id]
+        results = [i for i in self.subObjects if i['id'] == id]
         assert len(results) != 0, f"The id {id} could not be found."
         return results[0]
 
