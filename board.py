@@ -83,7 +83,6 @@ class Board():
                 'velocity': "",
                 'lane': self.lanes[y]
             }
-        raise NotImplementedError
     
     def setLane(self, y, laneType):
         '''
