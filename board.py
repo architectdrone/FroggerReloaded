@@ -117,12 +117,15 @@ class board():
         '''
         Returns the subobject with the given id, formatted as a dictionary
         @param id The id of the subobject to lookup
-        @raise KeyError If the id is not in the board.
+        @raise AssertationError If the id is not in the board.
         @return The subobject with this id.
         '''
 
-        raise NotImplementedError
-
+        #There may be a cleaner way to do this, but I don't care enough to find out.
+        results = [i for i in self.subObjects if i.id == id]
+        assert len(results) != 0, f"The id {id} could not be found."
+        return results[0]
+        
     def editSubObject(self, id, type = None, x = None, y = None, segment = None, direction = None, velocity = None):
         '''
         Edits the selected subobject.
