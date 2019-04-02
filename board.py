@@ -64,6 +64,25 @@ class Board():
         @return The data structure, as detailed above.
         '''
 
+        theSubObject = self.getSubObjectAtPosition(x, y)
+        if theSubObject is not None:
+            toReturn = {
+                'type': theSubObject['type'],
+                'segment': theSubObject['segment'],
+                'direction': theSubObject['direction'],
+                'id': theSubObject['id'],
+                'velocity': theSubObject['velocity'],
+                'lane': self.lanes[y]
+            }
+        else:
+            toReturn = {
+                'type': "",
+                'segment': "",
+                'direction': "",
+                'id': "",
+                'velocity': "",
+                'lane': self.lanes[y]
+            }
         raise NotImplementedError
     
     def setLane(self, y, laneType):
@@ -230,3 +249,9 @@ class Board():
                 for y_ids in y_overlaps:
                     new_collisions = tuple(set(x_ids[1]).intersection(y_ids[1]))
                     self.collisionsSinceLastUpdate.append(new_collisions)
+
+    def getSubObjectAtPosition(self, x, y):
+        for i in self.subObjects:
+            if i['x'] == x and i['y'] == y:
+                return i
+        return None
