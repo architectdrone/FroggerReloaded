@@ -32,7 +32,7 @@ Some use cases that have been taken care of:
 Tips and tricks:
 -Don't lose ids. These are the only way to refer to subobjects.
 '''
-class board():
+class Board():
     def __init__(self, x, y):
         '''
         Creates and inititalizes the board.
@@ -125,7 +125,7 @@ class board():
         results = [i for i in self.subObjects if i.id == id]
         assert len(results) != 0, f"The id {id} could not be found."
         return results[0]
-        
+
     def editSubObject(self, id, type = None, x = None, y = None, segment = None, direction = None, velocity = None):
         '''
         Edits the selected subobject.
