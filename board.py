@@ -133,7 +133,20 @@ class Board():
         @param {All other attributes} {The attribute}
         '''
         
-        raise NotImplementedError
+        #Get the index of the subObject
+        subObjectIndex = self.indexOfSubObject(id)
+        if (type not None):
+            self.subObjects['type'] = type
+        if (x not None):
+            self.subObjects['x'] = x
+        if (y not None):
+            self.subObjects['y'] = y
+        if (segment not None):
+            self.subObjects['segment'] = segment
+        if (direction not None):
+            self.subObjects['direction'] = direction
+        if (velocity not None):
+            self.subObjects['velocity'] = velocity
 
     def deleteSubObject(self, id):
         '''
@@ -142,3 +155,13 @@ class Board():
         '''
 
         raise NotImplementedError
+
+    #PRIVATE
+    def indexOfSubObject(self, id):
+        '''
+        Get the index of the subobject.
+        '''
+
+        for n, i in enumerate(self.subObjects):
+            if i['id'] == id:
+                return n
