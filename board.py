@@ -42,7 +42,8 @@ class Board():
         self.size = (x, y) #The size of the board. Obviously, size[0] is the size in the x direction while size[1] is size in the y direction.
         self.lanes = ["" for i in range(y)] #This is a list of all of the lane types of the board. Thus, lanes[5] is a string representing the lane type at y = 5. (This is a list comprehension, by the way.)
         self.subObjects = [] #All subobjects in the board. Stored in dictionaries.
-    
+        self.collisionsSinceLastUpdate = []
+        
     ##PUBLIC
     #General
     def getXY(self, x, y):
@@ -131,6 +132,7 @@ class Board():
         Edits the selected subobject.
         @param id The id to edit.
         @param {All other attributes} {The attribute}
+        @raise KeyError If the ID isn't present
         '''
         
         #Get the index of the subObject
@@ -152,9 +154,10 @@ class Board():
         '''
         Deletes the subobject with the given id.
         @param id The id to delete
+        @raise KeyError If the ID isn't present
         '''
-
-        raise NotImplementedError
+        subObjectIndex = self.indexOfSubObject(id)
+        self.subObjects.pop(subObjectIndex)
 
     #PRIVATE
     def indexOfSubObject(self, id):
@@ -165,3 +168,4 @@ class Board():
         for n, i in enumerate(self.subObjects):
             if i['id'] == id:
                 return n
+        raise KeyError
