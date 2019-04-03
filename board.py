@@ -196,10 +196,14 @@ class Board():
         self.collisionsSinceLastUpdate = []
 
         allDone = False #Tells us if we are done. This is False when movement is possible.
+        #x and y overlaps are lists of lists. Each element represents an x or y coordinate. For example, everything at x=3 is stored in x_overlaps[3].
+        x_overlaps = [[] for i in range(self.size[0])]
+        y_overlaps = [[] for i in range(self.size[1])]
         while not allDone: #We do this until we determine that no more movement is possible.
             allDone = True #Assume that we are done
             #Move everything
             for i in particles: 
+                #Move in the x direction
                 if i['remaining_x_movement'] != 0:
                     allDone = False #Movement is still possible in this case.
                     if i['remaining_x_movement'] > 0:
@@ -208,6 +212,7 @@ class Board():
                     else:
                         i['current_x']-=1
                         i['remaining_x_movement']+=1
+                #Move in the y direction
                 if i['remaining_y_movement'] != 0:
                     allDone = False #Movement is still possible in this case.
                     if i['remaining_y_movement'] > 0:
@@ -216,38 +221,21 @@ class Board():
                     else:
                         i['current_y']-=1
                         i['remaining_y_movement']+=1
+                #Add both to x and y overlaps
+                x_overlaps[i['current_x']].append(i['id'])
+                y_overlaps[i['current_y']].append(i['id'])
             
             #Check for collisions (This is the best runtime complexity I could do.)
             #The algorithim works like this. We create two lists The first list associates x coordinates with ids, and the second associtates y coordinates with ids.
             #Then we look at each x coordinate in our first list. If there exist a y-coordinate that has two ids in it that are also in 
             
             #Populate x and y overlaps
-            x_overlaps = [] #In this list, we have tuples. The first element of the tuple is the x positions. The second element is a list of ids with that x coordinate.
-            y_overlaps = []
-            for i in particles:
-                #Populate x_overlaps
-                found_an_x = False
-                for a in x_overlaps: #Check to see if there is already an x entry for it.
-                    if a[0] == i['current_x']:
-                        found_an_x = True
-                        a[1].append(i['id'])
-                if not found_an_x: #If not, make one.
-                    x_overlaps.append((i['current_x'], [i['id']]))
-                
-                #Populate y_overlaps
-                found_an_y = False
-                for a in y_overlaps: #Check to see if there is already an y entry for it.
-                    if a[0] == i['current_y']:
-                        found_an_y = True
-                        a[1].append(i['id'])
-                if not found_an_y: #If not, make one.
-                    y_overlaps.append((i['current_y'], [i['id']]))
             
             #Now, find collisions
             for x_ids in x_overlaps:
                 for y_ids in y_overlaps:
-                    new_collisions = tuple(set(x_ids[1]).intersection(y_ids[1]))
-                    self.collisionsSinceLastUpdate.append(new_collisions)
+                    new_collisions = tuple(set(x_ids).intersection(y_ids)) #Find everything that is common between the two lists.
+                    self.collisionsSinceLastUpdate.append(new_collisions) #Add it to the list of collisions.
 
     def getSubObjectAtPosition(self, x, y):
         for i in self.subObjects:
