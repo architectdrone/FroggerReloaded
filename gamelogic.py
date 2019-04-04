@@ -85,3 +85,12 @@ def frogRight():
     current_y = theSubObject['y']
     myBoard.editSubObject(frog_id, x = current_x+1, y = current_y, direction = "right")
     frogCheck()
+
+def frogReset():
+    '''
+    Resets position of frog
+    '''
+    global myBoard, frog_id
+    myBoard.editSubObject(frog_id, x = FROGGER_INITIAL_X, y = FROGGER_INITIAL_Y, direction = "na")
+
+
