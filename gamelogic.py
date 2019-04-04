@@ -43,9 +43,13 @@ def frogCheck():
     Checks frog's position
     '''
     #Do something
+    check = False
     if (intersect == True):
-        frogReset
+        if(attach == False):
+            frogReset
+            check = True
 
+    return check
     #pass
 
 def frogUp():
@@ -116,3 +120,19 @@ def intersect():
         
     return intersected
 
+def attach():
+    '''
+    If frog intersects with a log frog can attach, return True if attached
+    TODO
+    '''  
+    attached = False
+    global myBoard, frog_id, obstacle_ids
+    if intersect == True:
+        for i in obstacle_ids:
+            obstacle = myBoard.getSubObject(obstacle_ids[i])
+            if (obstacle['log']):
+                v = obstacle['velocity']
+                myBoard.editSubObject(frog_id, x = obstacle['x'], y = obstacle['y'], velocity = v)
+                attached = True
+
+    return attached
