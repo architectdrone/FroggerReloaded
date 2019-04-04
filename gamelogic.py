@@ -38,9 +38,38 @@ platform_ids = [] #This is a list of ids representing things that are platforms.
 
 initialize(SIZE_x, SIZE_Y)
 
+def frogCheck():
+    #Do something
+    pass
+
 def frogUp():
     global myBoard, frog_id
     theSubObject = myBoard.getSubObject(frog_id)
     current_x = theSubObject['x']
     current_y = theSubObject['y']
     myBoard.editSubObject(frog_id, x = current_x, y = current_y+1)
+    frogCheck()
+
+def frogDown():
+    global myBoard, frog_id
+    theSubObject = myBoard.getSubObject(frog_id)
+    current_x = theSubObject['x']
+    current_y = theSubObject['y']
+    myBoard.editSubObject(frog_id, x = current_x, y = current_y-1)
+    frogCheck()
+
+def frogLeft():
+    global myBoard, frog_id
+    theSubObject = myBoard.getSubObject(frog_id)
+    current_x = theSubObject['x']
+    current_y = theSubObject['y']
+    myBoard.editSubObject(frog_id, x = current_x-1, y = current_y)
+    frogCheck()
+
+def frogRight():
+    global myBoard, frog_id
+    theSubObject = myBoard.getSubObject(frog_id)
+    current_x = theSubObject['x']
+    current_y = theSubObject['y']
+    myBoard.editSubObject(frog_id, x = current_x+1, y = current_y)
+    frogCheck()
