@@ -43,33 +43,45 @@ def frogCheck():
     pass
 
 def frogUp():
+    '''
+    Moves the frog up.
+    '''
     global myBoard, frog_id
     theSubObject = myBoard.getSubObject(frog_id)
     current_x = theSubObject['x']
     current_y = theSubObject['y']
-    myBoard.editSubObject(frog_id, x = current_x, y = current_y+1)
+    myBoard.editSubObject(frog_id, x = current_x, y = current_y+1, direction = "up")
     frogCheck()
 
 def frogDown():
+    '''
+    Moves the frog down.
+    '''
     global myBoard, frog_id
     theSubObject = myBoard.getSubObject(frog_id)
     current_x = theSubObject['x']
     current_y = theSubObject['y']
-    myBoard.editSubObject(frog_id, x = current_x, y = current_y-1)
+    myBoard.editSubObject(frog_id, x = current_x, y = current_y-1, direction = "down")
     frogCheck()
 
 def frogLeft():
+    '''
+    Moves the frog left.
+    '''
     global myBoard, frog_id
     theSubObject = myBoard.getSubObject(frog_id)
     current_x = theSubObject['x']
     current_y = theSubObject['y']
-    myBoard.editSubObject(frog_id, x = current_x-1, y = current_y)
+    myBoard.editSubObject(frog_id, x = current_x-1, y = current_y, direction = "left")
     frogCheck()
 
 def frogRight():
+    '''
+    Moves the frog right.
+    '''
     global myBoard, frog_id
     theSubObject = myBoard.getSubObject(frog_id)
     current_x = theSubObject['x']
     current_y = theSubObject['y']
-    myBoard.editSubObject(frog_id, x = current_x+1, y = current_y)
+    myBoard.editSubObject(frog_id, x = current_x+1, y = current_y, direction = "right")
     frogCheck()
