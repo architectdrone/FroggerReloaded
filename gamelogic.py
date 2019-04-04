@@ -85,3 +85,26 @@ def frogRight():
     current_y = theSubObject['y']
     myBoard.editSubObject(frog_id, x = current_x+1, y = current_y, direction = "right")
     frogCheck()
+
+def getXY(x, y):
+    '''
+    Get the sprite that should be at X and Y. Returns in the following format:
+    {
+        'segment': The segment of the subobject at the XY. Present only if there is a subobject at XY.
+        'type': The type of the subobject at the XY. Present only if there is a subobject at XY.
+        'direction': The direction of the subobject at the XY. Present only if there is a subobject at XY.
+        'lane': The lane at XY.
+    }
+    @return Information about the X and Y position, formatted as written above.
+    '''
+    global myBoard
+    AtXY = myBoard.getXY(x, y)
+    if AtXY['segment'] != "" :
+        return {
+            'segment': AtXY['segment'],
+            'type': AtXY['type'],
+            'direction': AtXY['direction'],
+            'lane': AtXY['lane']
+        }
+    else:
+        return {'lane': AtXY['lane']}
