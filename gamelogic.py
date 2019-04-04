@@ -39,8 +39,14 @@ platform_ids = [] #This is a list of ids representing things that are platforms.
 initialize(SIZE_x, SIZE_Y)
 
 def frogCheck():
+    '''
+    Checks frog's position
+    '''
     #Do something
-    pass
+    if (intersect == True):
+        frogReset
+
+    #pass
 
 def frogUp():
     '''
@@ -93,4 +99,20 @@ def frogReset():
     global myBoard, frog_id
     myBoard.editSubObject(frog_id, x = FROGGER_INITIAL_X, y = FROGGER_INITIAL_Y, direction = "na")
 
+def intersect():
+    '''
+    Return True if there is an intersection between the frog and obstacle
+    '''
+    intersected = False
+    global myBoard, frog_id, obstacle_ids
+    frog = myBoard.getSubObject(frog_id)
+    frog_x = frog['x']
+    frog_y = frog['y']
+
+    for i in obstacle_ids:
+        obstacle = myBoard.getSubObject(obstacle_ids[i])
+        if (frog_x == obstacle['x'] and frog_y == obstacle['y']):
+            intersected = True
+        
+    return intersected
 
