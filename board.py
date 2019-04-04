@@ -83,6 +83,7 @@ class Board():
                 'velocity': "",
                 'lane': self.lanes[y]
             }
+        return toReturn
     
     def setLane(self, y, laneType):
         '''
