@@ -224,7 +224,7 @@ def update():
     global myBoard,next_id 
     for lane in movingObjectLanes(): #Check each moving object lane.
         if lane['entering']: #If we are in the entering state.
-            myBoard.addSubObject(next_id, lane['type'], segment=lane['segments'][lane['whichSegment']], )
+            myBoard.addSubObject(next_id, lane['type'], y=lane['y'], segment=lane['segments'][lane['whichSegment']], direction=lane['direction'])
             lane['whichSegment']+=1
             next_id+=1 #Increment the next_id, as we should everytime we create a subobject.
             if (lane['whichSegment'] > len((lane['segments'])-1)): #Now we test to make sure that we haven't run out of segments. This is determined by the segment that we are on, according to whichSegment, and the length of list of segments.
