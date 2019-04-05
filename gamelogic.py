@@ -232,7 +232,7 @@ def update():
                 positionX = 0
             elif lane['direction'] == "left":
                 velocityX = -1*lane['speed']
-                
+
                 positionX = SIZE_X-1
             
             
@@ -315,23 +315,7 @@ def frogCheck():
             dead = True
 
     isDead = dead
-def attach():
-    '''
-    If frog intersects with a log frog can attach, return True if attached
-    TODO
-    '''  
-    attached = False
-    global myBoard, frog_id, obstacle_ids
-    if intersect == True:
-        for i in obstacle_ids:
-            obstacle = myBoard.getSubObject(obstacle_ids[i])
-            if (obstacle['log']):
-                v = obstacle['velocity']
-                myBoard.editSubObject(frog_id, x = obstacle['x'], y = obstacle['y'], velocity = v)
-                attached = True
-
-    return attached
-
+    
 def getCollisions():
     '''
     Return collisions with frog
