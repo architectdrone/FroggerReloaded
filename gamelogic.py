@@ -39,8 +39,18 @@ platform_ids = [] #This is a list of ids representing things that are platforms.
 initialize(SIZE_x, SIZE_Y)
 
 def frogCheck():
+    '''
+    Checks frog's position
+    '''
     #Do something
-    pass
+    check = False
+    if (intersect == True):
+        if(attach == False):
+            frogReset
+            check = True
+
+    return check
+    #pass
 
 def frogUp():
     '''
@@ -108,3 +118,43 @@ def getXY(x, y):
         }
     else:
         return {'lane': AtXY['lane']}
+def frogReset():
+    '''
+    Resets position of frog
+    '''
+    global myBoard, frog_id
+    myBoard.editSubObject(frog_id, x = FROGGER_INITIAL_X, y = FROGGER_INITIAL_Y, direction = "na")
+
+def intersect():
+    '''
+    Return True if there is an intersection between the frog and obstacle
+    '''
+    intersected = False
+    global myBoard, frog_id, obstacle_ids
+    frog = myBoard.getSubObject(frog_id)
+    frog_x = frog['x']
+    frog_y = frog['y']
+
+    for i in obstacle_ids:
+        obstacle = myBoard.getSubObject(obstacle_ids[i])
+        if (frog_x == obstacle['x'] and frog_y == obstacle['y']):
+            intersected = True
+        
+    return intersected
+
+def attach():
+    '''
+    If frog intersects with a log frog can attach, return True if attached
+    TODO
+    '''  
+    attached = False
+    global myBoard, frog_id, obstacle_ids
+    if intersect == True:
+        for i in obstacle_ids:
+            obstacle = myBoard.getSubObject(obstacle_ids[i])
+            if (obstacle['log']):
+                v = obstacle['velocity']
+                myBoard.editSubObject(frog_id, x = obstacle['x'], y = obstacle['y'], velocity = v)
+                attached = True
+
+    return attached
