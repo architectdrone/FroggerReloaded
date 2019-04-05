@@ -237,20 +237,21 @@ def update():
     '''
     Updates moving subobjects in the lane
     '''
-    global myBoard,next_id
-    for lane in movingObjectLanes():
-        if lane['entering']:
+    global myBoard,next_id 
+    for lane in movingObjectLanes(): #Check each moving object lane.
+        if lane['entering']: #If we are in the entering state.
             myBoard.addSubObject(next_id, lane['type'], segment=lane['segments'][lane['whichSegment']], )
-            next_id+=1
-            if (lane['whichSegment'] > len((lane['segments'])-1)):
-                lane['entering'] = False
-                lane['untilNext'] = lane['coolDown']
+            lane['whichSegment']+=1
+            next_id+=1 #Increment the next_id, as we should everytime we create a subobject.
+            if (lane['whichSegment'] > len((lane['segments'])-1)): #Now we test to make sure that we haven't run out of segments. This is determined by the segment that we are on, according to whichSegment, and the length of list of segments.
+                lane['entering'] = False #If we have, entering mode ends.
+                lane['untilNext'] = lane['coolDown'] #We also reset the cooldown.
                 
-        else:
-            lane['untilNext'] -= 1
-            if (lane['untilNext'] == 0):
-                lane['entering'] = True
-                lane['whichSegment'] = 0
+        else: #If we are not in the entering state.
+            lane['untilNext'] -= 1 #We count down by one.
+            if (lane['untilNext'] == 0): #If we have reach 0, the countdown has expired.
+                lane['entering'] = True #In that case we start entering mode.
+                lane['whichSegment'] = 0 #We also reset whichSegment.
 
 
 def frogCheck():
