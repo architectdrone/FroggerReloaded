@@ -24,7 +24,7 @@ next_id = 1 #This is the next available id. Everytime we add a new subobject, we
 frog_id = 0 #This is the id of the frog. We must reserve just 0.
 obstacle_ids = [] #This is a list of ids representing things that are dangerous to frogger. If there is a collision with id 0 (frogger) and one of these, frogger is dead!
 platform_ids = [] #This is a list of ids representing things that are platforms.
-
+dangerous_lane = [] #Lanes that kill, if not on a platform.
 initialize(SIZE_x, SIZE_Y)
 
 
@@ -131,6 +131,25 @@ def getFrogCollisions():
     allC = myBoard.getCollisionsSinceLastUpdate()
     allFrogC = [i for i in allC if frog_id in i]
     return allFrogC
+
+def getLifeStatus():
+    '''
+    @return True if the frog is still alive, false otherwise.
+    '''
+    global myBoard, obstacle_ids, dangerous_lane
+
+    #Subobject testing
+    interactions = [] #This stores the id of everything that interacts with frogger
+    interactions = getFrogIntersect() #First we populate it with everything the frog is intersecting.
+    collisions = getFrogCollisions() #All of the collisions with frogger
+    if len(collisions) != 0: #If there is more than one element
+        interactions.append(list(getFrogCollisions()[0])) #We then append everything that has collided with the frog. Now, we know that this is formatted as a list of tuples, but there should only be one element in this list
+    #Otherwise, nothing collides with ya boi frogger
+    interactions = list(dict.fromkeys(interactions)) #Remove duplicates
+    
+    for i in obstacle_ids:
+        if i in interactions:
+            return False
 
 def attach():
     '''
