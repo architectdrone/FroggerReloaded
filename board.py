@@ -52,11 +52,11 @@ class Board():
         The data structure is a dictionary, formatted like so:
         return = 
         {
-            'type': (string) The type of the subobject found at this coordinate. If there is no subobject, the string is empty.
-            'segment': (string) The segment of the subobject that is found at this coordinate. If there is a subobject there, this will be one of the following: [front, middle, back, na]. If there isn't, this will be an empty string.
-            'direction': (string) The direction of the subobject that is found at this coordinate. If there is a subobject there, this will be one of the following: [left, right, up, down, na]. If there isn't, this will be an empty string.
-            'id': (int) The id of the subobject that is found at this coordinate. If there is no sub object, this will be -1.
-            'velocity': (int) The velocity of the subobject at the position.
+            'type': (string) The type of the subobject found at this coordinate. If there is no subobject, the string is empty.  (A List)
+            'segment': (string) The segment of the subobject that is found at this coordinate. If there is a subobject there, this will be one of the following: [front, middle, back, na]. If there isn't, this will be an empty string. (A List)
+            'direction': (string) The direction of the subobject that is found at this coordinate. If there is a subobject there, this will be one of the following: [left, right, up, down, na]. If there isn't, this will be an empty string. (A List)
+            'id': (int) The id of the subobject that is found at this coordinate. If there is no sub object, this will be -1. (A List)
+            'velocity': (int) The velocity of the subobject at the position. (A List)
             'lane': (string) The lane at this coordinate.
         }
         @param x The x coordinate.
@@ -76,11 +76,11 @@ class Board():
             }
         else:
             toReturn = {
-                'type': "",
-                'segment': "",
-                'direction': "",
-                'id': "",
-                'velocity': "",
+                'type': [],
+                'segment': [],
+                'direction': [],
+                'id': [],
+                'velocity': [],
                 'lane': self.lanes[y]
             }
         return toReturn
@@ -114,7 +114,7 @@ class Board():
         '''
         Adds a new subObject. Please see the documentation for subObjects for more details regarding each of the parameters... (TODO documentation regarding subObjects :P)
         @param id The id of the subObject.
-        @param type The type of the subObject.
+        @param type The type of the subObject. 
         @param x (optional) The initial X position. (defaults to 0)
         @param y (optional) The initial Y position. (defaults to 0)
         @param segment (optional) The segment. (defaults to 'na')
@@ -239,7 +239,24 @@ class Board():
                     self.collisionsSinceLastUpdate.append(new_collisions) #Add it to the list of collisions.
 
     def getSubObjectAtPosition(self, x, y):
+        toReturn = {
+            'type': [],
+            'segment': [],
+            'direction': [],
+            'id': [],
+            'velocity': []
+        }
         for i in self.subObjects:
             if i['x'] == x and i['y'] == y:
-                return i
-        return None
+                toReturn['type'].append(i['type'])
+                toReturn['segment'].append(i['segment'])
+                toReturn['direction'].append(i['direction'])
+                toReturn['id'].append(i['id'])
+                toReturn['velocity'].append(i['velocity'])
+        if toReturn['type'] == []:
+            toReturn['type'] = None
+            toReturn['segment'] = None
+            toReturn['direction'] = None
+            toReturn['id'] = None
+            toReturn['velocity'] = None
+        return toReturn
