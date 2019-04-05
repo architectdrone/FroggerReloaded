@@ -1,6 +1,7 @@
 import pygame 
 from pygame.locals import *
 import sys
+import time
 
 pygame.init()
 speed = [1, 1]
@@ -68,7 +69,7 @@ def game_intro():
         TextRect.center = (400, 200)
         screen.blit(TextSurf, TextRect)
 
-        game_button("Start!",display_width/6,2*display_height/3,display_width/6,display_height/12,color_green,color_lightgreen,None)
+        game_button("Start!",display_width/6,2*display_height/3,display_width/6,display_height/12,color_green,color_lightgreen,game_play)
         game_button("Quit", 2*display_width/3,2*display_height/3,display_width/6,display_height/12,color_red,color_lightred,game_quit)
 
         frog_rect = frog_rect.move(speed)
@@ -80,7 +81,25 @@ def game_intro():
         pygame.display.update()
         fps_clock.tick(frames_per_sec)
  
- #def game_play():
+def game_play():
+
+    run = True
+
+    while run:
+
+        pygame.time.delay(50)
+
+        screen.fill(color_black)
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_ESCAPE]:
+            run = False
+
+        pygame.display.update()
+
 
 
 game_intro()
+game_play()
+game_quit()
+quit()
