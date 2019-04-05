@@ -93,9 +93,11 @@ def game_play():
             print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
-                sys.exit()        
+                sys.exit()
 
         screen.fill(color_black)
+
+        
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:
