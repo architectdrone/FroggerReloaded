@@ -14,7 +14,7 @@ next_id = 1 #This is the next available id. Everytime we add a new subobject, we
 frog_id = 0 #This is the id of the frog. We must reserve just 0.
 obstacle_ids = [] #This is a list of ids representing things that are dangerous to frogger. If there is a collision with id 0 (frogger) and one of these, frogger is dead!
 platform_ids = [] #This is a list of ids representing things that are platforms.
-dangerous_lane = [] #Lanes that kill, if not on a platform.
+dangerous_lane = [] #Lanes that kill, if not on a platform. Each element is the y coordinate of the lane.
 movingObjectLanes = [] #Lanes that produce objects. There is a specific internal structure to this list, see chooseMovingObjectLane for deatils
 isDead = False #Are we dead?
 
@@ -220,9 +220,13 @@ def chooseMovingObjectLane(y, laneType, options):
     
 def update():
     '''
-    Updates moving subobjects in the lane
+    Updates board, moving subobjects in the lane, and the frog.
     '''
     global myBoard,next_id, SIZE_X
+    #Board-level update
+    myBoard.update()
+
+    #Causing objects to enter.
     for lane in movingObjectLanes: #Check each moving object lane.
         if lane['entering']: #If we are in the entering state.
             #Since the velocity and the position are based off of the direction, we compute them here. If the object is moving left, it has a positive velocity, if not, negative.
@@ -250,6 +254,9 @@ def update():
             if (lane['untilNext'] == 0): #If we have reach 0, the countdown has expired.
                 lane['entering'] = True #In that case we start entering mode.
                 lane['whichSegment'] = 0 #We also reset whichSegment.
+
+    #Do a frog check.
+    frogCheck()
 
 def getFrogIntersect():
     '''
