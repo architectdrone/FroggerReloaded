@@ -132,13 +132,11 @@ def getFrogCollisions():
     allFrogC = [i for i in allC if frog_id in i]
     return allFrogC
 
-def getLifeStatus():
+def getInteractions():
     '''
-    @return True if the frog is still alive, false otherwise.
+    @return A list of all ids that frogger has either collided with or is on top of.
     '''
     global myBoard, obstacle_ids, dangerous_lane, platform_ids
-
-    #Subobject testing
     interactions = [] #This stores the id of everything that interacts with frogger
     interactions = getFrogIntersect() #First we populate it with everything the frog is intersecting.
     collisions = getFrogCollisions() #All of the collisions with frogger
@@ -146,7 +144,15 @@ def getLifeStatus():
         interactions.append(list(getFrogCollisions()[0])) #We then append everything that has collided with the frog. Now, we know that this is formatted as a list of tuples, but there should only be one element in this list
     #Otherwise, nothing collides with ya boi frogger
     interactions = list(dict.fromkeys(interactions)) #Remove duplicates
-    
+    return interactions
+
+def getLifeStatus():
+    '''
+    @return True if the frog is still alive, false otherwise.
+    '''
+
+    #Subobject Testing
+    interactions = getInteractions()
     for i in obstacle_ids:
         if i in interactions:
             return False
