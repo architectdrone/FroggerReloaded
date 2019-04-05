@@ -29,7 +29,7 @@ def initialize(x_size, y_size):
     global myBoard, FROGGER_INITIAL_X, FROGGER_INITIAL_Y, frog_id
     
     myBoard = b.Board(x_size, y_size)
-    myBoard.addSubObject(frog_id, "frog", x = FROGGER_INITIAL_X, y = FROGGER_INITIAL_Y)
+    myBoard.addSubObject(frog_id, "frog", x = FROGGER_INITIAL_X, y = FROGGER_INITIAL_Y, direction="up")
     dangerous_lane = []
 
     generateBasic()
@@ -106,7 +106,7 @@ def frogReset():
     Resets position of frog
     '''
     global myBoard, frog_id
-    myBoard.editSubObject(frog_id, x = FROGGER_INITIAL_X, y = FROGGER_INITIAL_Y, direction = "na")
+    
 
 #PRIVATE FUNCTIONS
 #No touchy
@@ -216,7 +216,6 @@ def chooseMovingObjectLane(y, laneType, options):
     }
     movingObjectLanes.append(MOLEntry)
     
-
 def update():
     '''
     Updates moving subobjects in the lane
@@ -315,7 +314,7 @@ def frogCheck():
             dead = True
 
     isDead = dead
-    
+
 def getCollisions():
     '''
     Return collisions with frog
