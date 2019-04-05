@@ -212,6 +212,43 @@ def chooseMovingObjectLane(self, y, laneType, options):
     }
     movingObjectLanes.append(MOLEntry)
 
+def movingObjectLanes():
+    '''
+    Define lanes with moving objects
+    '''
+    movingObjectLane = {
+            'type' : type,
+            'y': y,
+            'direction': direction,
+            'speed' : speed,
+            'segment' : segment,
+            'coolDown' : coolDown,
+            'untilNext' : untilNext,
+            'entering' : entering,
+            'whichSegment' : whichSegment
+        }
+    
+    return movingObjectLane
+    
+
+def update():
+    '''
+    Updates moving subobjects in the lane
+    '''
+    global myBoard,next_id
+    for lane in movingObjectLanes():
+        if lane['entering']:
+            myBoard.addSubObject(next_id, lane['type'], segment=lane['segments'][lane['whichSegment']], )
+            next_id+=1
+            if (lane['whichSegment'] > len((lane['segments'])-1)):
+                lane['entering'] = False
+                lane['untilNext'] = lane['coolDown']
+                
+        else:
+            lane['untilNext'] -= 1
+            if (lane['untilNext'] == 0):
+                lane['entering'] = True
+                lane['whichSegment'] = 0
 
 
 def frogCheck():
