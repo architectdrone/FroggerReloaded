@@ -136,7 +136,7 @@ def getLifeStatus():
     '''
     @return True if the frog is still alive, false otherwise.
     '''
-    global myBoard, obstacle_ids, dangerous_lane
+    global myBoard, obstacle_ids, dangerous_lane, platform_ids
 
     #Subobject testing
     interactions = [] #This stores the id of everything that interacts with frogger
@@ -149,6 +149,17 @@ def getLifeStatus():
     
     for i in obstacle_ids:
         if i in interactions:
+            return False
+    
+    #Lane testing
+    frog_y = myBoard.getSubObject(frog_id)['y'] #The y coordinate of frogger
+    if frog_y in dangerous_lane: #If frogger is in a dangerous lane, check if we are on a plaform.
+        dead = True
+        for i in platform_ids:
+            if i in interactions:
+                dead = False
+                break
+        if dead:
             return False
 
 def attach():
