@@ -17,18 +17,15 @@ platform_ids = [] #This is a list of ids representing things that are platforms.
 dangerous_lane = [] #Lanes that kill, if not on a platform.
 movingObjectLanes = [] #Lanes that produce objects. There is a specific internal structure to this list, TODO document this structure.
 isDead = False #Are we dead?
-initialize(SIZE_X, SIZE_Y)
 
 #PUBLIC FUNCTIONS
-def initialize(x_size, y_size):
+def initialize():
     '''
     Initializes game board
-    @param x_size x dimension of board
-    @param y_size y dimension of board
     '''
     global myBoard, FROGGER_INITIAL_X, FROGGER_INITIAL_Y, frog_id
     
-    myBoard = b.Board(x_size, y_size)
+    myBoard = b.Board(SIZE_X, SIZE_Y)
     myBoard.addSubObject(frog_id, "frog", x = FROGGER_INITIAL_X, y = FROGGER_INITIAL_Y, direction="up")
     dangerous_lane = []
 
@@ -101,7 +98,6 @@ def getXY(x, y):
     else:
         return {'lane': AtXY['lane']}
     
-
 #PRIVATE FUNCTIONS
 #No touchy
 def generateBasic():
