@@ -118,6 +118,7 @@ def getXY(x, y):
         }
     else:
         return {'lane': AtXY['lane']}
+
 def frogReset():
     '''
     Resets position of frog
@@ -125,22 +126,18 @@ def frogReset():
     global myBoard, frog_id
     myBoard.editSubObject(frog_id, x = FROGGER_INITIAL_X, y = FROGGER_INITIAL_Y, direction = "na")
 
-def intersect():
+def isFrogIntersect():
     '''
-    Return True if there is an intersection between the frog and obstacle
+    Return The list of all things that intersect with the frog
     '''
-    intersected = False
-    global myBoard, frog_id, obstacle_ids
+    global myBoard, frog_id
     frog = myBoard.getSubObject(frog_id)
     frog_x = frog['x']
     frog_y = frog['y']
 
-    for i in obstacle_ids:
-        obstacle = myBoard.getSubObject(obstacle_ids[i])
-        if (frog_x == obstacle['x'] and frog_y == obstacle['y']):
-            intersected = True
-        
-    return intersected
+    allIDs = myBoard.getXY(frog_x, frog_y)['id']
+    allIDs.pop(allIDs.index(frog_id))
+    return allIDs
 
 def attach():
     '''
