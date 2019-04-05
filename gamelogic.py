@@ -100,12 +100,6 @@ def getXY(x, y):
         }
     else:
         return {'lane': AtXY['lane']}
-
-def frogReset():
-    '''
-    Resets position of frog
-    '''
-    global myBoard, frog_id
     
 
 #PRIVATE FUNCTIONS
