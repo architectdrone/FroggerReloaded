@@ -1,35 +1,24 @@
 #game logic for Frogger
 import board as b
 
-'''
-TODO
-SUBOBJECTS
--log
--car, truck
--lanes: river, road
--turtle
--frog
-
-SCORE
-
-Number of LIVES
-'''
 FROGGER_INITIAL_X = 0
 FROGGER_INITIAL_Y = 0
 SIZE_x = 10
 SIZE_Y = 10
 
+#PUBLIC
 myBoard = b.Board(1, 1)
 def initialize(x_size, y_size):
-    global myBoard, FROGGER_INITIAL_X, FROGGER_INITIAL_Y, frog_id
     '''
     Initializes game board
     @param x_size x dimension of board
     @param y_size y dimension of board
     '''
+    global myBoard, FROGGER_INITIAL_X, FROGGER_INITIAL_Y, frog_id
+    
     myBoard = b.Board(x_size, y_size)
     myBoard.addSubObject(frog_id, "frog", x = FROGGER_INITIAL_X, y = FROGGER_INITIAL_Y)
-    #place subobjects
+    #place subobjects and lanes using a procedural generation method.
 
 next_id = 1 #This is the next available id. Everytime we add a new subobject, we increment this id, and use the one that was there. We start at 1 so as to reserve 0 for the frog.
 frog_id = 0 #This is the id of the frog. We must reserve just 0.
@@ -38,19 +27,7 @@ platform_ids = [] #This is a list of ids representing things that are platforms.
 
 initialize(SIZE_x, SIZE_Y)
 
-def frogCheck():
-    '''
-    Checks frog's position
-    '''
-    #Do something
-    check = False
-    if (intersect == True):
-        if(attach == False):
-            frogReset
-            check = True
 
-    return check
-    #pass
 
 def frogUp():
     '''
@@ -126,9 +103,16 @@ def frogReset():
     global myBoard, frog_id
     myBoard.editSubObject(frog_id, x = FROGGER_INITIAL_X, y = FROGGER_INITIAL_Y, direction = "na")
 
+##PRIVATE
+def frogCheck():
+    '''
+    Runs whenever the frog moves.
+    '''
+    pass
+
 def getFrogIntersect():
     '''
-    Return The list of all things that intersect with the frog
+    @return The list of all things that intersect with the frog
     '''
     global myBoard, frog_id
     frog = myBoard.getSubObject(frog_id)
@@ -138,6 +122,15 @@ def getFrogIntersect():
     allIDs = myBoard.getXY(frog_x, frog_y)['id']
     allIDs.pop(allIDs.index(frog_id))
     return allIDs
+
+def getFrogCollisions():
+    '''
+    @return The list of things that have collided with the frog.
+    '''
+    global myBoard, frog_id
+    allC = myBoard.getCollisionsSinceLastUpdate()
+    allFrogC = [i for i in allC if frog_id in i]
+    return allFrogC
 
 def attach():
     '''

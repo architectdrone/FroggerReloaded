@@ -85,6 +85,13 @@ class Board():
             }
         return toReturn
     
+    def resetBoard(self):
+        '''
+        Clears everything in the board.
+        '''
+        self.subObjects = []
+        self.collisionsSinceLastUpdate = []
+
     def setLane(self, y, laneType):
         '''
         Sets the type of the lane along the given y axis.
@@ -108,6 +115,12 @@ class Board():
         @return A list, as formatted above.
         '''
         return self.collisionsSinceLastUpdate
+
+    def flushCollisions(self):
+        '''
+        Gets rid of all collisions in getCollisionsSinceLastUpdate()
+        '''
+        self.collisionsSinceLastUpdate = []
 
     #SubObjects
     def addSubObject(self, id, type, x = 0, y = 0, segment = "na", direction = "na", velocity = (0, 0)):
