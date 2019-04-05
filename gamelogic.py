@@ -23,7 +23,7 @@ def initialize():
     '''
     Initializes game board
     '''
-    global myBoard, FROGGER_INITIAL_X, FROGGER_INITIAL_Y, frog_id
+    global myBoard, FROGGER_INITIAL_X, FROGGER_INITIAL_Y, frog_id, dangerous_lane
     
     myBoard = b.Board(SIZE_X, SIZE_Y)
     myBoard.addSubObject(frog_id, "frog", x = FROGGER_INITIAL_X, y = FROGGER_INITIAL_Y, direction="up")
