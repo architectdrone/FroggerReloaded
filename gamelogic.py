@@ -224,15 +224,16 @@ def update():
     global myBoard,next_id, SIZE_X
     for lane in movingObjectLanes: #Check each moving object lane.
         if lane['entering']: #If we are in the entering state.
-            
+            #Since the velocity and the position are based off of the direction, we compute them here. If the object is moving left, it has a positive velocity, if not, negative.
             velocityX = 0
             positionX = 0
             if lane['direction'] == "right":
-                velocityX = -1*lane['speed']
-                positionX = SIZE_X-1
-            elif lane['direction'] == "left":
                 velocityX = lane['speed']
                 positionX = 0
+            elif lane['direction'] == "left":
+                velocityX = -1*lane['speed']
+                
+                positionX = SIZE_X-1
             
             
             myBoard.addSubObject(next_id, lane['type'], y=lane['y'], segment=lane['segments'][lane['whichSegment']], direction=lane['direction'],velocity = (velocityX, 0),x = positionX)
