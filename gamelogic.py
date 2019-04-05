@@ -15,7 +15,7 @@ frog_id = 0 #This is the id of the frog. We must reserve just 0.
 obstacle_ids = [] #This is a list of ids representing things that are dangerous to frogger. If there is a collision with id 0 (frogger) and one of these, frogger is dead!
 platform_ids = [] #This is a list of ids representing things that are platforms.
 dangerous_lane = [] #Lanes that kill, if not on a platform.
-movingObjectLanes = [] #Lanes that produce objects. There is a specific internal structure to this list, TODO document this structure.
+movingObjectLanes = [] #Lanes that produce objects. There is a specific internal structure to this list, see chooseMovingObjectLane for deatils
 isDead = False #Are we dead?
 
 #PUBLIC FUNCTIONS
@@ -187,7 +187,19 @@ def generateBasic():
 
 def chooseMovingObjectLane(y, laneType, options):
     '''
-    Chooses a moving object lane that works with the lane from the options, and adds it to the moving object lane variable
+    Chooses a moving object lane that works with the lane from the options, and adds it to the moving object lane variable.
+    Structure of a moving object lane:
+    {
+        'y': The y coordinate of the lane.
+        'direction': The direction of the objects in the lane. left or right.
+        'speed': The speed of the objects in the lane.
+        'segments': The segments in the object. This is a list. The first element is the one to emerge first. Example: ['front', 'middle','back']
+        'type': The type of the object.
+        'cooldown': How long to wait until the next object emerges.
+        'untilNext': How long until the next object emerges. (USED ONLY BY UPDATE)
+        'entering': Whether or not the object is entering. (USED ONLY BY UPDATE)
+        'whichSegment': The index of segments that is emerging. (USED ONLY BY UPDATE)
+    }
     '''
     global movingObjectLanes
 
