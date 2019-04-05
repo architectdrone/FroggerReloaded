@@ -126,7 +126,7 @@ def frogReset():
     global myBoard, frog_id
     myBoard.editSubObject(frog_id, x = FROGGER_INITIAL_X, y = FROGGER_INITIAL_Y, direction = "na")
 
-def isFrogIntersect():
+def getFrogIntersect():
     '''
     Return The list of all things that intersect with the frog
     '''
