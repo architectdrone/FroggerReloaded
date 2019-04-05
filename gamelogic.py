@@ -155,3 +155,13 @@ def attach():
                 attached = True
 
     return attached
+
+def getCollisions():
+    '''
+    Return collisions with frog
+    TODO
+    ''' 
+    global myBoard, frog_id
+    collisions = myBoard.getCollisionsSinceLastUpdate()
+    toReturn = [i for i in collisions if frog_id in i]
+    return toReturn
