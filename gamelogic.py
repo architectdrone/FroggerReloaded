@@ -108,19 +108,11 @@ def frogCheck():
     '''
     Runs whenever the frog moves.
     '''
-    #Do something
-    check = False
-    if (intersect == True):
-        if(attach == False):
-            frogReset
-            check = True
-
-    return check
-    #pass
+    pass
 
 def getFrogIntersect():
     '''
-    Return The list of all things that intersect with the frog
+    @return The list of all things that intersect with the frog
     '''
     global myBoard, frog_id
     frog = myBoard.getSubObject(frog_id)
@@ -130,6 +122,15 @@ def getFrogIntersect():
     allIDs = myBoard.getXY(frog_x, frog_y)['id']
     allIDs.pop(allIDs.index(frog_id))
     return allIDs
+
+def getFrogCollisions():
+    '''
+    @return The list of things that have collided with the frog.
+    '''
+    global myBoard, frog_id
+    allC = myBoard.getCollisionsSinceLastUpdate()
+    allFrogC = [i for i in allC if frog_id in i]
+    return allFrogC
 
 def attach():
     '''
