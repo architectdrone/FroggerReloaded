@@ -4,13 +4,22 @@ import sys
 
 pygame.init()
 speed = [1, 1]
+display_width = 800
+display_height = 600
+
 color_white = (255,255,255)
 color_black = (0,0,0)
-window_size = (width, height) = (800,600)
+color_red = (200,0,0)
+color_green = (0,200,0) 
+
+color_lightred = (255,0,0)
+color_lightgreen = (0,255,0)
+
 pygame.display.set_caption('Frogger Reloaded')
 frog_image = pygame.image.load('frog.jpg')
 
-screen = pygame.display.set_mode(window_size)
+screen = pygame.display.set_mode((display_width, display_height))
+
 
 def text_objects(text, font):
     textSurface = font.render(text, True, color_black)
@@ -26,20 +35,32 @@ def game_intro():
     
     while intro:        
         for event in pygame.event.get():
+            #print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
         screen.fill(color_white)
         frog_rect = frog_rect.move(speed)
-        gameTitle = pygame.font.Font('freesansbold.ttf', 60)
+        gameTitle = pygame.font.Font('freesansbold.ttf', 80)
         TextSurf, TextRect = text_objects("Frogger", gameTitle)
         TextRect.center = (400, 200)
         screen.blit(TextSurf, TextRect)
 
-        if(frog_rect.left < 0) or (frog_rect.right > width):
+        pygame.draw.rect(screen,color_green,(display_width/6,2*display_height/3,display_width/6,display_height/12))
+        pygame.draw.rect(screen,color_red,((4*display_width)/6,2*display_height/3,display_width/6,display_height/12))
+
+        mouse = pygame.mouse.get_pos()
+        print(mouse)
+
+        if display_width/3 > mouse[0] > display_width/6 and (2*display_height/3)+(display_height/12) > mouse[1] > 2*display_height/3:
+            pygame.draw.rect(screen,color_lightgreen,(display_width/6,2*display_height/3,display_width/6,display_height/12))
+        if 5*display_width/6 > mouse[0] > 2*display_width/3 and (2*display_height/3)+(display_height/12) > mouse[1] > 2*display_height/3:
+            pygame.draw.rect(screen,color_lightred,((4*display_width)/6,2*display_height/3,display_width/6,display_height/12))
+
+        if(frog_rect.left < 0) or (frog_rect.right >display_width):
             speed[0] =- speed[0]
-        if (frog_rect.top < 0) or (frog_rect.bottom > height):
+        if (frog_rect.top < 0) or (frog_rect.bottom > display_height):
             speed[1] =- speed[1]
         screen.blit(frog_image, frog_rect)
         pygame.display.update()
