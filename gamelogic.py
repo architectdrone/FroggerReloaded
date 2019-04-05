@@ -28,7 +28,9 @@ def initialize(x_size, y_size):
     
     myBoard = b.Board(x_size, y_size)
     myBoard.addSubObject(frog_id, "frog", x = FROGGER_INITIAL_X, y = FROGGER_INITIAL_Y)
-    #place subobjects and lanes using a procedural generation method.
+    dangerous_lane = []
+
+    generateBasic()
 
 def frogUp():
     '''
@@ -159,19 +161,19 @@ def generateBasic():
     toPlace = random.randrange(GRASS_MIN, GRASS_MAX)
     for y in range(SIZE_Y):
         if (y == SIZE_Y-1):
-            myBoard.setLane("grass")
-        if currentlyPlacing = "g":
+            myBoard.setLane(y, "grass")
+        elif currentlyPlacing == "g":
             toPlace-=1
-            myBoard.setLane("grass")
+            myBoard.setLane(y, "grass")
             if toPlace == 0:
                 currentlyPlacing = random.choice(['s', 'r'])
                 if currentlyPlacing == 's':
                     toPlace = random.randrange(SWAMP_MIN, SWAMP_MAX)
                 elif currentlyPlacing == 'r':
                     toPlace = random.randrange(ROAD_MIN, ROAD_MAX)
-        elif currentlyPlacing = "s":
+        elif currentlyPlacing == "s":
             toPlace-=1
-            myBoard.setLane("swamp")
+            myBoard.setLane(y, "swamp")
             dangerous_lane.append(y) #Swamps are dangerous
             chooseMovingObjectLane(y, "swamp", availableMOLs)
             if toPlace == 0:
@@ -180,9 +182,9 @@ def generateBasic():
                     toPlace = random.randrange(GRASS_MIN, GRASS_MAX)
                 elif currentlyPlacing == 'r':
                     toPlace = random.randrange(ROAD_MIN, ROAD_MAX)
-        elif currentlyPlacing = "r":
+        elif currentlyPlacing == "r":
             toPlace-=1
-            myBoard.setLane("road")
+            myBoard.setLane(y, "road")
             chooseMovingObjectLane(y, "road", availableMOLs)
             if toPlace == 0:
                 currentlyPlacing = random.choice(['g', 's'])
@@ -191,7 +193,7 @@ def generateBasic():
                 elif currentlyPlacing == 's':
                     toPlace = random.randrange(SWAMP_MIN, SWAMP_MAX)
 
-def chooseMovingObjectLane(self, y, laneType, options):
+def chooseMovingObjectLane(y, laneType, options):
     '''
     Chooses a moving object lane that works with the lane from the options, and adds it to the moving object lane variable
     '''
