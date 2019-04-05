@@ -1,11 +1,12 @@
 import pygame 
 from pygame.locals import *
 import sys
+import time
 
 pygame.init()
 speed = [1, 1]
-display_width = 800
-display_height = 600
+display_width = 700
+display_height = 490
 
 color_white = (255,255,255)
 color_black = (0,0,0)
@@ -16,13 +17,15 @@ color_lightred = (255,0,0)
 color_lightgreen = (0,255,0)
 
 pygame.display.set_caption('Frogger Reloaded')
-frog_image = pygame.image.load('frog.jpg')
+frog_image = pygame.image.load('frog.png')
+background_image = pygame.image.load("s2.jpg")
 
 screen = pygame.display.set_mode((display_width, display_height))
 
 gameTitle = pygame.font.Font('freesansbold.ttf', 80)
 smallText = pygame.font.Font('freesansbold.ttf', 30)
 
+fps_clock = pygame.time.Clock()
 
 def text_objects(text, font):
     textSurface = font.render(text, True, color_black)
@@ -54,7 +57,7 @@ def game_intro():
     
     frog_rect = frog_image.get_rect()
     frames_per_sec = 100
-    fps_clock = pygame.time.Clock()
+    #fps_clock = pygame.time.Clock()
     
     while intro:        
         for event in pygame.event.get():
@@ -63,24 +66,47 @@ def game_intro():
                 pygame.quit()
                 sys.exit()
 
-        screen.fill(color_white)
+        #screen.fill(color_white)
+        screen.blit(background_image, [0,0])
         TextSurf, TextRect = text_objects("Frogger", gameTitle)
         TextRect.center = (400, 200)
         screen.blit(TextSurf, TextRect)
 
-        game_button("Start!",display_width/6,2*display_height/3,display_width/6,display_height/12,color_green,color_lightgreen,None)
+        game_button("Start!",display_width/6,2*display_height/3,display_width/6,display_height/12,color_green,color_lightgreen,game_play)
         game_button("Quit", 2*display_width/3,2*display_height/3,display_width/6,display_height/12,color_red,color_lightred,game_quit)
 
         frog_rect = frog_rect.move(speed)
         if(frog_rect.left < 0) or (frog_rect.right >display_width):
             speed[0] =- speed[0]
-        if (frog_rect.top < 0) or (frog_rect.bottom > display_height):
+        if (frog_rect.top < 0) or (frog_rect.bottom > display_height/2):
             speed[1] =- speed[1]
         screen.blit(frog_image, frog_rect)
         pygame.display.update()
         fps_clock.tick(frames_per_sec)
  
- #def game_play():
+def game_play():
+
+    run = True
+
+    while run:
+        for event in pygame.event.get():
+            print(event)
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        screen.fill(color_black)
+
+        
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_ESCAPE]:
+            run = False
+
+        pygame.display.update()
 
 
 game_intro()
+game_play()
+pygame.quit()
+quit()
