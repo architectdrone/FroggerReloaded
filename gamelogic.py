@@ -15,6 +15,8 @@ frog_id = 0 #This is the id of the frog. We must reserve just 0.
 obstacle_ids = [] #This is a list of ids representing things that are dangerous to frogger. If there is a collision with id 0 (frogger) and one of these, frogger is dead!
 platform_ids = [] #This is a list of ids representing things that are platforms.
 dangerous_lane = [] #Lanes that kill, if not on a platform.
+movingObjectLanes = [] #Lanes that produce objects. There is a specific internal structure to this list, TODO document this structure.
+isDead = False #Are we dead?
 initialize(SIZE_X, SIZE_Y)
 
 #PUBLIC FUNCTIONS
@@ -213,24 +215,6 @@ def chooseMovingObjectLane(y, laneType, options):
         "whichSegment": 0
     }
     movingObjectLanes.append(MOLEntry)
-
-def movingObjectLanes():
-    '''
-    Define lanes with moving objects
-    '''
-    movingObjectLane = {
-            'type' : type,
-            'y': y,
-            'direction': direction,
-            'speed' : speed,
-            'segment' : segment,
-            'coolDown' : coolDown,
-            'untilNext' : untilNext,
-            'entering' : entering,
-            'whichSegment' : whichSegment
-        }
-    
-    return movingObjectLane
     
 
 def update():
@@ -252,13 +236,6 @@ def update():
             if (lane['untilNext'] == 0): #If we have reach 0, the countdown has expired.
                 lane['entering'] = True #In that case we start entering mode.
                 lane['whichSegment'] = 0 #We also reset whichSegment.
-
-
-def frogCheck():
-    '''
-    Runs whenever the frog moves.
-    '''
-    pass
 
 def getFrogIntersect():
     '''
@@ -296,28 +273,35 @@ def getInteractions():
     interactions = list(dict.fromkeys(interactions)) #Remove duplicates
     return interactions
 
-def getLifeStatus():
+def frogCheck():
     '''
-    @return True if the frog is still alive, false otherwise.
+    Do all checks. Sees if we are dead, and sets the frog's velocity based off of the platform that he is (or isn't) on.
     '''
+    global isDead
+    dead = False
 
-    #Subobject Testing
+    #Subobject Testing - Test to see if we have collided with an obstacle
     interactions = getInteractions()
-    for i in obstacle_ids:
-        if i in interactions:
-            return False
-    
-    #Lane testing
-    frog_y = myBoard.getSubObject(frog_id)['y'] #The y coordinate of frogger
-    if frog_y in dangerous_lane: #If frogger is in a dangerous lane, check if we are on a plaform.
-        dead = True
-        for i in platform_ids:
-            if i in interactions:
-                dead = False
-                break
-        if dead:
-            return False
+    for i in interactions:
+        if i in obstacle_ids:
+            dead = True
 
+    
+    #Lane testing --Test to see if we are on a dangerous lane. If we are, test to see if we are on a platform. If we are, set froggers velocity to be the velocity of the platform.
+    frog_y = myBoard.getSubObject(frog_id)['y'] #The y coordinate of frogger
+    myBoard.editSubObject(frog_id, velocity=(0,0)) #Pre set the velocity to 0.
+    if frog_y in dangerous_lane: #If frogger is in a dangerous lane, check if we are on a plaform.
+        laneDead = True
+        for i in platform_ids:
+            if i in interactions: #If we are standing on a platform...
+                laneDead = False
+                platformVelocity = myBoard.getSubObject(i)['velocity'] #Get the velocity of the platform.
+                myBoard.editSubObject(frog_id, velocity=platformVelocity) #Set our velocity to the velocity of the platform.
+                break
+        if laneDead:
+            dead = True
+
+    isDead = dead
 def attach():
     '''
     If frog intersects with a log frog can attach, return True if attached
