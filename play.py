@@ -4,8 +4,8 @@ import sys
 
 pygame.init()
 speed = [1, 1]
-display_width = 800
-display_height = 600
+display_width = 700
+display_height = 490
 
 color_white = (255,255,255)
 color_black = (0,0,0)
@@ -16,7 +16,8 @@ color_lightred = (255,0,0)
 color_lightgreen = (0,255,0)
 
 pygame.display.set_caption('Frogger Reloaded')
-frog_image = pygame.image.load('frog.jpg')
+frog_image = pygame.image.load('frog.png')
+background_image = pygame.image.load("s2.jpg")
 
 screen = pygame.display.set_mode((display_width, display_height))
 
@@ -63,7 +64,8 @@ def game_intro():
                 pygame.quit()
                 sys.exit()
 
-        screen.fill(color_white)
+        #screen.fill(color_white)
+        screen.blit(background_image, [0,0])
         TextSurf, TextRect = text_objects("Frogger", gameTitle)
         TextRect.center = (400, 200)
         screen.blit(TextSurf, TextRect)
@@ -74,7 +76,7 @@ def game_intro():
         frog_rect = frog_rect.move(speed)
         if(frog_rect.left < 0) or (frog_rect.right >display_width):
             speed[0] =- speed[0]
-        if (frog_rect.top < 0) or (frog_rect.bottom > display_height):
+        if (frog_rect.top < 0) or (frog_rect.bottom > display_height/2):
             speed[1] =- speed[1]
         screen.blit(frog_image, frog_rect)
         pygame.display.update()
@@ -84,3 +86,4 @@ def game_intro():
 
 
 game_intro()
+quit()
