@@ -39,7 +39,10 @@ def initialize():
 
 def update():
     '''
-    Updates board, moving subobjects in the lane, and the frog.
+    -Moves subobjects.
+    -Checks if frog is still alive.
+    -Move frog if on platform.
+    -Causes new moving objects to enter lanes
     '''
     global myBoard,next_id, SIZE_X
     
