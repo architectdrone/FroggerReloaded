@@ -37,6 +37,47 @@ def initialize():
 
     generateBasic() #Runs the board generator.
 
+def update():
+    '''
+    Updates board, moving subobjects in the lane, and the frog.
+    '''
+    global myBoard,next_id, SIZE_X
+    
+    #Do a frog check.
+    frogCheck()
+
+    #Board-level update
+    myBoard.update()
+
+    #Causing objects to enter.
+    for lane in movingObjectLanes: #Check each moving object lane.
+        if lane['entering']: #If we are in the entering state.
+            #Since the velocity and the position are based off of the direction, we compute them here. If the object is moving left, it has a positive velocity, if not, negative.
+            velocityX = 0
+            positionX = 0
+            if lane['direction'] == "right":
+                velocityX = lane['speed']
+                positionX = 0
+            elif lane['direction'] == "left":
+                velocityX = -1*lane['speed']
+
+                positionX = SIZE_X-1
+            
+            
+            myBoard.addSubObject(next_id, lane['type'], y=lane['y'], segment=lane['segments'][lane['whichSegment']], direction=lane['direction'],velocity = (velocityX, 0),x = positionX)
+
+            lane['whichSegment']+=1
+            next_id+=1 #Increment the next_id, as we should everytime we create a subobject.
+            if (lane['whichSegment'] > len((lane['segments'])-1)): #Now we test to make sure that we haven't run out of segments. This is determined by the segment that we are on, according to whichSegment, and the length of list of segments.
+                lane['entering'] = False #If we have, entering mode ends.
+                lane['untilNext'] = lane['coolDown'] #We also reset the cooldown.
+                
+        else: #If we are not in the entering state.
+            lane['untilNext'] -= 1 #We count down by one.
+            if (lane['untilNext'] == 0): #If we have reach 0, the countdown has expired.
+                lane['entering'] = True #In that case we start entering mode.
+                lane['whichSegment'] = 0 #We also reset whichSegment.
+
 def frogUp():
     '''
     Moves the frog up.
@@ -224,46 +265,6 @@ def chooseMovingObjectLane(y, laneType, options):
     }
     movingObjectLanes.append(MOLEntry)
     
-def update():
-    '''
-    Updates board, moving subobjects in the lane, and the frog.
-    '''
-    global myBoard,next_id, SIZE_X
-    
-    #Do a frog check.
-    frogCheck()
-
-    #Board-level update
-    myBoard.update()
-
-    #Causing objects to enter.
-    for lane in movingObjectLanes: #Check each moving object lane.
-        if lane['entering']: #If we are in the entering state.
-            #Since the velocity and the position are based off of the direction, we compute them here. If the object is moving left, it has a positive velocity, if not, negative.
-            velocityX = 0
-            positionX = 0
-            if lane['direction'] == "right":
-                velocityX = lane['speed']
-                positionX = 0
-            elif lane['direction'] == "left":
-                velocityX = -1*lane['speed']
-
-                positionX = SIZE_X-1
-            
-            
-            myBoard.addSubObject(next_id, lane['type'], y=lane['y'], segment=lane['segments'][lane['whichSegment']], direction=lane['direction'],velocity = (velocityX, 0),x = positionX)
-
-            lane['whichSegment']+=1
-            next_id+=1 #Increment the next_id, as we should everytime we create a subobject.
-            if (lane['whichSegment'] > len((lane['segments'])-1)): #Now we test to make sure that we haven't run out of segments. This is determined by the segment that we are on, according to whichSegment, and the length of list of segments.
-                lane['entering'] = False #If we have, entering mode ends.
-                lane['untilNext'] = lane['coolDown'] #We also reset the cooldown.
-                
-        else: #If we are not in the entering state.
-            lane['untilNext'] -= 1 #We count down by one.
-            if (lane['untilNext'] == 0): #If we have reach 0, the countdown has expired.
-                lane['entering'] = True #In that case we start entering mode.
-                lane['whichSegment'] = 0 #We also reset whichSegment.
 
 def getFrogIntersect():
     '''
