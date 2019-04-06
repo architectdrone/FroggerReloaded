@@ -21,7 +21,7 @@ isDead = False #Are we dead?
 #PUBLIC FUNCTIONS
 def initialize():
     '''
-    Initializes game board
+    Initializes game board. Size is determined by global variables.
     '''
     global myBoard, FROGGER_INITIAL_X, FROGGER_INITIAL_Y, frog_id, dangerous_lane
     
