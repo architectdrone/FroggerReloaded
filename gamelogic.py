@@ -229,6 +229,10 @@ def update():
     Updates board, moving subobjects in the lane, and the frog.
     '''
     global myBoard,next_id, SIZE_X
+    
+    #Do a frog check.
+    frogCheck()
+
     #Board-level update
     myBoard.update()
 
@@ -260,9 +264,6 @@ def update():
             if (lane['untilNext'] == 0): #If we have reach 0, the countdown has expired.
                 lane['entering'] = True #In that case we start entering mode.
                 lane['whichSegment'] = 0 #We also reset whichSegment.
-
-    #Do a frog check.
-    frogCheck()
 
 def getFrogIntersect():
     '''
