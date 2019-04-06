@@ -21,15 +21,21 @@ isDead = False #Are we dead?
 #PUBLIC FUNCTIONS
 def initialize():
     '''
-    Initializes game board. Size is determined by global variables.
+    Resets and initializes game board. Size is determined by global variables.
     '''
-    global myBoard, FROGGER_INITIAL_X, FROGGER_INITIAL_Y, frog_id, dangerous_lane
+    global myBoard, FROGGER_INITIAL_X, FROGGER_INITIAL_Y, frog_id, dangerous_lane, platform_ids, obstacle_ids, movingObjectLanes, isDead, next_id
     
     myBoard = b.Board(SIZE_X, SIZE_Y)
     myBoard.addSubObject(frog_id, "frog", x = FROGGER_INITIAL_X, y = FROGGER_INITIAL_Y, direction="up")
-    dangerous_lane = []
+    
+    dangerous_lane = [] #Clear the dangerous lanes
+    platform_ids = []
+    obstacle_ids = []
+    movingObjectLanes = []
+    isDead = False
+    next_id = 1
 
-    generateBasic()
+    generateBasic() #Runs the board generator.
 
 def frogUp():
     '''
