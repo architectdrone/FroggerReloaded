@@ -152,7 +152,7 @@ def getXY(x, y):
 #No touchy
 def generateBasic():
     '''
-    Generates a basic game board. This game board has clusters of roads and swamps. Roads produce cars, swamps produce logs.
+    Generates a basic game board. This game board has clusters of roads and swamps. Roads and swamps have moving object lanes associated with them.
     '''
     #Some parameters. Since there should be clusters, what shout the minimum and maximum sizes of said clusters be?
     global myBoard, dangerous_lane, SIZE_Y
@@ -268,7 +268,6 @@ def chooseMovingObjectLane(y, laneType, options):
     }
     movingObjectLanes.append(MOLEntry)
     
-
 def getFrogIntersect():
     '''
     @return The list of all things that intersect with the frog
