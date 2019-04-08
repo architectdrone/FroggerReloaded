@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import sys
 import time
+import gamelogic as g
 
 pygame.init()
 speed = [1, 1]
@@ -22,6 +23,7 @@ background_image = pygame.image.load("s2.jpg")
 grass_image = pygame.image.load('grass.png')
 road_image = pygame.image.load('road.png')
 water_image = pygame.image.load('water.png')
+frogger_image = pygame.image.load('frogger.png')
 
 screen = pygame.display.set_mode((display_width, display_height))
 
@@ -96,6 +98,10 @@ def road(x,y):
 
 def water(x,y):
     screen.blit(water_image, (x,y))
+
+def frogger(x,y):
+    # frogger.png (51 x 36)
+    screen.blit(frogger_image, (x,y))
  
 def game_play():
 
@@ -122,7 +128,21 @@ def game_play():
         for i in range(9):
             water(i*79, display_height-(80*4))
 
+        frogger((display_width/2)-25, display_height - 60)
+        
+
         keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_UP]:
+            g.frogUp
+        elif keys[pygame.K_DOWN]:
+            g.frogDown
+        elif keys[pygame.K_LEFT]:
+            g.frogLeft
+        elif keys[pygame.K_RIGHT]:
+            g.frogRight        
+
+
         if keys[pygame.K_ESCAPE]:
             run = False
 
