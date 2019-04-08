@@ -19,6 +19,9 @@ color_lightgreen = (0,255,0)
 pygame.display.set_caption('Frogger Reloaded')
 frog_image = pygame.image.load('frog.png')
 background_image = pygame.image.load("s2.jpg")
+grass_image = pygame.image.load('grass.png')
+road_image = pygame.image.load('road.png')
+water_image = pygame.image.load('water.png')
 
 screen = pygame.display.set_mode((display_width, display_height))
 
@@ -83,6 +86,16 @@ def game_intro():
         screen.blit(frog_image, frog_rect)
         pygame.display.update()
         fps_clock.tick(frames_per_sec)
+
+# Helper functions for displaying different images
+def grass(x,y):
+    screen.blit(grass_image, (x,y))
+
+def road(x,y):
+    screen.blit(road_image, (x,y))
+
+def water(x,y):
+    screen.blit(water_image, (x,y))
  
 def game_play():
 
@@ -97,7 +110,17 @@ def game_play():
 
         screen.fill(color_black)
 
-        
+        for i in range(9):
+            grass(i*79,0)
+            grass(i*79,display_height-83)
+            grass(i*79, display_height-(83*3))
+
+        for i in range(9):
+            road(i*83, display_height-(83*2))
+            road(i*83, display_height-(81*5))
+
+        for i in range(9):
+            water(i*79, display_height-(80*4))
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_ESCAPE]:
