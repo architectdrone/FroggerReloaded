@@ -24,6 +24,7 @@ grass_image = pygame.image.load('grass.png')
 road_image = pygame.image.load('road.png')
 water_image = pygame.image.load('water.png')
 frogger_image = pygame.image.load('frogger.png')
+blue_car = pygame.image.load('blue_car.png')
 
 screen = pygame.display.set_mode((display_width, display_height))
 
@@ -102,6 +103,9 @@ def water(x,y):
 def frogger(x,y):
     # frogger.png (51 x 36)
     screen.blit(frogger_image, (x,y))
+
+def blueCar(x,y):
+    screen.blit(blue_car, (x,y))
  
 def game_play():
 
@@ -129,7 +133,6 @@ def game_play():
             water(i*79, display_height-(80*4))
 
         frogger((display_width/2)-25, display_height - 60)
-        
 
         keys = pygame.key.get_pressed()
 
