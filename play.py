@@ -240,7 +240,7 @@ def game_play():
         #Update, if needed
         updateCounter-=1
         if updateCounter == 0:
-            #g.update()
+            g.update()
             updateCounter = betweenUpdates
         
         #Are we dead?
