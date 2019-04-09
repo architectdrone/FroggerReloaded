@@ -83,9 +83,6 @@ smallText = pygame.font.Font('freesansbold.ttf', 30)
 #Initializes the clock
 fps_clock = pygame.time.Clock()
 
-#Begin the game
-game_intro()
-
 #HELPER FUNCTIONS
 #Menu Helper Functions
 def text_objects(text, font):
@@ -258,7 +255,7 @@ def game_quit():
     pygame.quit()
     quit()
  
-
-
+#Begin the game
+game_intro()
 
 
