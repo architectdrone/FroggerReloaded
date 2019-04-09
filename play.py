@@ -167,23 +167,19 @@ def display():
 
             numberSprites = len(segments)
             imagesToDisplay = []
+            if lane == 'grass':
+                imagesToDisplay.append(grass_image)
+            elif lane == 'road':
+                imagesToDisplay.append(road_image)
+            if lane == 'swamp': #Make sure this is right...
+                imagesToDisplay.append(water_image)
+            
             for i in range(numberSprites):
                 imagesToDisplay.append(getSprite(types[i], segments[i], directions[i]))
-            
-            if (tile_y == 1 or tile_y == 4):
-                screen.blit(road_image, (tile_x*79,tile_y*79))
-            elif (tile_y == 0 or tile_y == 3 or tile_y == 5):
-                screen.blit(grass_image,(tile_x*79,tile_y*79))
-            elif (tile_y == 2):
-                screen.blit(water_image,(tile_x*79,tile_y*79))
-            
-         
 
-            #Extract the sprites to be displayed
-            #Determine precedance of sprites
-            #Put it at the correct X and Y (on the screen)
-        
-
+            for i in imagesToDisplay:
+                drawSprite(i, tile_x, tile_y)
+            
 # Retrieves images based on given properties
 def getSprite(type, seg, dir):
     '''
