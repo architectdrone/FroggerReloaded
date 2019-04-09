@@ -81,6 +81,7 @@ def update():
                 lane['entering'] = True #In that case we start entering mode.
                 lane['whichSegment'] = 0 #We also reset whichSegment.
 
+    myBoard.printAllSubObjects()
 def frogUp():
     '''
     Moves the frog up.

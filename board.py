@@ -122,6 +122,11 @@ class Board():
         '''
         self.collisionsSinceLastUpdate = []
 
+    def printAllSubObjects(self):
+        print("----Here's all of the subobjects!----")
+        for i in self.subObjects:
+            print(f"{i['id']}: TYPE = {i['type']} SEGMENT = {i['segment']} X = {i['x']} Y = {i['y']} VELOCITY = {i['velocity']}")
+
     #SubObjects
     def addSubObject(self, id, type, x = 0, y = 0, segment = "na", direction = "na", velocity = (0, 0)):
         '''
