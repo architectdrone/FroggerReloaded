@@ -6,8 +6,10 @@ import gamelogic as g
 
 pygame.init()
 speed = [1, 1]
-display_width = 9*79
-display_height = 6*79
+X_SIZE = 9
+Y_SIZE = 6
+display_width = X_SIZE*79
+display_height = Y_SIZE*79
 
 color_white = (255,255,255)
 color_black = (0,0,0)
@@ -106,7 +108,40 @@ def frogger(x,y):
 
 def blueCar(x,y):
     screen.blit(blue_car, (x,y))
- 
+
+def display():
+    '''
+    Update the window according to what gamelogic tells us.
+    '''
+    #TODO define X_SIZE and Y_SIZE
+    for tile_x in range(X_SIZE):
+        for tile_y in range(Y_SIZE):
+            atXY = g.getXY(tile_x, tile_y)
+
+            segments = atXY['segment']
+            types = atXY['type']
+            directions = atXY['direction']
+            lane = atXY['lane']
+
+            numberSprites = len(segments)
+            imagesToDisplay = []
+            for i in range(numberSprites):
+                imagesToDisplay.append(getSprite(types[i], segments[i], directions[i]))
+            
+            if (tile_y == 1 or tile_y == 4):
+                screen.blit(road_image, (tile_x*79,tile_y*79))
+            elif (tile_y == 0 or tile_y == 3 or tile_y == 5):
+                screen.blit(grass_image,(tile_x*79,tile_y*79))
+            elif (tile_y == 2):
+                screen.blit(water_image,(tile_x*79,tile_y*79))
+            
+         
+
+            #Extract the sprites to be displayed
+            #Determine precedance of sprites
+            #Put it at the correct X and Y (on the screen)
+        
+
 def game_play():
 
     run = True
