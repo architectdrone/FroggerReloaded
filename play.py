@@ -33,6 +33,8 @@ smallText = pygame.font.Font('freesansbold.ttf', 30)
 
 fps_clock = pygame.time.Clock()
 
+#HELPER FUNCTIONS
+#Menu Helper Functions
 def text_objects(text, font):
     textSurface = font.render(text, True, color_black)
     return textSurface, textSurface.get_rect()
@@ -52,10 +54,6 @@ def game_button(msg,x,y,w,h,c,l,action=None):
     buttonSurf, buttonRect = text_objects(msg, smallText)
     buttonRect.center = (x+w/2, y+h/2)
     screen.blit(buttonSurf, buttonRect)
-
-def game_quit():
-    pygame.quit()
-    quit()
 
 def game_intro():
 
@@ -90,49 +88,27 @@ def game_intro():
         pygame.display.update()
         fps_clock.tick(frames_per_sec)
 
-# Helper functions for displaying different images
-def grass(x,y):
-    screen.blit(grass_image, (x,y))
-
-def road(x,y):
-    screen.blit(road_image, (x,y))
-
-def water(x,y):
-    screen.blit(water_image, (x,y))
-
-def frogger(x,y):
-    # frogger.png (51 x 36)
-    screen.blit(frogger_image, (x,y))
-
-def blueCar(x,y):
-    screen.blit(blue_car, (x,y))
+#Generl Helper Functions
+def game_quit():
+    pygame.quit()
+    quit()
  
 def game_play():
 
     run = True
+    g.initialize()
 
     while run:
+        #Get events
         for event in pygame.event.get():
             print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
-        screen.fill(color_black)
+        screen.fill(color_black) #Reset the screen
 
-        for i in range(9):
-            grass(i*79,0)
-            grass(i*79,display_height-79)
-            grass(i*79, display_height-(79*3))
-
-        for i in range(9):
-            road(i*79, display_height-(79*2))
-            road(i*79, display_height-(79*5))
-
-        for i in range(10):
-            water(i*78, display_height-(79*4))
-
-        frogger((display_width/2)-25, display_height - 60)
+        display() #Update the game frame
 
         keys = pygame.key.get_pressed()
 
