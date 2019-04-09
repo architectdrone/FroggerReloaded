@@ -6,8 +6,8 @@ import gamelogic as g
 
 pygame.init()
 speed = [1, 1]
-display_width = 700
-display_height = 490
+display_width = 9*79
+display_height = 6*79
 
 color_white = (255,255,255)
 color_black = (0,0,0)
@@ -122,15 +122,15 @@ def game_play():
 
         for i in range(9):
             grass(i*79,0)
-            grass(i*79,display_height-83)
-            grass(i*79, display_height-(83*3))
+            grass(i*79,display_height-79)
+            grass(i*79, display_height-(79*3))
 
         for i in range(9):
-            road(i*83, display_height-(83*2))
-            road(i*83, display_height-(81*5))
+            road(i*79, display_height-(79*2))
+            road(i*79, display_height-(79*5))
 
-        for i in range(9):
-            water(i*79, display_height-(80*4))
+        for i in range(10):
+            water(i*78, display_height-(79*4))
 
         frogger((display_width/2)-25, display_height - 60)
 
