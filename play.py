@@ -22,6 +22,7 @@ color_green = (0,200,0)
 color_lightred = (255,0,0)
 color_lightgreen = (0,255,0)
 
+#Load images
 pygame.display.set_caption('Frogger Reloaded')
 frog_image = pygame.image.load('frog.png')
 background_image = pygame.image.load("s2.jpg")
@@ -72,12 +73,18 @@ imageDict = {
     'log_back_right': log_back_right
 }
 
+#Makes the screen
 screen = pygame.display.set_mode((display_width, display_height))
 
+#Sets the fonts for the menu
 gameTitle = pygame.font.Font('freesansbold.ttf', 80)
 smallText = pygame.font.Font('freesansbold.ttf', 30)
 
+#Initializes the clock
 fps_clock = pygame.time.Clock()
+
+#Begin the game
+game_intro()
 
 #HELPER FUNCTIONS
 #Menu Helper Functions
@@ -150,7 +157,7 @@ def game_intro():
         pygame.display.update()
         fps_clock.tick(frames_per_sec)
 
-
+#Game Frame Helper Functions
 def display():
     '''
     Update the window according to what gamelogic tells us.
@@ -176,21 +183,13 @@ def display():
             
             for i in imagesToDisplay:
                 drawSprite(i, tile_x, tile_y)
-            
-         
-
-            #Extract the sprites to be displayed
-            #Determine precedance of sprites
-            #Put it at the correct X and Y (on the screen)
         
 def drawSprite(image,tile_x,tile_y):
     screen.blit(image,(tile_x*79,(Y_SIZE-tile_y)*79))
-
-
-            
-            
+           
 # Retrieves images based on given properties
 def getSprite(type, seg, dir):
+
     '''
     Get the image associated with the parameters
     @param type The type of the sprite.
@@ -200,15 +199,7 @@ def getSprite(type, seg, dir):
     global imageDict
     image = imageDict[type+'_'+seg+'_'+dir]
     return image
-    
-#Generl Helper Functions
-def game_quit(): 
-    '''
-    Quits the game
-    '''
-    pygame.quit()
-    quit()
- 
+
 def game_play():
     '''
     The game frame itself
@@ -260,8 +251,15 @@ def game_play():
         #Update the screen using pygame methods
         pygame.display.update()
 
+#Generl Helper Functions
+def game_quit(): 
+    '''
+    Quits the game
+    '''
+    pygame.quit()
+    quit()
+ 
 
-game_intro()
-game_play()
-pygame.quit()
-quit()
+
+
+
