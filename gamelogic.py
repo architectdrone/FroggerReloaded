@@ -279,7 +279,7 @@ def chooseMovingObjectLane(y, laneType, options):
     '''
     global movingObjectLanes
 
-    availableMOLs = [i for i in options if options['lane'] == laneType] #All MOLs that fit in with the current laneType
+    availableMOLs = [i for i in options if i['lane'] == laneType] #All MOLs that fit in with the current laneType
     currentMOL = random.choice(availableMOLs) #The chosen MOL
     MOLEntry = {
         "y": y,
