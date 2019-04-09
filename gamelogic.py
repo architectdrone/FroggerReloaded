@@ -219,7 +219,7 @@ def generateBasic():
             "type": "log",
             "directions": ["right"],
             "visableDirection": True,
-            "segments": ['left', 'right'],
+            "segments": ['front', 'back'],
             "speed": 1,
             "cooldown": 3,
             "lane": "swamp"
