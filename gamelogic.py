@@ -202,8 +202,8 @@ def generateBasic():
             "directions": ["left", "right"],
             "visableDirection": True,
             "segments": ['front', 'middle','back'],
-            "speed": 4,
-            "cooldown": 5,
+            "speed": 2,
+            "cooldown": 3,
             "lane": "road"
         },
         {
@@ -211,8 +211,8 @@ def generateBasic():
             "directions": ["left", "right"],
             "visableDirection": True,
             "segments": ['front','back'],
-            "speed": 4,
-            "cooldown": 5,
+            "speed": 3,
+            "cooldown": 4,
             "lane": "road"
         },
         {
