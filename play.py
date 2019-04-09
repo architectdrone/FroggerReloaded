@@ -80,10 +80,24 @@ fps_clock = pygame.time.Clock()
 #HELPER FUNCTIONS
 #Menu Helper Functions
 def text_objects(text, font):
+    '''
+    @return A text object
+    '''
     textSurface = font.render(text, True, color_black)
     return textSurface, textSurface.get_rect()
 
 def game_button(msg,x,y,w,h,c,l,action=None):
+    '''
+    Display a button to the screen
+    @param msg The message to print
+    @param x The x coordinate
+    @param y The y coordinate
+    @param w The width
+    @param h The height
+    @param c The color of the button
+    @param l The color after hovering
+    @param action A function to be execute upon pressing the button
+    '''
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
     #print(mouse)
@@ -100,7 +114,9 @@ def game_button(msg,x,y,w,h,c,l,action=None):
     screen.blit(buttonSurf, buttonRect)
 
 def game_intro():
-
+    '''
+    Shows the initial game menu
+    '''
     intro = True
     
     frog_rect = frog_image.get_rect()
@@ -134,16 +150,28 @@ def game_intro():
 
 # Retrieves images based on given properties
 def getSprite(type, seg, dir):
+    '''
+    Get the image associated with the parameters
+    @param type The type of the sprite.
+    @param seg The segment of the image (can be front, middle, back, or na)
+    @param dir The direction of the image (can be left, right, na)
+    '''
     global imageDict
     image = imageDict[type+'_'+seg+'_'+dir]
     return image
     
 #Generl Helper Functions
-def game_quit():
+def game_quit(): 
+    '''
+    Quits the game
+    '''
     pygame.quit()
     quit()
  
 def game_play():
+    '''
+    The game frame itself
+    '''
     global betweenUpdates
 
     run = True
