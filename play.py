@@ -161,7 +161,7 @@ def display():
     '''
     #TODO define X_SIZE and Y_SIZE
     for tile_x in range(X_SIZE):
-        for tile_y in range(Y_SIZE+1):
+        for tile_y in range(Y_SIZE):
             atXY = g.getXY(tile_x, tile_y)
 
             segments = atXY['segment']

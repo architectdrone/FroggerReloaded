@@ -5,8 +5,8 @@ import random
 #PUBLIC GLOBALS
 FROGGER_INITIAL_X = 0
 FROGGER_INITIAL_Y = 0
-SIZE_X = 6
-SIZE_Y = 9
+SIZE_X = 9
+SIZE_Y = 6
 
 #PRIVATE GLOBALS
 myBoard = b.Board(1, 1)
