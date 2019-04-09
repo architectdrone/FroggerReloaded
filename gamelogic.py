@@ -327,7 +327,7 @@ def getInteractions():
     if len(collisions) != 0: #If there is more than one element
         interactions.append(list(getFrogCollisions()[0])) #We then append everything that has collided with the frog. Now, we know that this is formatted as a list of tuples, but there should only be one element in this list
     #Otherwise, nothing collides with ya boi frogger
-    interactions = list(dict.fromkeys(interactions)) #Remove duplicates
+    #interactions = list(dict.fromkeys(interactions)) #Remove duplicates
     return interactions
 
 def frogCheck():
