@@ -169,7 +169,6 @@ def display():
             directions = atXY['direction']
             lane = atXY['lane']
 
-            numberSprites = len(segments)
             imagesToDisplay = []
             if lane == 'grass':
                 imagesToDisplay.append(grass_image)
@@ -177,6 +176,10 @@ def display():
                 imagesToDisplay.append(road_image)
             if lane == 'swamp': #Make sure this is right...
                 imagesToDisplay.append(water_image)
+            
+            if segments is not None:
+                for i in range(len(segments)-1):
+                    imagesToDisplay.append(getSprite(types[i], segments[i], directions[i]))
             
             for i in imagesToDisplay:
                 drawSprite(i, tile_x, tile_y)
