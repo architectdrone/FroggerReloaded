@@ -171,11 +171,11 @@ def display():
                 imagesToDisplay.append(getSprite(types[i], segments[i], directions[i]))
             
             if (tile_y == 1 or tile_y == 4):
-                screen.blit(road_image, (tile_x*79,tile_y*79))
+                drawSprite(road_image,tile_x,tile_y)
             elif (tile_y == 0 or tile_y == 3 or tile_y == 5):
-                screen.blit(grass_image,(tile_x*79,tile_y*79))
+                drawSprite(grass_image,tile_x,tile_y)
             elif (tile_y == 2):
-                screen.blit(water_image,(tile_x*79,tile_y*79))
+                drawSprite(water_image,tile_x,tile_y)
             
          
 
@@ -183,6 +183,8 @@ def display():
             #Determine precedance of sprites
             #Put it at the correct X and Y (on the screen)
         
+def drawSprite(image,tile_x,tile_y):
+    screen.blit(image,(tile_x*79,(Y_SIZE-tile_y)*79))
 
 # Retrieves images based on given properties
 def getSprite(type, seg, dir):
