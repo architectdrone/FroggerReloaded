@@ -178,22 +178,48 @@ def generateBasic():
         }
     ]
     '''
-    #All this is mostly just for example
     availableMOLs = [
         {
-            "type": "car",
+            "type": "blueCar",
             "directions": ["left", "right"],
             "visableDirection": True,
             "segments": ['na'],
-            "speed": 3,
+            "speed": 4,
+            "cooldown": 5,
+            "lane": "road"
+        },
+        {
+            "type": "greenCar",
+            "directions": ["left", "right"],
+            "visableDirection": True,
+            "segments": ['na'],
+            "speed": 4,
+            "cooldown": 5,
+            "lane": "road"
+        },
+        {
+            "type": "truck",
+            "directions": ["left", "right"],
+            "visableDirection": True,
+            "segments": ['front', 'middle','back'],
+            "speed": 4,
+            "cooldown": 5,
+            "lane": "road"
+        },
+        {
+            "type": "fireTruck",
+            "directions": ["left", "right"],
+            "visableDirection": True,
+            "segments": ['front','back'],
+            "speed": 4,
             "cooldown": 5,
             "lane": "road"
         },
         {
             "type": "log",
-            "directions": ["left"],
+            "directions": ["right"],
             "visableDirection": True,
-            "segments": ['na'],
+            "segments": ['left', 'right'],
             "speed": 1,
             "cooldown": 3,
             "lane": "swamp"
