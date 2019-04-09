@@ -137,14 +137,13 @@ def game_play():
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_UP]:
-            g.frogUp
+            g.frogUp()
         elif keys[pygame.K_DOWN]:
-            g.frogDown
+            g.frogDown()
         elif keys[pygame.K_LEFT]:
-            g.frogLeft
+            g.frogLeft()
         elif keys[pygame.K_RIGHT]:
-            g.frogRight        
-
+            g.frogRight()
 
         if keys[pygame.K_ESCAPE]:
             run = False
