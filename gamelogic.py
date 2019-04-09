@@ -5,8 +5,8 @@ import random
 #PUBLIC GLOBALS
 FROGGER_INITIAL_X = 0
 FROGGER_INITIAL_Y = 0
-SIZE_X = 10
-SIZE_Y = 10
+SIZE_X = 6
+SIZE_Y = 9
 
 #PRIVATE GLOBALS
 myBoard = b.Board(1, 1)
@@ -21,15 +21,65 @@ isDead = False #Are we dead?
 #PUBLIC FUNCTIONS
 def initialize():
     '''
-    Initializes game board. Size is determined by global variables.
+    Resets and initializes game board. Size is determined by global variables.
     '''
-    global myBoard, FROGGER_INITIAL_X, FROGGER_INITIAL_Y, frog_id, dangerous_lane
+    global myBoard, FROGGER_INITIAL_X, FROGGER_INITIAL_Y, frog_id, dangerous_lane, platform_ids, obstacle_ids, movingObjectLanes, isDead, next_id
     
     myBoard = b.Board(SIZE_X, SIZE_Y)
     myBoard.addSubObject(frog_id, "frog", x = FROGGER_INITIAL_X, y = FROGGER_INITIAL_Y, direction="up")
-    dangerous_lane = []
+    
+    dangerous_lane = [] #Clear the dangerous lanes
+    platform_ids = []
+    obstacle_ids = []
+    movingObjectLanes = []
+    isDead = False
+    next_id = 1
 
-    generateBasic()
+    generateBasic() #Runs the board generator.
+
+def update():
+    '''
+    -Moves subobjects.
+    -Checks if frog is still alive.
+    -Move frog if on platform.
+    -Causes new moving objects to enter lanes
+    '''
+    global myBoard,next_id, SIZE_X
+    
+    #Do a frog check.
+    frogCheck()
+
+    #Board-level update
+    myBoard.update()
+
+    #Causing objects to enter.
+    for lane in movingObjectLanes: #Check each moving object lane.
+        if lane['entering']: #If we are in the entering state.
+            #Since the velocity and the position are based off of the direction, we compute them here. If the object is moving left, it has a positive velocity, if not, negative.
+            velocityX = 0
+            positionX = 0
+            if lane['direction'] == "right":
+                velocityX = lane['speed']
+                positionX = 0
+            elif lane['direction'] == "left":
+                velocityX = -1*lane['speed']
+
+                positionX = SIZE_X-1
+            
+            
+            myBoard.addSubObject(next_id, lane['type'], y=lane['y'], segment=lane['segments'][lane['whichSegment']], direction=lane['direction'],velocity = (velocityX, 0),x = positionX)
+
+            lane['whichSegment']+=1
+            next_id+=1 #Increment the next_id, as we should everytime we create a subobject.
+            if (lane['whichSegment'] > len((lane['segments'])-1)): #Now we test to make sure that we haven't run out of segments. This is determined by the segment that we are on, according to whichSegment, and the length of list of segments.
+                lane['entering'] = False #If we have, entering mode ends.
+                lane['untilNext'] = lane['coolDown'] #We also reset the cooldown.
+                
+        else: #If we are not in the entering state.
+            lane['untilNext'] -= 1 #We count down by one.
+            if (lane['untilNext'] == 0): #If we have reach 0, the countdown has expired.
+                lane['entering'] = True #In that case we start entering mode.
+                lane['whichSegment'] = 0 #We also reset whichSegment.
 
 def frogUp():
     '''
@@ -102,7 +152,7 @@ def getXY(x, y):
 #No touchy
 def generateBasic():
     '''
-    Generates a basic game board. This game board has clusters of roads and swamps. Roads produce cars, swamps produce logs.
+    Generates a basic game board. This game board has clusters of roads and swamps. Roads and swamps have moving object lanes associated with them.
     '''
     #Some parameters. Since there should be clusters, what shout the minimum and maximum sizes of said clusters be?
     global myBoard, dangerous_lane, SIZE_Y
@@ -128,22 +178,48 @@ def generateBasic():
         }
     ]
     '''
-    #All this is mostly just for example
     availableMOLs = [
         {
-            "type": "car",
+            "type": "blueCar",
             "directions": ["left", "right"],
             "visableDirection": True,
             "segments": ['na'],
-            "speed": 3,
+            "speed": 4,
             "cooldown": 5,
             "lane": "road"
         },
         {
-            "type": "log",
-            "directions": ["left"],
+            "type": "greenCar",
+            "directions": ["left", "right"],
             "visableDirection": True,
             "segments": ['na'],
+            "speed": 4,
+            "cooldown": 5,
+            "lane": "road"
+        },
+        {
+            "type": "truck",
+            "directions": ["left", "right"],
+            "visableDirection": True,
+            "segments": ['front', 'middle','back'],
+            "speed": 2,
+            "cooldown": 3,
+            "lane": "road"
+        },
+        {
+            "type": "fireTruck",
+            "directions": ["left", "right"],
+            "visableDirection": True,
+            "segments": ['front','back'],
+            "speed": 3,
+            "cooldown": 4,
+            "lane": "road"
+        },
+        {
+            "type": "log",
+            "directions": ["right"],
+            "visableDirection": True,
+            "segments": ['left', 'right'],
             "speed": 1,
             "cooldown": 3,
             "lane": "swamp"
@@ -203,7 +279,7 @@ def chooseMovingObjectLane(y, laneType, options):
     '''
     global movingObjectLanes
 
-    availableMOLs = [i for i in options if options['lane'] == laneType] #All MOLs that fit in with the current laneType
+    availableMOLs = [i for i in options if i['lane'] == laneType] #All MOLs that fit in with the current laneType
     currentMOL = random.choice(availableMOLs) #The chosen MOL
     MOLEntry = {
         "y": y,
@@ -218,46 +294,6 @@ def chooseMovingObjectLane(y, laneType, options):
     }
     movingObjectLanes.append(MOLEntry)
     
-def update():
-    '''
-    Updates board, moving subobjects in the lane, and the frog.
-    '''
-    global myBoard,next_id, SIZE_X
-    #Board-level update
-    myBoard.update()
-
-    #Causing objects to enter.
-    for lane in movingObjectLanes: #Check each moving object lane.
-        if lane['entering']: #If we are in the entering state.
-            #Since the velocity and the position are based off of the direction, we compute them here. If the object is moving left, it has a positive velocity, if not, negative.
-            velocityX = 0
-            positionX = 0
-            if lane['direction'] == "right":
-                velocityX = lane['speed']
-                positionX = 0
-            elif lane['direction'] == "left":
-                velocityX = -1*lane['speed']
-
-                positionX = SIZE_X-1
-            
-            
-            myBoard.addSubObject(next_id, lane['type'], y=lane['y'], segment=lane['segments'][lane['whichSegment']], direction=lane['direction'],velocity = (velocityX, 0),x = positionX)
-
-            lane['whichSegment']+=1
-            next_id+=1 #Increment the next_id, as we should everytime we create a subobject.
-            if (lane['whichSegment'] > len((lane['segments'])-1)): #Now we test to make sure that we haven't run out of segments. This is determined by the segment that we are on, according to whichSegment, and the length of list of segments.
-                lane['entering'] = False #If we have, entering mode ends.
-                lane['untilNext'] = lane['coolDown'] #We also reset the cooldown.
-                
-        else: #If we are not in the entering state.
-            lane['untilNext'] -= 1 #We count down by one.
-            if (lane['untilNext'] == 0): #If we have reach 0, the countdown has expired.
-                lane['entering'] = True #In that case we start entering mode.
-                lane['whichSegment'] = 0 #We also reset whichSegment.
-
-    #Do a frog check.
-    frogCheck()
-
 def getFrogIntersect():
     '''
     @return The list of all things that intersect with the frog

@@ -9,11 +9,14 @@ speed = [1, 1]
 display_width = 9*79
 display_height = 6*79
 
+#Game Speed
+betweenUpdates = 30
+
+#Colors
 color_white = (255,255,255)
 color_black = (0,0,0)
 color_red = (200,0,0)
 color_green = (0,200,0) 
-
 color_lightred = (255,0,0)
 color_lightgreen = (0,255,0)
 
@@ -74,6 +77,8 @@ smallText = pygame.font.Font('freesansbold.ttf', 30)
 
 fps_clock = pygame.time.Clock()
 
+#HELPER FUNCTIONS
+#Menu Helper Functions
 def text_objects(text, font):
     textSurface = font.render(text, True, color_black)
     return textSurface, textSurface.get_rect()
@@ -93,10 +98,6 @@ def game_button(msg,x,y,w,h,c,l,action=None):
     buttonSurf, buttonRect = text_objects(msg, smallText)
     buttonRect.center = (x+w/2, y+h/2)
     screen.blit(buttonSurf, buttonRect)
-
-def game_quit():
-    pygame.quit()
-    quit()
 
 def game_intro():
 
@@ -136,54 +137,58 @@ def getSprite(type, seg, dir):
     global imageDict
     image = imageDict[type+'_'+seg+'_'+dir]
     return image
+    
+#Generl Helper Functions
+def game_quit():
+    pygame.quit()
+    quit()
  
 def game_play():
+    global betweenUpdates
 
     run = True
+    g.initialize() #Create the game board
+    updateCounter = betweenUpdates
 
     while run:
+        #Get events
         for event in pygame.event.get():
             print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
+        #Reset the screen
         screen.fill(color_black)
 
-        for i in range(9):
-            grass(i*79,0)
-            grass(i*79,display_height-79)
-            grass(i*79, display_height-(79*3))
+        #Update the game frame
+        display() 
 
-        for i in range(9):
-            road(i*79, display_height-(79*2))
-            road(i*79, display_height-(79*5))
-
-        for i in range(10):
-            water(i*79, display_height-(79*4))
-
-        frogger((display_width/2)-39, display_height - 79)
-
-        screen.blit(log_front_right, (79*4, display_height-(79*4)))
-        screen.blit(log_back_right, (79*3, display_height-(79*4)))
-
-        screen.blit(blue_car, (4*79, display_height-(79*2)))
-
+        #Handle keypresses
         keys = pygame.key.get_pressed()
-
         if keys[pygame.K_UP]:
-            g.frogUp
+            g.frogUp()
         elif keys[pygame.K_DOWN]:
-            g.frogDown
+            g.frogDown()
         elif keys[pygame.K_LEFT]:
-            g.frogLeft
+            g.frogLeft()
         elif keys[pygame.K_RIGHT]:
-            g.frogRight        
-
-
+            g.frogRight()
         if keys[pygame.K_ESCAPE]:
             run = False
 
+        #Update, if needed
+        updateCounter-=1
+        if updateCounter == 0:
+            g.update()
+            updateCounter = betweenUpdates
+        
+        #Are we dead?
+        if g.isDead:
+            #Do something, I guess? idk lol
+            game_quit()
+            
+        #Update the screen using pygame methods
         pygame.display.update()
 
 
