@@ -146,7 +146,7 @@ def game_intro():
         game_button("Quit", 2*display_width/3,2*display_height/3,display_width/6,display_height/12,color_red,color_lightred,game_quit)
 
         frog_rect = frog_rect.move(speed)
-        if(frog_rect.left < 0) or (frog_rect.right >display_width):
+        if(frog_rect.left < 0) or (frog_rect.right > display_width):
             speed[0] =- speed[0]
         if (frog_rect.top < 0) or (frog_rect.bottom > display_height/2):
             speed[1] =- speed[1]
@@ -240,7 +240,7 @@ def game_play():
         #Update, if needed
         updateCounter-=1
         if updateCounter == 0:
-            g.update()
+            #g.update()
             updateCounter = betweenUpdates
         
         #Are we dead?
