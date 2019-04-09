@@ -154,6 +154,7 @@ class Board():
         '''
 
         #There may be a cleaner way to do this, but I don't care enough to find out.
+        print(self.subObjects)
         results = [i for i in self.subObjects if i['id'] == id]
         assert len(results) != 0, f"The id {id} could not be found."
         return results[0]
@@ -205,51 +206,66 @@ class Board():
         '''
         Update positions based off of velocity
         '''
-
         particles = [{"id":i['id'],"current_x":i['x'], "current_y":i['y'], "remaining_x_movement":i['velocity'][0], "remaining_y_movement":i['velocity'][1]} for i in self.subObjects]
         self.collisionsSinceLastUpdate = []
 
         allDone = False #Tells us if we are done. This is False when movement is possible.
         #x and y overlaps are lists of lists. Each element represents an x or y coordinate. For example, everything at x=3 is stored in x_overlaps[3].
-        x_overlaps = [[] for i in range(self.size[0])]
-        y_overlaps = [[] for i in range(self.size[1])]
+        out_of_bounds = []
         while not allDone: #We do this until we determine that no more movement is possible.
             allDone = True #Assume that we are done
+            x_overlaps = [[] for i in range(self.size[0])]
+            y_overlaps = [[] for i in range(self.size[1])]
+
             #Move everything
-            for i in particles: 
+            for index, element in enumerate(particles): 
                 #Move in the x direction
-                if i['remaining_x_movement'] != 0:
+                if element['remaining_x_movement'] != 0:
                     allDone = False #Movement is still possible in this case.
-                    if i['remaining_x_movement'] > 0:
-                        i['current_x']+=1
-                        i['remaining_x_movement']-=1
+                    if element['remaining_x_movement'] > 0:
+                        particles[index]['current_x']+=1
+                        particles[index]['remaining_x_movement']-=1
                     else:
-                        i['current_x']-=1
-                        i['remaining_x_movement']+=1
+                        particles[index]['current_x']-=1
+                        particles[index]['remaining_x_movement']+=1
                 #Move in the y direction
-                if i['remaining_y_movement'] != 0:
+                if element['remaining_y_movement'] != 0:
                     allDone = False #Movement is still possible in this case.
-                    if i['remaining_y_movement'] > 0:
-                        i['current_y']+=1
-                        i['remaining_y_movement']-=1
+                    if element['remaining_y_movement'] > 0:
+                        particles[index]['current_y']+=1
+                        particles[index]['remaining_y_movement']-=1
                     else:
-                        i['current_y']-=1
-                        i['remaining_y_movement']+=1
+                        particles[index]['current_y']-=1
+                        particles[index]['remaining_y_movement']+=1
                 #Add both to x and y overlaps
-                x_overlaps[i['current_x']].append(i['id'])
-                y_overlaps[i['current_y']].append(i['id'])
+                if not (particles[index]['current_x'] >= self.size[0] or particles[index]['current_x'] < 0 or particles[index]['current_y'] >= self.size[1] or particles[index]['current_y'] < 0):
+                    x_overlaps[particles[index]['current_x']].append(element['id'])
+                    y_overlaps[particles[index]['current_y']].append(element['id'])
+                else:
+                    print(f"ID {element['id']} is outta bounds! X = {particles[index]['current_x']} Y = {particles[index]['current_y']}")
+                    out_of_bounds.append(element['id'])
             
             #Check for collisions (This is the best runtime complexity I could do.)
             #The algorithim works like this. We create two lists The first list associates x coordinates with ids, and the second associtates y coordinates with ids.
             #Then we look at each x coordinate in our first list. If there exist a y-coordinate that has two ids in it that are also in 
-            
-            #Populate x and y overlaps
-            
+                        
             #Now, find collisions
             for x_ids in x_overlaps:
                 for y_ids in y_overlaps:
                     new_collisions = tuple(set(x_ids).intersection(y_ids)) #Find everything that is common between the two lists.
                     self.collisionsSinceLastUpdate.append(new_collisions) #Add it to the list of collisions.
+        
+        #Now, we must update the positions
+        for i in particles:
+            self.editSubObject(i['id'], x=i['current_x'], y=i['current_y'])
+        
+        #Remove everything that is out of bounds
+        for i in out_of_bounds:
+            print(f"Deleting {i}")
+            try:
+                self.deleteSubObject(i)
+            except:
+                continue
 
     def getSubObjectAtPosition(self, x, y):
         toReturn = {

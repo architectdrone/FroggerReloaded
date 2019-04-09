@@ -131,7 +131,7 @@ def game_intro():
     
     while intro:        
         for event in pygame.event.get():
-            print(event)
+            #print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
@@ -213,7 +213,7 @@ def game_play():
     while run:
         #Get events
         for event in pygame.event.get():
-            print(event)
+            #print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
