@@ -71,7 +71,7 @@ def update():
 
             lane['whichSegment']+=1
             next_id+=1 #Increment the next_id, as we should everytime we create a subobject.
-            if (lane['whichSegment'] > len((lane['segments'])-1)): #Now we test to make sure that we haven't run out of segments. This is determined by the segment that we are on, according to whichSegment, and the length of list of segments.
+            if (lane['whichSegment'] > len((lane['segments']))-1): #Now we test to make sure that we haven't run out of segments. This is determined by the segment that we are on, according to whichSegment, and the length of list of segments.
                 lane['entering'] = False #If we have, entering mode ends.
                 lane['untilNext'] = lane['coolDown'] #We also reset the cooldown.
                 
