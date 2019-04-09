@@ -20,11 +20,52 @@ color_lightgreen = (0,255,0)
 pygame.display.set_caption('Frogger Reloaded')
 frog_image = pygame.image.load('frog.png')
 background_image = pygame.image.load("s2.jpg")
-grass_image = pygame.image.load('grass.png')
-road_image = pygame.image.load('road.png')
-water_image = pygame.image.load('water.png')
-frogger_image = pygame.image.load('frogger.png')
-blue_car = pygame.image.load('blue_car.png')
+grass_image = pygame.image.load('SPRITES/grass.png')
+road_image = pygame.image.load('SPRITES/road.png')
+water_image = pygame.image.load('SPRITES/water.png')
+frog_na_down = pygame.image.load('SPRITES/frog_na_down.png')
+frog_na_up = pygame.image.load('SPRITES/frog_na_up.png')
+frog_na_left = pygame.image.load('SPRITES/frog_na_left.png')
+frog_na_right = pygame.image.load('SPRITES/frog_na_right.png')
+blueCar_na_right = pygame.image.load('SPRITES/blueCar_na_right.png')
+blueCar_na_left = pygame.image.load('SPRITES/blueCar_na_left.png')
+greenCar_na_right = pygame.image.load('SPRITES/greenCar_na_right.png')
+greenCar_na_left = pygame.image.load('SPRITES/greenCar_na_left.png')
+truck_front_right = pygame.image.load('SPRITES/truck_front_right.png')
+truck_middle_right = pygame.image.load('SPRITES/truck_middle_right.png')
+truck_back_right = pygame.image.load('SPRITES/truck_back_right.png')
+truck_front_left = pygame.image.load('SPRITES/truck_front_left.png')
+truck_middle_left = pygame.image.load('SPRITES/truck_middle_left.png')
+truck_back_left = pygame.image.load('SPRITES/truck_back_left.png')
+firetruck_front_right = pygame.image.load('SPRITES/firetruck_front_right.png')
+firetruck_back_right = pygame.image.load('SPRITES/firetruck_back_right.png')
+firetruck_front_left = pygame.image.load('SPRITES/firetruck_front_left.png')
+firetruck_back_left = pygame.image.load('SPRITES/firetruck_back_left.png')
+log_front_right = pygame.image.load('SPRITES/log_front_right.png')
+log_back_right = pygame.image.load('SPRITES/log_back_right.png')
+
+imageDict = {
+    'frog_na_down': frog_na_down,
+    'frog_na_up': frog_na_up,
+    'frog_na_left': frog_na_left,
+    'frog_na_right': frog_na_right,
+    'blueCar_na_right': blueCar_na_right,
+    'blueCar_na_left': blueCar_na_left,
+    'greenCar_na_right': greenCar_na_right,
+    'greenCar_na_left': greenCar_na_left,
+    'truck_front_right': truck_front_right,
+    'truck_middle_right': truck_middle_right,
+    'truck_back_right': truck_back_right,
+    'truck_front_left': truck_front_left,
+    'truck_middle_left': truck_middle_left,
+    'truck_back_left': truck_back_left,
+    'firetruck_front_right': firetruck_front_right,
+    'firetruck_back_right': firetruck_back_right,
+    'firetruck_front_left': firetruck_front_left,
+    'firetruck_back_left': firetruck_back_left,
+    'log_front_right': log_front_right,
+    'log_back_right': log_back_right
+}
 
 screen = pygame.display.set_mode((display_width, display_height))
 
@@ -90,22 +131,11 @@ def game_intro():
         pygame.display.update()
         fps_clock.tick(frames_per_sec)
 
-# Helper functions for displaying different images
-def grass(x,y):
-    screen.blit(grass_image, (x,y))
-
-def road(x,y):
-    screen.blit(road_image, (x,y))
-
-def water(x,y):
-    screen.blit(water_image, (x,y))
-
-def frogger(x,y):
-    # frogger.png (51 x 36)
-    screen.blit(frogger_image, (x,y))
-
-def blueCar(x,y):
-    screen.blit(blue_car, (x,y))
+# Retrieves images based on given properties
+def getSprite(type, seg, dir):
+    global imageDict
+    image = imageDict[type+'_'+seg+'_'+dir]
+    return image
  
 def game_play():
 
@@ -130,9 +160,14 @@ def game_play():
             road(i*79, display_height-(79*5))
 
         for i in range(10):
-            water(i*78, display_height-(79*4))
+            water(i*79, display_height-(79*4))
 
-        frogger((display_width/2)-25, display_height - 60)
+        frogger((display_width/2)-39, display_height - 79)
+
+        screen.blit(log_front_right, (79*4, display_height-(79*4)))
+        screen.blit(log_back_right, (79*3, display_height-(79*4)))
+
+        screen.blit(blue_car, (4*79, display_height-(79*2)))
 
         keys = pygame.key.get_pressed()
 
