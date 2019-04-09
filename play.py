@@ -65,10 +65,10 @@ imageDict = {
     'truck_front_left': truck_front_left,
     'truck_middle_left': truck_middle_left,
     'truck_back_left': truck_back_left,
-    'firetruck_front_right': firetruck_front_right,
-    'firetruck_back_right': firetruck_back_right,
-    'firetruck_front_left': firetruck_front_left,
-    'firetruck_back_left': firetruck_back_left,
+    'fireTruck_front_right': firetruck_front_right,
+    'fireTruck_back_right': firetruck_back_right,
+    'fireTruck_front_left': firetruck_front_left,
+    'fireTruck_back_left': firetruck_back_left,
     'log_front_right': log_front_right,
     'log_back_right': log_back_right
 }
