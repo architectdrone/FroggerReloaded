@@ -178,11 +178,15 @@ def display():
                 imagesToDisplay.append(water_image)
             
             if segments is not None:
-                for i in range(len(segments)-1):
+                for i in range(len(segments)):
+                    print()
                     imagesToDisplay.append(getSprite(types[i], segments[i], directions[i]))
+                print(imagesToDisplay)
             
             for i in imagesToDisplay:
                 drawSprite(i, tile_x, tile_y)
+            
+            print(imagesToDisplay)
         
 def drawSprite(image,tile_x,tile_y):
     screen.blit(image,(tile_x*79,(Y_SIZE-tile_y)*79))
@@ -211,6 +215,7 @@ def game_play():
     updateCounter = betweenUpdates
 
     while run:
+
         #Get events
         for event in pygame.event.get():
             #print(event)
@@ -222,7 +227,9 @@ def game_play():
         screen.fill(color_black)
 
         #Update the game frame
+        print('----DISPLAY!')
         display() 
+        print('---- END DISPLAY!')
 
         #Handle keypresses
         keys = pygame.key.get_pressed()
