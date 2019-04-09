@@ -11,22 +11,66 @@ Y_SIZE = 6
 display_width = X_SIZE*79
 display_height = Y_SIZE*79
 
+#Game Speed
+betweenUpdates = 30
+
+#Colors
 color_white = (255,255,255)
 color_black = (0,0,0)
 color_red = (200,0,0)
 color_green = (0,200,0) 
-
 color_lightred = (255,0,0)
 color_lightgreen = (0,255,0)
 
 pygame.display.set_caption('Frogger Reloaded')
 frog_image = pygame.image.load('frog.png')
 background_image = pygame.image.load("s2.jpg")
-grass_image = pygame.image.load('grass.png')
-road_image = pygame.image.load('road.png')
-water_image = pygame.image.load('water.png')
-frogger_image = pygame.image.load('frogger.png')
-blue_car = pygame.image.load('blue_car.png')
+grass_image = pygame.image.load('SPRITES/grass.png')
+road_image = pygame.image.load('SPRITES/road.png')
+water_image = pygame.image.load('SPRITES/water.png')
+frog_na_down = pygame.image.load('SPRITES/frog_na_down.png')
+frog_na_up = pygame.image.load('SPRITES/frog_na_up.png')
+frog_na_left = pygame.image.load('SPRITES/frog_na_left.png')
+frog_na_right = pygame.image.load('SPRITES/frog_na_right.png')
+blueCar_na_right = pygame.image.load('SPRITES/blueCar_na_right.png')
+blueCar_na_left = pygame.image.load('SPRITES/blueCar_na_left.png')
+greenCar_na_right = pygame.image.load('SPRITES/greenCar_na_right.png')
+greenCar_na_left = pygame.image.load('SPRITES/greenCar_na_left.png')
+truck_front_right = pygame.image.load('SPRITES/truck_front_right.png')
+truck_middle_right = pygame.image.load('SPRITES/truck_middle_right.png')
+truck_back_right = pygame.image.load('SPRITES/truck_back_right.png')
+truck_front_left = pygame.image.load('SPRITES/truck_front_left.png')
+truck_middle_left = pygame.image.load('SPRITES/truck_middle_left.png')
+truck_back_left = pygame.image.load('SPRITES/truck_back_left.png')
+firetruck_front_right = pygame.image.load('SPRITES/firetruck_front_right.png')
+firetruck_back_right = pygame.image.load('SPRITES/firetruck_back_right.png')
+firetruck_front_left = pygame.image.load('SPRITES/firetruck_front_left.png')
+firetruck_back_left = pygame.image.load('SPRITES/firetruck_back_left.png')
+log_front_right = pygame.image.load('SPRITES/log_front_right.png')
+log_back_right = pygame.image.load('SPRITES/log_back_right.png')
+
+imageDict = {
+    'frog_na_down': frog_na_down,
+    'frog_na_up': frog_na_up,
+    'frog_na_left': frog_na_left,
+    'frog_na_right': frog_na_right,
+    'blueCar_na_right': blueCar_na_right,
+    'blueCar_na_left': blueCar_na_left,
+    'greenCar_na_right': greenCar_na_right,
+    'greenCar_na_left': greenCar_na_left,
+    'truck_front_right': truck_front_right,
+    'truck_middle_right': truck_middle_right,
+    'truck_back_right': truck_back_right,
+    'truck_front_left': truck_front_left,
+    'truck_middle_left': truck_middle_left,
+    'truck_back_left': truck_back_left,
+    'firetruck_front_right': firetruck_front_right,
+    'firetruck_back_right': firetruck_back_right,
+    'firetruck_front_left': firetruck_front_left,
+    'firetruck_back_left': firetruck_back_left,
+    'log_front_right': log_front_right,
+    'log_back_right': log_back_right
+}
 
 screen = pygame.display.set_mode((display_width, display_height))
 
@@ -35,11 +79,27 @@ smallText = pygame.font.Font('freesansbold.ttf', 30)
 
 fps_clock = pygame.time.Clock()
 
+#HELPER FUNCTIONS
+#Menu Helper Functions
 def text_objects(text, font):
+    '''
+    @return A text object
+    '''
     textSurface = font.render(text, True, color_black)
     return textSurface, textSurface.get_rect()
 
 def game_button(msg,x,y,w,h,c,l,action=None):
+    '''
+    Display a button to the screen
+    @param msg The message to print
+    @param x The x coordinate
+    @param y The y coordinate
+    @param w The width
+    @param h The height
+    @param c The color of the button
+    @param l The color after hovering
+    @param action A function to be execute upon pressing the button
+    '''
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
     #print(mouse)
@@ -55,12 +115,10 @@ def game_button(msg,x,y,w,h,c,l,action=None):
     buttonRect.center = (x+w/2, y+h/2)
     screen.blit(buttonSurf, buttonRect)
 
-def game_quit():
-    pygame.quit()
-    quit()
-
 def game_intro():
-
+    '''
+    Shows the initial game menu
+    '''
     intro = True
     
     frog_rect = frog_image.get_rect()
@@ -92,22 +150,6 @@ def game_intro():
         pygame.display.update()
         fps_clock.tick(frames_per_sec)
 
-# Helper functions for displaying different images
-def grass(x,y):
-    screen.blit(grass_image, (x,y))
-
-def road(x,y):
-    screen.blit(road_image, (x,y))
-
-def water(x,y):
-    screen.blit(water_image, (x,y))
-
-def frogger(x,y):
-    # frogger.png (51 x 36)
-    screen.blit(frogger_image, (x,y))
-
-def blueCar(x,y):
-    screen.blit(blue_car, (x,y))
 
 def display():
     '''
@@ -142,35 +184,52 @@ def display():
             #Put it at the correct X and Y (on the screen)
         
 
+# Retrieves images based on given properties
+def getSprite(type, seg, dir):
+    '''
+    Get the image associated with the parameters
+    @param type The type of the sprite.
+    @param seg The segment of the image (can be front, middle, back, or na)
+    @param dir The direction of the image (can be left, right, na)
+    '''
+    global imageDict
+    image = imageDict[type+'_'+seg+'_'+dir]
+    return image
+    
+#Generl Helper Functions
+def game_quit(): 
+    '''
+    Quits the game
+    '''
+    pygame.quit()
+    quit()
+ 
 def game_play():
+    '''
+    The game frame itself
+    '''
+    global betweenUpdates
 
     run = True
+    g.initialize() #Create the game board
+    updateCounter = betweenUpdates
 
     while run:
+        #Get events
         for event in pygame.event.get():
             print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
+        #Reset the screen
         screen.fill(color_black)
 
-        for i in range(9):
-            grass(i*79,0)
-            grass(i*79,display_height-79)
-            grass(i*79, display_height-(79*3))
+        #Update the game frame
+        display() 
 
-        for i in range(9):
-            road(i*79, display_height-(79*2))
-            road(i*79, display_height-(79*5))
-
-        for i in range(10):
-            water(i*78, display_height-(79*4))
-
-        frogger((display_width/2)-25, display_height - 60)
-
+        #Handle keypresses
         keys = pygame.key.get_pressed()
-
         if keys[pygame.K_UP]:
             g.frogUp()
         elif keys[pygame.K_DOWN]:
@@ -179,10 +238,21 @@ def game_play():
             g.frogLeft()
         elif keys[pygame.K_RIGHT]:
             g.frogRight()
-
         if keys[pygame.K_ESCAPE]:
             run = False
 
+        #Update, if needed
+        updateCounter-=1
+        if updateCounter == 0:
+            g.update()
+            updateCounter = betweenUpdates
+        
+        #Are we dead?
+        if g.isDead:
+            #Do something, I guess? idk lol
+            game_quit()
+            
+        #Update the screen using pygame methods
         pygame.display.update()
 
 

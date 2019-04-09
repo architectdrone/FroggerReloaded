@@ -5,8 +5,8 @@ import random
 #PUBLIC GLOBALS
 FROGGER_INITIAL_X = 0
 FROGGER_INITIAL_Y = 0
-SIZE_X = 10
-SIZE_Y = 10
+SIZE_X = 6
+SIZE_Y = 9
 
 #PRIVATE GLOBALS
 myBoard = b.Board(1, 1)
@@ -178,22 +178,48 @@ def generateBasic():
         }
     ]
     '''
-    #All this is mostly just for example
     availableMOLs = [
         {
-            "type": "car",
+            "type": "blueCar",
             "directions": ["left", "right"],
             "visableDirection": True,
             "segments": ['na'],
-            "speed": 3,
+            "speed": 4,
             "cooldown": 5,
             "lane": "road"
         },
         {
-            "type": "log",
-            "directions": ["left"],
+            "type": "greenCar",
+            "directions": ["left", "right"],
             "visableDirection": True,
             "segments": ['na'],
+            "speed": 4,
+            "cooldown": 5,
+            "lane": "road"
+        },
+        {
+            "type": "truck",
+            "directions": ["left", "right"],
+            "visableDirection": True,
+            "segments": ['front', 'middle','back'],
+            "speed": 2,
+            "cooldown": 3,
+            "lane": "road"
+        },
+        {
+            "type": "fireTruck",
+            "directions": ["left", "right"],
+            "visableDirection": True,
+            "segments": ['front','back'],
+            "speed": 3,
+            "cooldown": 4,
+            "lane": "road"
+        },
+        {
+            "type": "log",
+            "directions": ["right"],
+            "visableDirection": True,
+            "segments": ['left', 'right'],
             "speed": 1,
             "cooldown": 3,
             "lane": "swamp"
@@ -253,7 +279,7 @@ def chooseMovingObjectLane(y, laneType, options):
     '''
     global movingObjectLanes
 
-    availableMOLs = [i for i in options if options['lane'] == laneType] #All MOLs that fit in with the current laneType
+    availableMOLs = [i for i in options if i['lane'] == laneType] #All MOLs that fit in with the current laneType
     currentMOL = random.choice(availableMOLs) #The chosen MOL
     MOLEntry = {
         "y": y,
