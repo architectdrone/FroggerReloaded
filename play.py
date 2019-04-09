@@ -9,11 +9,14 @@ speed = [1, 1]
 display_width = 9*79
 display_height = 6*79
 
+#Game Speed
+betweenUpdates = 30
+
+#Colors
 color_white = (255,255,255)
 color_black = (0,0,0)
 color_red = (200,0,0)
 color_green = (0,200,0) 
-
 color_lightred = (255,0,0)
 color_lightgreen = (0,255,0)
 
@@ -94,9 +97,11 @@ def game_quit():
     quit()
  
 def game_play():
+    global betweenUpdates
 
     run = True
-    g.initialize()
+    g.initialize() #Create the game board
+    updateCounter = betweenUpdates
 
     while run:
         #Get events
@@ -106,12 +111,14 @@ def game_play():
                 pygame.quit()
                 sys.exit()
 
-        screen.fill(color_black) #Reset the screen
+        #Reset the screen
+        screen.fill(color_black)
 
-        display() #Update the game frame
+        #Update the game frame
+        display() 
 
+        #Handle keypresses
         keys = pygame.key.get_pressed()
-
         if keys[pygame.K_UP]:
             g.frogUp()
         elif keys[pygame.K_DOWN]:
@@ -120,10 +127,21 @@ def game_play():
             g.frogLeft()
         elif keys[pygame.K_RIGHT]:
             g.frogRight()
-
         if keys[pygame.K_ESCAPE]:
             run = False
 
+        #Update, if needed
+        updateCounter-=1
+        if updateCounter == 0:
+            g.update()
+            updateCounter = betweenUpdates
+        
+        #Are we dead?
+        if g.isDead:
+            #Do something, I guess? idk lol
+            game_quit()
+            
+        #Update the screen using pygame methods
         pygame.display.update()
 
 
