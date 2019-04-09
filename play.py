@@ -167,15 +167,15 @@ def display():
 
             numberSprites = len(segments)
             imagesToDisplay = []
-            for i in range(numberSprites):
-                imagesToDisplay.append(getSprite(types[i], segments[i], directions[i]))
+            if lane == 'grass':
+                imagesToDisplay.append(grass_image)
+            elif lane == 'road':
+                imagesToDisplay.append(road_image)
+            if lane == 'swamp': #Make sure this is right...
+                imagesToDisplay.append(water_image)
             
-            if (tile_y == 1 or tile_y == 4):
-                drawSprite(road_image,tile_x,tile_y)
-            elif (tile_y == 0 or tile_y == 3 or tile_y == 5):
-                drawSprite(grass_image,tile_x,tile_y)
-            elif (tile_y == 2):
-                drawSprite(water_image,tile_x,tile_y)
+            for i in imagesToDisplay:
+                drawSprite(i, tile_x, tile_y)
             
          
 
@@ -186,6 +186,9 @@ def display():
 def drawSprite(image,tile_x,tile_y):
     screen.blit(image,(tile_x*79,(Y_SIZE-tile_y)*79))
 
+
+            
+            
 # Retrieves images based on given properties
 def getSprite(type, seg, dir):
     '''
