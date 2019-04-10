@@ -178,9 +178,13 @@ def display():
             if lane == 'swamp': #Make sure this is right...
                 imagesToDisplay.append(water_image)
             
+            newImages = []
             if segments is not None:
                 for i in range(len(segments)):
-                    imagesToDisplay.append(getSprite(types[i], segments[i], directions[i]))            
+                    newImages.append(getSprite(types[i], segments[i], directions[i]))
+                newImages = newImages[::-1] #Reverse the list. TODO actually add precedance.
+            
+            imagesToDisplay+=newImages
             for i in imagesToDisplay:
                 drawSprite(i, tile_x, tile_y)
             
@@ -209,12 +213,14 @@ def game_play():
 
     run = True
     g.initialize() #Create the game board
+    nextCommand = ""
     updateCounter = betweenUpdates
 
     while run:
-
+        '''
         clockobject = pygame.time.Clock()
-        clockobject.tick(30)
+        clockobject.tick(60)
+        '''
 
         #Get events
         for event in pygame.event.get():
@@ -231,19 +237,30 @@ def game_play():
         #Handle keypresses
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
-            g.frogUp()
+            nextCommand = "up"
         elif keys[pygame.K_DOWN]:
-            g.frogDown()
+            nextCommand = "down"
         elif keys[pygame.K_LEFT]:
-            g.frogLeft()
+            nextCommand = "left"
         elif keys[pygame.K_RIGHT]:
-            g.frogRight()
+            nextCommand = "right"
         if keys[pygame.K_ESCAPE]:
-            run = False
+                run = False
 
         #Update, if needed
-        updateCounter-=1
+        
         if updateCounter == 0:
+
+            if nextCommand == "up":
+                g.frogUp()
+            if nextCommand == "down":
+                g.frogDown()
+            if nextCommand == "left":
+                g.frogLeft()
+            if nextCommand == "right":
+                g.frogRight()
+            nextCommand = ""
+
             g.update()
             updateCounter = betweenUpdates
         
@@ -256,6 +273,7 @@ def game_play():
         #Update the screen using pygame methods
         pygame.display.update()
 
+        updateCounter-=1
 #Generl Helper Functions
 def gameOver():
     while True:

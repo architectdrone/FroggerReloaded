@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module gamelogic</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>gamelogic</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Ctheeu%5Cdesktop%5Ceecs448%5Cfroggerreloaded%5Cgamelogic.py">c:\users\theeu\desktop\eecs448\froggerreloaded\gamelogic.py</a></font></td></tr></table>
+    <p><tt>#game&nbsp;logic&nbsp;for&nbsp;Frogger</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="board.html">board</a><br>
+</td><td width="25%" valign=top><a href="random.html">random</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-chooseMovingObjectLane"><strong>chooseMovingObjectLane</strong></a>(y, laneType, options)</dt><dd><tt>Chooses&nbsp;a&nbsp;moving&nbsp;object&nbsp;lane&nbsp;that&nbsp;works&nbsp;with&nbsp;the&nbsp;lane&nbsp;from&nbsp;the&nbsp;options,&nbsp;and&nbsp;adds&nbsp;it&nbsp;to&nbsp;the&nbsp;moving&nbsp;object&nbsp;lane&nbsp;variable.<br>
+Structure&nbsp;of&nbsp;a&nbsp;moving&nbsp;object&nbsp;lane:<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'y':&nbsp;The&nbsp;y&nbsp;coordinate&nbsp;of&nbsp;the&nbsp;lane.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'direction':&nbsp;The&nbsp;direction&nbsp;of&nbsp;the&nbsp;objects&nbsp;in&nbsp;the&nbsp;lane.&nbsp;left&nbsp;or&nbsp;right.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'speed':&nbsp;The&nbsp;speed&nbsp;of&nbsp;the&nbsp;objects&nbsp;in&nbsp;the&nbsp;lane.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'segments':&nbsp;The&nbsp;segments&nbsp;in&nbsp;the&nbsp;object.&nbsp;This&nbsp;is&nbsp;a&nbsp;list.&nbsp;The&nbsp;first&nbsp;element&nbsp;is&nbsp;the&nbsp;one&nbsp;to&nbsp;emerge&nbsp;first.&nbsp;Example:&nbsp;['front',&nbsp;'middle','back']<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'type':&nbsp;The&nbsp;type&nbsp;of&nbsp;the&nbsp;object.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'cooldown':&nbsp;How&nbsp;long&nbsp;to&nbsp;wait&nbsp;until&nbsp;the&nbsp;next&nbsp;object&nbsp;emerges.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'untilNext':&nbsp;How&nbsp;long&nbsp;until&nbsp;the&nbsp;next&nbsp;object&nbsp;emerges.&nbsp;(USED&nbsp;ONLY&nbsp;BY&nbsp;UPDATE)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'entering':&nbsp;Whether&nbsp;or&nbsp;not&nbsp;the&nbsp;object&nbsp;is&nbsp;entering.&nbsp;(USED&nbsp;ONLY&nbsp;BY&nbsp;UPDATE)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'whichSegment':&nbsp;The&nbsp;index&nbsp;of&nbsp;segments&nbsp;that&nbsp;is&nbsp;emerging.&nbsp;(USED&nbsp;ONLY&nbsp;BY&nbsp;UPDATE)<br>
+}</tt></dd></dl>
+ <dl><dt><a name="-frogCheck"><strong>frogCheck</strong></a>()</dt><dd><tt>Do&nbsp;all&nbsp;checks.&nbsp;Sees&nbsp;if&nbsp;we&nbsp;are&nbsp;dead,&nbsp;and&nbsp;sets&nbsp;the&nbsp;frog's&nbsp;velocity&nbsp;based&nbsp;off&nbsp;of&nbsp;the&nbsp;platform&nbsp;that&nbsp;he&nbsp;is&nbsp;(or&nbsp;isn't)&nbsp;on.</tt></dd></dl>
+ <dl><dt><a name="-frogDown"><strong>frogDown</strong></a>()</dt><dd><tt>Moves&nbsp;the&nbsp;frog&nbsp;down.</tt></dd></dl>
+ <dl><dt><a name="-frogLeft"><strong>frogLeft</strong></a>()</dt><dd><tt>Moves&nbsp;the&nbsp;frog&nbsp;left.</tt></dd></dl>
+ <dl><dt><a name="-frogRight"><strong>frogRight</strong></a>()</dt><dd><tt>Moves&nbsp;the&nbsp;frog&nbsp;right.</tt></dd></dl>
+ <dl><dt><a name="-frogUp"><strong>frogUp</strong></a>()</dt><dd><tt>Moves&nbsp;the&nbsp;frog&nbsp;up.</tt></dd></dl>
+ <dl><dt><a name="-generateBasic"><strong>generateBasic</strong></a>()</dt><dd><tt>Generates&nbsp;a&nbsp;basic&nbsp;game&nbsp;board.&nbsp;This&nbsp;game&nbsp;board&nbsp;has&nbsp;clusters&nbsp;of&nbsp;roads&nbsp;and&nbsp;swamps.&nbsp;Roads&nbsp;and&nbsp;swamps&nbsp;have&nbsp;moving&nbsp;object&nbsp;lanes&nbsp;associated&nbsp;with&nbsp;them.</tt></dd></dl>
+ <dl><dt><a name="-getFrogCollisions"><strong>getFrogCollisions</strong></a>()</dt><dd><tt>@return&nbsp;The&nbsp;list&nbsp;of&nbsp;things&nbsp;that&nbsp;have&nbsp;collided&nbsp;with&nbsp;the&nbsp;frog.</tt></dd></dl>
+ <dl><dt><a name="-getFrogIntersect"><strong>getFrogIntersect</strong></a>()</dt><dd><tt>@return&nbsp;The&nbsp;list&nbsp;of&nbsp;all&nbsp;things&nbsp;that&nbsp;intersect&nbsp;with&nbsp;the&nbsp;frog</tt></dd></dl>
+ <dl><dt><a name="-getInteractions"><strong>getInteractions</strong></a>()</dt><dd><tt>@return&nbsp;A&nbsp;list&nbsp;of&nbsp;all&nbsp;ids&nbsp;that&nbsp;frogger&nbsp;has&nbsp;either&nbsp;collided&nbsp;with&nbsp;or&nbsp;is&nbsp;on&nbsp;top&nbsp;of.</tt></dd></dl>
+ <dl><dt><a name="-getXY"><strong>getXY</strong></a>(x, y)</dt><dd><tt>Get&nbsp;the&nbsp;sprite&nbsp;that&nbsp;should&nbsp;be&nbsp;at&nbsp;X&nbsp;and&nbsp;Y.&nbsp;Returns&nbsp;in&nbsp;the&nbsp;following&nbsp;format:<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'segment':&nbsp;The&nbsp;segment&nbsp;of&nbsp;the&nbsp;subobject&nbsp;at&nbsp;the&nbsp;XY.&nbsp;Present&nbsp;only&nbsp;if&nbsp;there&nbsp;is&nbsp;a&nbsp;subobject&nbsp;at&nbsp;XY.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'type':&nbsp;The&nbsp;type&nbsp;of&nbsp;the&nbsp;subobject&nbsp;at&nbsp;the&nbsp;XY.&nbsp;Present&nbsp;only&nbsp;if&nbsp;there&nbsp;is&nbsp;a&nbsp;subobject&nbsp;at&nbsp;XY.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'direction':&nbsp;The&nbsp;direction&nbsp;of&nbsp;the&nbsp;subobject&nbsp;at&nbsp;the&nbsp;XY.&nbsp;Present&nbsp;only&nbsp;if&nbsp;there&nbsp;is&nbsp;a&nbsp;subobject&nbsp;at&nbsp;XY.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'lane':&nbsp;The&nbsp;lane&nbsp;at&nbsp;XY.<br>
+}<br>
+@return&nbsp;Information&nbsp;about&nbsp;the&nbsp;X&nbsp;and&nbsp;Y&nbsp;position,&nbsp;formatted&nbsp;as&nbsp;written&nbsp;above.</tt></dd></dl>
+ <dl><dt><a name="-initialize"><strong>initialize</strong></a>()</dt><dd><tt>Resets&nbsp;and&nbsp;initializes&nbsp;game&nbsp;board.&nbsp;Size&nbsp;is&nbsp;determined&nbsp;by&nbsp;global&nbsp;variables.</tt></dd></dl>
+ <dl><dt><a name="-update"><strong>update</strong></a>()</dt><dd><tt>-Moves&nbsp;subobjects.<br>
+-Checks&nbsp;if&nbsp;frog&nbsp;is&nbsp;still&nbsp;alive.<br>
+-Move&nbsp;frog&nbsp;if&nbsp;on&nbsp;platform.<br>
+-Causes&nbsp;new&nbsp;moving&nbsp;objects&nbsp;to&nbsp;enter&nbsp;lanes</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>FROGGER_INITIAL_X</strong> = 0<br>
+<strong>FROGGER_INITIAL_Y</strong> = 0<br>
+<strong>SIZE_X</strong> = 9<br>
+<strong>SIZE_Y</strong> = 6<br>
+<strong>dangerous_lane</strong> = []<br>
+<strong>frog_id</strong> = 0<br>
+<strong>isDead</strong> = False<br>
+<strong>movingObjectLanes</strong> = []<br>
+<strong>myBoard</strong> = &lt;board.Board object&gt;<br>
+<strong>next_id</strong> = 1<br>
+<strong>obstacle_ids</strong> = []<br>
+<strong>platform_ids</strong> = []</td></tr></table>
+</body></html>

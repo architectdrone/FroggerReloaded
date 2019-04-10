@@ -68,7 +68,13 @@ def update():
             
             
             myBoard.addSubObject(next_id, lane['type'], y=lane['y'], segment=lane['segments'][lane['whichSegment']], direction=lane['direction'],velocity = (velocityX, 0),x = positionX)
+            current_id = next_id
 
+            if lane['platform']:
+                platform_ids.append(current_id)
+            elif lane['obstacle']:
+                obstacle_ids.append(current_id)
+            
             lane['whichSegment']+=1
             next_id+=1 #Increment the next_id, as we should everytime we create a subobject.
             if (lane['whichSegment'] > len((lane['segments']))-1): #Now we test to make sure that we haven't run out of segments. This is determined by the segment that we are on, according to whichSegment, and the length of list of segments.
@@ -181,6 +187,8 @@ def generateBasic():
             "speed": The speep of the object.
             "cooldown": Time between new ones entering.
             "lane": What lane it is available for. ("grass", "road", or "swamp")
+            "obstacle": Whether or not this is an obstacle that can KILL.
+            "platform": Whether or not this is a platform that can SAVE.
         }
     ]
     '''
@@ -192,7 +200,9 @@ def generateBasic():
             "segments": ['na'],
             "speed": 1,
             "cooldown": 5,
-            "lane": "road"
+            "lane": "road",
+            "obstacle": True,
+            "platform": False
         },
         {
             "type": "greenCar",
@@ -201,7 +211,9 @@ def generateBasic():
             "segments": ['na'],
             "speed": 1,
             "cooldown": 5,
-            "lane": "road"
+            "lane": "road",
+            "obstacle": True,
+            "platform": False
         },
         {
             "type": "truck",
@@ -210,7 +222,9 @@ def generateBasic():
             "segments": ['front', 'middle','back'],
             "speed": 1,
             "cooldown": 3,
-            "lane": "road"
+            "lane": "road",
+            "obstacle": True,
+            "platform": False
         },
         {
             "type": "fireTruck",
@@ -219,7 +233,9 @@ def generateBasic():
             "segments": ['front','back'],
             "speed": 1,
             "cooldown": 4,
-            "lane": "road"
+            "lane": "road",
+            "obstacle": True,
+            "platform": False
         },
         {
             "type": "log",
@@ -228,7 +244,9 @@ def generateBasic():
             "segments": ['front', 'back'],
             "speed": 1,
             "cooldown": 3,
-            "lane": "swamp"
+            "lane": "swamp",
+            "obstacle": False,
+            "platform": True
         }
     ]
     currentlyPlacing = "g" #Stores which cluster we are placing. "g" for grass, "r" for road, "s" for swamp. duh.
@@ -294,6 +312,8 @@ def chooseMovingObjectLane(y, laneType, options):
         "segments": currentMOL['segments'],
         "type": currentMOL['type'],
         "cooldown": currentMOL['cooldown'],
+        "platform": currentMOL['platform'],
+        "obstacle": currentMOL['obstacle'],
         "untilNext": random.randrange(1, currentMOL['cooldown']), #Just so that not everything is in sync.
         "entering": False,
         "whichSegment": 0
@@ -353,6 +373,7 @@ def frogCheck():
     
     #Lane testing --Test to see if we are on a dangerous lane. If we are, test to see if we are on a platform. If we are, set froggers velocity to be the velocity of the platform.
     frog_y = myBoard.getSubObject(frog_id)['y'] #The y coordinate of frogger
+    print(frog_y)
     myBoard.editSubObject(frog_id, velocity=(0,0)) #Pre set the velocity to 0.
     if frog_y in dangerous_lane: #If frogger is in a dangerous lane, check if we are on a plaform.
         laneDead = True
@@ -363,7 +384,8 @@ def frogCheck():
                 myBoard.editSubObject(frog_id, velocity=platformVelocity) #Set our velocity to the velocity of the platform.
                 break
         if laneDead:
-            print("You are in a killing lane! DEAD")
+            print(f"You are in a killing lane! DEAD Y = {frog_y} Dangerous = {dangerous_lane}")
             dead = True
-
-    isDead = dead
+    
+    if dead:
+        isDead = dead
