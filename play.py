@@ -178,9 +178,13 @@ def display():
             if lane == 'swamp': #Make sure this is right...
                 imagesToDisplay.append(water_image)
             
+            newImages = []
             if segments is not None:
                 for i in range(len(segments)):
-                    imagesToDisplay.append(getSprite(types[i], segments[i], directions[i]))            
+                    newImages.append(getSprite(types[i], segments[i], directions[i]))
+                newImages = newImages[::-1] #Reverse the list. TODO actually add precedance.
+            
+            imagesToDisplay+=newImages
             for i in imagesToDisplay:
                 drawSprite(i, tile_x, tile_y)
             
@@ -217,7 +221,7 @@ def game_play():
         clockobject = pygame.time.Clock()
         clockobject.tick(60)
         '''
-        
+
         #Get events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
