@@ -82,6 +82,7 @@ def update():
                 lane['whichSegment'] = 0 #We also reset whichSegment.
 
     myBoard.printAllSubObjects()
+
 def frogUp():
     '''
     Moves the frog up.
@@ -90,7 +91,8 @@ def frogUp():
     theSubObject = myBoard.getSubObject(frog_id)
     current_x = theSubObject['x']
     current_y = theSubObject['y']
-    myBoard.editSubObject(frog_id, x = current_x, y = current_y+1, direction = "up")
+    if current_y != SIZE_Y-1:
+        myBoard.editSubObject(frog_id, x = current_x, y = current_y+1, direction = "up")
     frogCheck()
 
 def frogDown():
@@ -101,7 +103,8 @@ def frogDown():
     theSubObject = myBoard.getSubObject(frog_id)
     current_x = theSubObject['x']
     current_y = theSubObject['y']
-    myBoard.editSubObject(frog_id, x = current_x, y = current_y-1, direction = "down")
+    if current_y != 0:
+        myBoard.editSubObject(frog_id, x = current_x, y = current_y-1, direction = "down")
     frogCheck()
 
 def frogLeft():
@@ -112,7 +115,8 @@ def frogLeft():
     theSubObject = myBoard.getSubObject(frog_id)
     current_x = theSubObject['x']
     current_y = theSubObject['y']
-    myBoard.editSubObject(frog_id, x = current_x-1, y = current_y, direction = "left")
+    if current_x != 0:
+        myBoard.editSubObject(frog_id, x = current_x-1, y = current_y, direction = "left")
     frogCheck()
 
 def frogRight():
@@ -123,7 +127,8 @@ def frogRight():
     theSubObject = myBoard.getSubObject(frog_id)
     current_x = theSubObject['x']
     current_y = theSubObject['y']
-    myBoard.editSubObject(frog_id, x = current_x+1, y = current_y, direction = "right")
+    if current_x != SIZE_X-1:
+        myBoard.editSubObject(frog_id, x = current_x+1, y = current_y, direction = "right")
     frogCheck()
 
 def getXY(x, y):
@@ -342,6 +347,7 @@ def frogCheck():
     interactions = getInteractions()
     for i in interactions:
         if i in obstacle_ids:
+            print("Frogger hit an obstacle! DEAD")
             dead = True
 
     
@@ -357,6 +363,7 @@ def frogCheck():
                 myBoard.editSubObject(frog_id, velocity=platformVelocity) #Set our velocity to the velocity of the platform.
                 break
         if laneDead:
+            print("You are in a killing lane! DEAD")
             dead = True
 
     isDead = dead

@@ -106,7 +106,7 @@ def game_button(msg,x,y,w,h,c,l,action=None):
     '''
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
-    #print(mouse)
+
 
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(screen,l,(x,y,w,h))
@@ -131,7 +131,6 @@ def game_intro():
     
     while intro:        
         for event in pygame.event.get():
-            #print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
@@ -179,17 +178,13 @@ def display():
             
             if segments is not None:
                 for i in range(len(segments)):
-                    print()
-                    imagesToDisplay.append(getSprite(types[i], segments[i], directions[i]))
-                print(imagesToDisplay)
-            
+                    imagesToDisplay.append(getSprite(types[i], segments[i], directions[i]))            
             for i in imagesToDisplay:
                 drawSprite(i, tile_x, tile_y)
             
-            print(imagesToDisplay)
-        
 def drawSprite(image,tile_x,tile_y):
-    screen.blit(image,(tile_x*79,(Y_SIZE-tile_y-1)*79))
+    screen.blit(image,(tile_x*79,(Y_SIZE-tile_y-
+    1)*79))
            
 # Retrieves images based on given properties
 def getSprite(type, seg, dir):
@@ -218,7 +213,6 @@ def game_play():
 
         #Get events
         for event in pygame.event.get():
-            #print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
@@ -227,9 +221,7 @@ def game_play():
         screen.fill(color_black)
 
         #Update the game frame
-        print('----DISPLAY!')
         display() 
-        print('---- END DISPLAY!')
 
         #Handle keypresses
         keys = pygame.key.get_pressed()

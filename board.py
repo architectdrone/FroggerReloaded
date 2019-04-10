@@ -159,7 +159,6 @@ class Board():
         '''
 
         #There may be a cleaner way to do this, but I don't care enough to find out.
-        print(self.subObjects)
         results = [i for i in self.subObjects if i['id'] == id]
         assert len(results) != 0, f"The id {id} could not be found."
         return results[0]
@@ -247,7 +246,6 @@ class Board():
                     x_overlaps[particles[index]['current_x']].append(element['id'])
                     y_overlaps[particles[index]['current_y']].append(element['id'])
                 else:
-                    print(f"ID {element['id']} is outta bounds! X = {particles[index]['current_x']} Y = {particles[index]['current_y']}")
                     out_of_bounds.append(element['id'])
             
             #Check for collisions (This is the best runtime complexity I could do.)
@@ -266,7 +264,6 @@ class Board():
         
         #Remove everything that is out of bounds
         for i in out_of_bounds:
-            print(f"Deleting {i}")
             try:
                 self.deleteSubObject(i)
             except:
