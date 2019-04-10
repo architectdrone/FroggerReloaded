@@ -287,7 +287,10 @@ def gameOver():
 
         TextSurf, TextRect = text_objects("RIP", gameTitle)
         TextRect.center = (400, 200)
+        TextSurf1, TextRect1 = text_objects("SPACE TO QUIT", smallText)
+        TextRect1.center = (400, 400)
         screen.blit(TextSurf, TextRect)
+        screen.blit(TextSurf1, TextRect1)
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE]:
