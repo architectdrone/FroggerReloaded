@@ -266,13 +266,37 @@ def game_play():
         #Are we dead?
         if g.isDead:
             #Do something, I guess? idk lol
-            game_quit()
+            run = False
+            gameOver()
             
         #Update the screen using pygame methods
         pygame.display.update()
 
         updateCounter-=1
 #Generl Helper Functions
+def gameOver():
+    while True:
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+        screen.fill(color_red)
+
+        TextSurf, TextRect = text_objects("RIP", gameTitle)
+        TextRect.center = (400, 200)
+        TextSurf1, TextRect1 = text_objects("SPACE TO QUIT", smallText)
+        TextRect1.center = (400, 400)
+        screen.blit(TextSurf, TextRect)
+        screen.blit(TextSurf1, TextRect1)
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_SPACE]:
+            game_quit()
+
+        pygame.display.update()
+
 def game_quit(): 
     '''
     Quits the game
