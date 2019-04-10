@@ -250,6 +250,8 @@ def game_play():
         
         if updateCounter == 0:
 
+            g.update()
+            
             if nextCommand == "up":
                 g.frogUp()
             if nextCommand == "down":
@@ -260,7 +262,7 @@ def game_play():
                 g.frogRight()
             nextCommand = ""
 
-            g.update()
+            
             updateCounter = betweenUpdates
         
         #Are we dead?
