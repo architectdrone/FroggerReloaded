@@ -1,5 +1,4 @@
 # Pygame implementation for FroggerReloaded
-
 import pygame 
 from pygame.locals import *
 import sys
@@ -282,6 +281,7 @@ def game_quit():
     quit()
  
 #Begin the game
-game_intro()
+if __name__ == '__main__':
+    game_intro()
 
 
