@@ -211,6 +211,9 @@ def game_play():
 
     while run:
 
+        clockobject = pygame.time.Clock()
+        clockobject.tick(30)
+
         #Get events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
