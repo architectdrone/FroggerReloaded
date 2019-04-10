@@ -189,7 +189,7 @@ def display():
             print(imagesToDisplay)
         
 def drawSprite(image,tile_x,tile_y):
-    screen.blit(image,(tile_x*79,(Y_SIZE-tile_y)*79))
+    screen.blit(image,(tile_x*79,(Y_SIZE-tile_y-1)*79))
            
 # Retrieves images based on given properties
 def getSprite(type, seg, dir):
