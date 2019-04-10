@@ -305,6 +305,7 @@ def chooseMovingObjectLane(y, laneType, options):
 
     availableMOLs = [i for i in options if i['lane'] == laneType] #All MOLs that fit in with the current laneType
     currentMOL = random.choice(availableMOLs) #The chosen MOL
+    random.seed()
     MOLEntry = {
         "y": y,
         "direction": random.choice(currentMOL['directions']),
@@ -362,6 +363,14 @@ def frogCheck():
     '''
     global isDead
     dead = False
+
+    #Is ya boi frogger still in the board? Lets see
+    try:
+        myBoard.getSubObject(frog_id)
+    except:
+        isDead = True
+        print("Frogger sailed off the edge! DEAD")
+        return
 
     #Subobject Testing - Test to see if we have collided with an obstacle
     interactions = getInteractions()
