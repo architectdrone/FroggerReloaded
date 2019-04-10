@@ -1,3 +1,5 @@
+# Pygame implementation for FroggerReloaded
+
 import pygame 
 from pygame.locals import *
 import sys
