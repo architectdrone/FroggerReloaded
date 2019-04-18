@@ -1,0 +1,15 @@
+2 minigames
+infinite loop works/back to main menu on death or win
+highscore with name input leaderboard.
+
+python- unit tests
+
+1. Product Backlog X
+2. Meeting Log 
+3. Documentation X
+4. UML X
+5. Gantt Chart
+6. Bug List
+7. User Manual: 5pg min
+8. Deployment Plan
+9. Maintenance Plan
