@@ -2,12 +2,6 @@
 import board as b
 import random
 
-#PUBLIC GLOBALS
-FROGGER_INITIAL_X = 0
-FROGGER_INITIAL_Y = 0
-SIZE_X = 9
-SIZE_Y = 6
-
 class game():
     
     def __init__(self, x_size, y_size, init_x = 0, init_y = 0):
@@ -67,7 +61,7 @@ class game():
                 elif lane['direction'] == "left":
                     velocityX = -1*lane['speed']
 
-                    positionX = SIZE_X-1
+                    positionX = self.x_size-1
                 
                 
                 self.myBoard.addSubObject(self.next_id, lane['type'], y=lane['y'], segment=lane['segments'][lane['whichSegment']], direction=lane['direction'],velocity = (velocityX, 0),x = positionX)
@@ -100,7 +94,7 @@ class game():
         theSubObject = self.myBoard.getSubObject(self.frog_id)
         current_x = theSubObject['x']
         current_y = theSubObject['y']
-        if current_y != SIZE_Y-1:
+        if current_y != self.y_size-1:
             self.myBoard.editSubObject(self.frog_id, x = current_x, y = current_y+1, direction = "up")
         self.frogCheck()
 
@@ -136,7 +130,7 @@ class game():
         theSubObject = self.myBoard.getSubObject(self.frog_id)
         current_x = theSubObject['x']
         current_y = theSubObject['y']
-        if current_x != SIZE_X-1:
+        if current_x != self.x_size-1:
             self.myBoard.editSubObject(self.frog_id, x = current_x+1, y = current_y, direction = "right")
         self.frogCheck()
 
@@ -254,8 +248,8 @@ class game():
         ]
         currentlyPlacing = "g" #Stores which cluster we are placing. "g" for grass, "r" for road, "s" for swamp. duh.
         toPlace = random.randrange(GRASS_MIN, GRASS_MAX)
-        for y in range(SIZE_Y):
-            if (y == SIZE_Y-1):
+        for y in range(self.y_size):
+            if (y == self.y_size-1):
                 self.myBoard.setLane(y, "grass")
             elif currentlyPlacing == "g":
                 toPlace-=1
