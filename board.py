@@ -268,6 +268,17 @@ class Board():
                 self.deleteSubObject(i)
             except:
                 continue
+        
+        #Remove non-collisions from list of collisions. (Yes, this is neccesary)
+        i = 0
+        while True:
+            if i == len(self.collisionsSinceLastUpdate)-1:
+                break
+            if self.collisionsSinceLastUpdate[i] == () or len(self.collisionsSinceLastUpdate[i]) != 2:
+                self.collisionsSinceLastUpdate.pop(i)
+            else:
+                i+=1
+
 
     def getSubObjectAtPosition(self, x, y):
         toReturn = {
