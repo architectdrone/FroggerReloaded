@@ -10,7 +10,7 @@ SIZE_Y = 6
 
 class game():
     
-    def __init__(self, x_size, y_size):
+    def __init__(self, x_size, y_size, init_x = 0, init_y = 0):
         '''
         Creates the game object. Sets up all non-strictly game related features (such as score) and creates the board.
         @param x_size The number of squares in the x direction.
@@ -18,6 +18,8 @@ class game():
         '''
         self.x_size = x_size
         self.y_size = y_size
+        self.init_x = init_x
+        self.init_y = init_y
         self.initialize()
 
     #PUBLIC FUNCTIONS
@@ -35,7 +37,7 @@ class game():
         self.isDead = False #Are we dead?
 
         self.myBoard = b.Board(self.x_size, self.y_size)
-        self.myBoard.addSubObject(self.frog_id, "frog", x = FROGGER_INITIAL_X, y = FROGGER_INITIAL_Y, direction="up")
+        self.myBoard.addSubObject(self.frog_id, "frog", x = self.init_x, y = self.init_y, direction="up")
 
         self.generateBasic() #Runs the board generator.
 

@@ -3,7 +3,7 @@ import pygame
 from pygame.locals import *
 import sys
 import time
-import gamelogic as g
+import gamelogic
 
 pygame.init()
 speed = [1, 1]
@@ -155,10 +155,12 @@ def game_intro():
         fps_clock.tick(frames_per_sec)
 
 #Game Frame Helper Functions
-def display():
+def display(g):
     '''
     Update the window according to what gamelogic tells us.
+    @param g The game object to display for.
     '''
+    
     #TODO define X_SIZE and Y_SIZE
     for tile_x in range(X_SIZE):
         for tile_y in range(Y_SIZE):
@@ -211,7 +213,7 @@ def game_play():
     global betweenUpdates
 
     run = True
-    g.initialize() #Create the game board
+    g = gamelogic.game(9, 6)    
     nextCommand = ""
     updateCounter = betweenUpdates
 
@@ -231,7 +233,7 @@ def game_play():
         screen.fill(color_black)
 
         #Update the game frame
-        display() 
+        display(g) 
 
         #Handle keypresses
         keys = pygame.key.get_pressed()
