@@ -97,6 +97,13 @@ class game():
         current_y = theSubObject['y']
         if current_y != self.y_size-1:
             self.myBoard.editSubObject(self.frog_id, x = current_x, y = current_y+1, direction = "up")
+
+        else: #will change display once frog reaches maximum y
+            self.generateBasic()
+            self.myBoard.editSubObject(self.frog_id, x = current_x, y = self.init_y, direction = "up")
+            self.displayCount+=1 
+            print("Display count: " + str(self.displayCount))
+
         self.frogCheck()
 
     def frogDown(self):
@@ -156,22 +163,7 @@ class game():
                 'lane': AtXY['lane']
             }
         else:
-            return {'lane': AtXY['lane']}
-    
-    def scrollDisplay(self):
-        '''
-        Will generate new display when frog reaches maximum y_size
-        '''
-        theSubObject = self.myBoard.getSubObject(self.frog_id)
-        current_x = theSubObject['x']
-        current_y = theSubObject['y']
-
-        if current_y == self.y_size-1:
-            self.generateBasic()
-            self.myBoard.editSubObject(self.frog_id, x = current_x, y = self.init_y, direction = "up")
-
-        self.displayCount+=1 #update change in display count
-            
+            return {'lane': AtXY['lane']}         
         
     #PRIVATE FUNCTIONS
     #No touchy
