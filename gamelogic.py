@@ -15,6 +15,7 @@ class game():
         self.init_x = init_x
         self.init_y = init_y
         self.initialize()
+        self.displayCount = 0 #counts change in display
 
     #PUBLIC FUNCTIONS
     def initialize(self):
@@ -168,6 +169,8 @@ class game():
         if current_y == self.y_size-1:
             self.generateBasic()
             self.myBoard.editSubObject(self.frog_id, x = current_x, y = self.init_y, direction = "up")
+
+        self.displayCount+=1 #update change in display count
             
         
     #PRIVATE FUNCTIONS
