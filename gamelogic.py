@@ -99,10 +99,10 @@ class game():
             self.myBoard.editSubObject(self.frog_id, x = current_x, y = current_y+1, direction = "up")
 
         else: #will change display once frog reaches maximum y
-            self.generateBasic()
             self.myBoard.editSubObject(self.frog_id, x = current_x, y = self.init_y, direction = "up")
+            self.initialize()
             self.displayCount+=1 
-            print("Display count: " + str(self.displayCount))
+            print("Display count: " + str(self.displayCount)) 
 
         self.frogCheck()
 
