@@ -1,6 +1,7 @@
 #game logic for Frogger
 import board as b
 import random
+import math
 
 class game():
     
@@ -29,6 +30,8 @@ class game():
         self.obstacle_id = [] #This is a list of ids representing things that are dangerous to frogger. If there is a collision with id 0 (frogger) and one of these, frogger is dead!
         self.platform_id = [] #This is a list of ids representing things that are platforms.
         self.dangerous_lane = [] #Lanes that kill, if not on a platform. Each element is the y coordinate of the lane.
+        self.wall_ids = [] #Things frogger can't move through, but don't kill him. Only currently used in the invaders minigame.
+        self.enemy_ids = [] #The ids of enemies. Keep in mind that these are enemies from space invaders, don't mix up with obstacles!
         self.movingObjectLanes = [] #Lanes that produce objects. There is a specific internal structure to this list, see chooseMovingObjectLane for deatils
         self.isDead = False #Are we dead?
 
@@ -303,8 +306,36 @@ class game():
         '''
         Generates the space invaders game. The space invaders board is split in half, by a wall. Also, enemies are placed on the board with random velocities. 
         '''
+        BACKGROUND = "grass" #The lane for all non-wall areas.
+        ENEMY_TYPE = "enemy" #The type for the enemies.
+        MAX_ENEMY = 10 #Total number of enemies.
+        WALL_TYPE = "wall" #The type for the wall.
+
         self.currentMinigame = "invaders"
+
+        #Set all lanes to the appropriate lane
+        for y in range(self.y_size):
+            self.myBoard.setLane(y, BACKGROUND)
         
+        #Place wall.
+        wallY = math.floor(self.y_size/2) #The y coordinate of the wall. 
+        for x in range(self.x_size):
+            self.myBoard.addSubObject(self.next_id, WALL_TYPE, x = x, y = wallY)
+            self.wall_ids.append(self.next_id)
+            self.next_id += 1
+        
+        #Place enemies.
+        numEnemies = random.randrange(1, MAX_ENEMY)
+        while numEnemies > 0:
+            x = random.randrange(0, self.x_size-1)
+            y = random.randrange(wallY+1, self.y_size-1)
+            velocity = random.choice([(1,0),(-1,0),(0,1),(0,-1)])
+            if self.myBoard.getXY(0,0)['id'] == []:
+                self.myBoard.addSubObject(self.next_id, ENEMY_TYPE, x = x, y = y, velocity=velocity)
+                self.enemy_ids.append(self.next_id)
+                self.next_id+=1
+                numEnemies-=1
+       
     def chooseMovingObjectLane(self, y, laneType, options):
         '''
         Chooses a moving object lane that works with the lane from the options, and adds it to the moving object lane variable.
