@@ -431,13 +431,15 @@ class game():
             print("Frogger sailed off the edge! DEAD")
             return
 
-        #Subobject Testing - Test to see if we have collided with an obstacle
+        #Subobject Testing - Test to see if we have collided with an obstacle or a bullet
         interactions = self.getInteractions()
         for i in interactions:
             if i in self.obstacle_id:
                 print("Frogger hit an obstacle! DEAD")
                 dead = True
-
+            elif i in self.enemy_bullet_ids:
+                print("Frogger got shot! DEAD")
+                dead = True
         
         #Lane testing --Test to see if we are on a dangerous lane. If we are, test to see if we are on a platform. If we are, set froggers velocity to be the velocity of the platform.
         frog_y = self.myBoard.getSubObject(self.frog_id)['y'] #The y coordinate of frogger
@@ -454,6 +456,7 @@ class game():
             if laneDead:
                 print(f"You are in a killing lane! DEAD Y = {frog_y} Dangerous = {self.dangerous_lane}")
                 dead = True
+        
         
         if dead:
             self.isDead = dead
