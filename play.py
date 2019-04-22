@@ -192,6 +192,12 @@ def display(g):
 def drawSprite(image,tile_x,tile_y):
     screen.blit(image,(tile_x*79,(Y_SIZE-tile_y-
     1)*79))
+
+# Responsible for displaying the score in the corner of the screen
+def drawScore(score):
+    scoreFont = pygame.font.SysFont('Comic Sans MS', 30)
+    textScore = scoreFont.render(str (score), False, color_white)
+    screen.blit(textScore, (display_width-40, display_height-40))
            
 # Retrieves images based on given properties
 def getSprite(type, seg, dir):
@@ -216,6 +222,7 @@ def game_play():
     g = gamelogic.game(9, 6)    
     nextCommand = ""
     updateCounter = betweenUpdates
+    score = 0
 
     while run:
         '''
@@ -234,6 +241,12 @@ def game_play():
 
         #Update the game frame
         display(g) 
+
+        #Increment score
+        score += 1
+
+        #Display score
+        drawScore(g.score())
 
         #Handle keypresses
         keys = pygame.key.get_pressed()
