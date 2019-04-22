@@ -46,7 +46,9 @@ class game():
         -Moves subobjects.
         -Checks if frog is still alive.
         -Move frog if on platform.
-        -Causes new moving objects to enter lanes
+        -Move frog out of walls. (For use with the invaders minigame.)
+        -Causes new moving objects to enter lanes.
+        -If applicable, do checks for enemies.
         '''
         
         #Do a frog check.
@@ -90,7 +92,9 @@ class game():
                     lane['entering'] = True #In that case we start entering mode.
                     lane['whichSegment'] = 0 #We also reset whichSegment.
 
-        #self.myBoard.printAllSubObjects()
+        #Do an enemy check
+        if self.currentMinigame == "invaders":
+            self.updateEnemies()
 
     def frogUp(self):
         '''
@@ -503,8 +507,3 @@ class game():
                     self.enemy_ids.remove(enemy_id) #Destroy Enemy
                     self.myBoard.deleteSubObject(enemy_id)
                     self.myBoard.deleteSubObject(subObjectID)
-
-
-
-        
-        
