@@ -14,6 +14,7 @@ class game():
         self.y_size = y_size
         self.init_x = init_x
         self.init_y = init_y
+        self.currentMinigame = "basic" #The minigame we are currently on. Allowed values are "basic", "lilypads", "invaders".
         self.initialize()
         self.displayCount = 0 #counts change in display
 
@@ -173,6 +174,8 @@ class game():
         '''
         #Some parameters. Since there should be clusters, what shout the minimum and maximum sizes of said clusters be?
 
+        self.currentMinigame = "basic"
+
         GRASS_MIN = 1
         GRASS_MAX = 4
         ROAD_MIN = 2
@@ -290,6 +293,12 @@ class game():
                     elif currentlyPlacing == 's':
                         toPlace = random.randrange(SWAMP_MIN, SWAMP_MAX)
 
+    def generateInvaders(self):
+        '''
+        Generates the space invaders game. The space invaders board is split in half, by a wall. Also, enemies are placed on the board with random velocities. 
+        '''
+        self.currentMinigame = "invaders"
+        
     def chooseMovingObjectLane(self, y, laneType, options):
         '''
         Chooses a moving object lane that works with the lane from the options, and adds it to the moving object lane variable.
