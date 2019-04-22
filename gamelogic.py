@@ -160,6 +160,7 @@ class game():
         self.myBoard.addSubObject(self.next_id, FROG_BULLET_TYPE, x = self.myBoard.getSubObject(0)['x'], y=self.myBoard.getSubObject(0)['y'], velocity=BULLET_VELOCITY)
         self.frog_bullet_ids.append(self.next_id)
         self.next_id+=1
+        self.frogCheck()
 
     def getXY(self, x, y):
         '''
@@ -441,7 +442,7 @@ class game():
             print("Frogger sailed off the edge! DEAD")
             return
 
-        #Subobject Testing - Test to see if we have collided with an obstacle or a bullet
+        #Subobject Testing - Test to see if we have collided with an obstacle or a bullet or a wall
         interactions = self.getInteractions()
         for i in interactions:
             if i in self.obstacle_id:
@@ -450,6 +451,10 @@ class game():
             elif i in self.enemy_bullet_ids:
                 print("Frogger got shot! DEAD")
                 dead = True
+            elif i in self.wall_ids:
+                froggerCurrentY = self.myBoard.getSubObject(0)['y']
+                self.myBoard.editSubObject(0, y = froggerCurrentY-1)
+
         
         #Lane testing --Test to see if we are on a dangerous lane. If we are, test to see if we are on a platform. If we are, set froggers velocity to be the velocity of the platform.
         frog_y = self.myBoard.getSubObject(self.frog_id)['y'] #The y coordinate of frogger
