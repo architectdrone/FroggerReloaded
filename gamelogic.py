@@ -366,7 +366,22 @@ class game():
             # case(s) covered: middle lanes set to swamp
             else:
                 self.myBoard.setLane(y, "swamp")
-        # create lilypad subObjects and
+        # set bounds for range of segLength
+        # SEG_LENGTH_MIN = 2, SEG_LENGTH_MAX = 3
+
+        # START LOOP
+            # randomly choose segmentLength
+            # segLength = random.randrange(SEG_LENGTH_MIN, SEG_LENGTH_MAX)
+
+            # create lilypad subObject and decrement the current segLength
+            # variable after each lilypad is created
+
+            # once segLength == 0, start process over with end point of
+            # previous segment as start point for next segment(decrement the next
+            # segLength because the start point is included in the total length)
+            # startPoint = previousEndPoint
+
+        # END LOOP
 
 
     def chooseMovingObjectLane(self, y, laneType, options):
