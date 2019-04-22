@@ -164,8 +164,14 @@ class game():
                 'lane': AtXY['lane']
             }
         else:
-            return {'lane': AtXY['lane']}         
-        
+            return {'lane': AtXY['lane']}       
+
+    def score(self):
+        '''
+        Returns score as number of display changes
+        '''
+        return self.displayCount
+
     #PRIVATE FUNCTIONS
     #No touchy
     def generateBasic(self):
