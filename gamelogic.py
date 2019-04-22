@@ -24,7 +24,6 @@ class game():
         '''
         Resets and initializes game board. Size is determined by global variables.
         '''
-        #PRIVATE GLOBALS
         self.next_id = 1 #This is the next available id. Everytime we add a new subobject, we increment this id, and use the one that was there. We start at 1 so as to reserve 0 for the frog.
         self.frog_id = 0 #This is the id of the frog. We must reserve just 0.
         self.obstacle_id = [] #This is a list of ids representing things that are dangerous to frogger. If there is a collision with id 0 (frogger) and one of these, frogger is dead!
@@ -443,3 +442,10 @@ class game():
         
         if dead:
             self.isDead = dead
+
+    def updateEnemies(self):
+        '''
+        Move enemies. Have some of them shoot projectiles. Only for usage in invaders.
+        '''
+
+        
