@@ -336,7 +336,10 @@ class game():
                 self.enemy_ids.append(self.next_id)
                 self.next_id+=1
                 numEnemies-=1
-       
+
+    def generateMaze(self):
+        self.currentMinigame = "lilypads"
+
     def chooseMovingObjectLane(self, y, laneType, options):
         '''
         Chooses a moving object lane that works with the lane from the options, and adds it to the moving object lane variable.
