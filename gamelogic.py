@@ -31,6 +31,8 @@ class game():
         self.dangerous_lane = [] #Lanes that kill, if not on a platform. Each element is the y coordinate of the lane.
         self.wall_ids = [] #Things frogger can't move through, but don't kill him. Only currently used in the invaders minigame.
         self.enemy_ids = [] #The ids of enemies. Keep in mind that these are enemies from space invaders, don't mix up with obstacles!
+        self.enemy_bullet_ids = [] #IDs of things that kill frogger.
+        self.frog_bullet_ids  = [] #IDs of things that kill enemies.
         self.movingObjectLanes = [] #Lanes that produce objects. There is a specific internal structure to this list, see chooseMovingObjectLane for deatils
         self.isDead = False #Are we dead?
 
@@ -451,7 +453,55 @@ class game():
 
     def updateEnemies(self):
         '''
-        Move enemies. Have some of them shoot projectiles. Only for usage in invaders.
+        Move enemies. Have some of them shoot projectiles. Check if enemies have died. Only for usage in invaders.
         '''
+        FIRING_CHANCE = 0.4 #Chance of a given enemy firing.
+        MAX_SHOOTERS = 4 #Maximum amount of enemies that can fire in a given tick.
+        BULLET_VELOCITY = (0, -1) #Velocity of a bullet. Make sure the Y coordinate is negative!
+        BULLET_TYPE = "enemy_bullet"
 
+        current_shooters = MAX_SHOOTERS
+        enemyCollisions = []
+        for i in self.enemy_ids:
+            #Update positions of enemies.
+            theSubObject = self.myBoard.getSubObject(i)
+            x = theSubObject['x']
+            y = theSubObject['y']
+            new_velocity = theSubObject['velocity']
+            if x == 0 or x == self.x_size-1:
+                new_velocity = (new_velocity[0]*-1, new_velocity[1])
+            elif y == math.floor(self.y_size/2) or y == self.y_size-1:
+                new_velocity = (new_velocity[0], new_velocity[1]*-1)
+            self.myBoard.editSubObject(i, velocity=new_velocity)
+
+            #Fire, potentially.
+            if random.randrange(1, 100) < FIRING_CHANCE*100:
+                if current_shooters > 0:
+                    self.myBoard.addSubObject(self.next_id, BULLET_TYPE, x = x, y = y, velocity=BULLET_VELOCITY)
+                    self.enemy_bullet_ids.append(self.next_id)
+                    self.next_id+=1
+                    current_shooters-=1
+
+            #Get collisions with this enemy.
+            for c in self.myBoard.getCollisionsSinceLastUpdate():
+                if i in c:
+                    enemyCollisions.append(c)
+        
+        #Check to see if enemy is dead
+        for collision in enemyCollisions:
+            for subObjectID in collision:
+                if subObjectID in self.frog_bullet_ids:
+                    self.frog_bullet_ids.remove(subObjectID) #Destroy Bullet
+                    enemy_id = 0
+                    if collision[0] != subObjectID:
+                        enemy_id = collision[0]
+                    else:
+                        enemy_id = collision[1]
+                    self.enemy_ids.remove(enemy_id) #Destroy Enemy
+                    self.myBoard.deleteSubObject(enemy_id)
+                    self.myBoard.deleteSubObject(subObjectID)
+
+
+
+        
         
