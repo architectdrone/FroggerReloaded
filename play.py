@@ -20,6 +20,7 @@ pygame.mixer.music.play(-1) #loop it
 
 #Game sound
 crash = pygame.mixer.Sound("music/crash.wav")
+drawning = pygame.mixer.Sound("music/drawning.wav")
 
 #Game Speed
 betweenUpdates = 30
