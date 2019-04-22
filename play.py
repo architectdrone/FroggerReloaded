@@ -19,7 +19,7 @@ pygame.mixer.music.set_volume(0.2)
 pygame.mixer.music.play(-1) #loop it
 
 #Game sound
-
+crash = pygame.mixer.Sound("music/crash.wav")
 
 #Game Speed
 betweenUpdates = 30
