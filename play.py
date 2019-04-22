@@ -125,7 +125,7 @@ def game_intro():
     Shows the initial game menu
     '''
     intro = True
-    
+
     frog_rect = frog_image.get_rect()
     frames_per_sec = 100
     #fps_clock = pygame.time.Clock()
