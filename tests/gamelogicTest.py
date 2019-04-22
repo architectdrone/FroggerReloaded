@@ -12,16 +12,11 @@ class gamelogicTest(unittest.TestCase):
         self.g = gamelogic.game(10, 10)
     
     def test_frogUp(self):
-        self.g.myBoard.addSubObject(0,"frog", 0, 0)
         self.g.frogUp()
-        y = self.g.myBoard.getSubObject(0)['y']
-        self.assertEqual(y, 1)
+        assert 'type' in self.g.getXY(0,1) #Test if there is a subobject at the position.
+        self.assertEquals(self.g.getXY(0,1)['type'][0], 'frog') #Test if the subobject there is frog.
 
-        self.g.myBoard.editSubObject(0,"frog", 0, 9)
-        self.g.frogUp()
-        y = self.g.myBoard.getSubObject(0)['y']
-        self.assertEqual(y, 0)
-
+    '''
     def test_frogDown(self):
         self.g.myBoard.addSubObject(0,"frog", 0, 8)
         self.g.frogDown()
@@ -40,7 +35,8 @@ class gamelogicTest(unittest.TestCase):
         x = self.g.myBoard.getSubObject(0)['x']
         self.assertEqual(x, 1)
 
-'''
+    '''
+    '''
     def test_score(self):
         self.g.myBoard.addSubObject(0,"frog", 0, 9)
         self.g.game.frogUp()
@@ -61,9 +57,8 @@ class gamelogicTest(unittest.TestCase):
     def test_frogCheck(self): #incomplete
         self.g.myBoard.addSubObject(0,"frog", 1, 1)
         self.g.myBoard.addSubObject(1, "truck", 1, 1)
-        self.assertEqual(self.g.frogCheck, False)
-  '''  
-    '''
+        self.assertEqual(self.g.frogCheck, False)  
+    
     TO-BE tested
     Public functions:
         initialize
@@ -73,3 +68,5 @@ class gamelogicTest(unittest.TestCase):
     '''
 
 
+if __name__ == '__main__':
+    unittest.main()
