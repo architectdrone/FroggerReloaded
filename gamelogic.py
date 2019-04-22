@@ -35,6 +35,7 @@ class game():
         self.frog_bullet_ids  = [] #IDs of things that kill enemies.
         self.movingObjectLanes = [] #Lanes that produce objects. There is a specific internal structure to this list, see chooseMovingObjectLane for deatils
         self.isDead = False #Are we dead?
+        self.lilypad_ids = []  # Container for lilypad ID's during Maze Minigame
 
         self.myBoard = b.Board(self.x_size, self.y_size)
         self.myBoard.addSubObject(self.frog_id, "frog", x = self.init_x, y = self.init_y, direction="up")
@@ -353,7 +354,20 @@ class game():
                 numEnemies-=1
 
     def generateMaze(self):
+        # set the type of mini game
         self.currentMinigame = "lilypads"
+
+        # iterate y times
+        # set lane's land type
+        for y in range(self.y_size - 1):
+            # case(s) covered: first lane set grass AND last lane set to grass
+            if (y == 0) or (y == (self.y_size - 1)):
+                self.myBoard.setLane(y, "grass")
+            # case(s) covered: middle lanes set to swamp
+            else:
+                self.myBoard.setLane(y, "swamp")
+        # create lilypad subObjects and
+
 
     def chooseMovingObjectLane(self, y, laneType, options):
         '''
