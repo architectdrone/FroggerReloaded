@@ -298,7 +298,11 @@ class game():
         Generates the space invaders game. The space invaders board is split in half, by a wall. Also, enemies are placed on the board with random velocities. 
         '''
         self.currentMinigame = "invaders"
-        
+
+    def generateMaze(self):
+        self.currentMinigame = "lilypads"
+
+
     def chooseMovingObjectLane(self, y, laneType, options):
         '''
         Chooses a moving object lane that works with the lane from the options, and adds it to the moving object lane variable.
