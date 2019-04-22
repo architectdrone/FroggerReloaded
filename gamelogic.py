@@ -151,6 +151,16 @@ class game():
             self.myBoard.editSubObject(self.frog_id, x = current_x+1, y = current_y, direction = "right")
         self.frogCheck()
 
+    def frogShoot(self):
+        '''
+        Shoots a projectile - if we are in the right mode for projectile shooting
+        '''
+        FROG_BULLET_TYPE = "bullet"
+        BULLET_VELOCITY = (0, 1)
+        self.myBoard.addSubObject(self.next_id, FROG_BULLET_TYPE, x = self.myBoard.getSubObject(0)['x'], y=self.myBoard.getSubObject(0)['y'], velocity=BULLET_VELOCITY)
+        self.frog_bullet_ids.append(self.next_id)
+        self.next_id+=1
+
     def getXY(self, x, y):
         '''
         Get the sprite that should be at X and Y. Returns in the following format:
