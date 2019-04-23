@@ -76,3 +76,6 @@ class boardTest(unittest.TestCase):
         self.assertEqual(self.b.getCollisionsSinceLastUpdate(), []) #SURELY there are no collisions yet, right?
         self.b.update() #Now move things
         self.assertIn((3,4),self.b.getCollisionsSinceLastUpdate()) #Now there should be a collision.
+
+if __name__ == '__main__':
+    unittest.main()

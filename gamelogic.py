@@ -35,6 +35,7 @@ class game():
         self.frog_bullet_ids  = [] #IDs of things that kill enemies.
         self.movingObjectLanes = [] #Lanes that produce objects. There is a specific internal structure to this list, see chooseMovingObjectLane for deatils
         self.isDead = False #Are we dead?
+        self.lilypad_ids = []  # Container for lilypad ID's during Maze Minigame
 
         self.myBoard = b.Board(self.x_size, self.y_size)
         self.myBoard.addSubObject(self.frog_id, "frog", x = self.init_x, y = self.init_y, direction="up")
@@ -160,6 +161,7 @@ class game():
         self.myBoard.addSubObject(self.next_id, FROG_BULLET_TYPE, x = self.myBoard.getSubObject(0)['x'], y=self.myBoard.getSubObject(0)['y'], velocity=BULLET_VELOCITY)
         self.frog_bullet_ids.append(self.next_id)
         self.next_id+=1
+        self.frogCheck()
 
     def getXY(self, x, y):
         '''
@@ -352,7 +354,35 @@ class game():
                 numEnemies-=1
 
     def generateMaze(self):
+        # set the type of mini game
         self.currentMinigame = "lilypads"
+
+        # iterate y times
+        # set lane's land type
+        for y in range(self.y_size - 1):
+            # case(s) covered: first lane set grass AND last lane set to grass
+            if (y == 0) or (y == (self.y_size - 1)):
+                self.myBoard.setLane(y, "grass")
+            # case(s) covered: middle lanes set to swamp
+            else:
+                self.myBoard.setLane(y, "swamp")
+        # set bounds for range of segLength
+        # SEG_LENGTH_MIN = 2, SEG_LENGTH_MAX = 3
+
+        # START LOOP
+            # randomly choose segmentLength
+            # segLength = random.randrange(SEG_LENGTH_MIN, SEG_LENGTH_MAX)
+
+            # create lilypad subObject and decrement the current segLength
+            # variable after each lilypad is created
+
+            # once segLength == 0, start process over with end point of
+            # previous segment as start point for next segment(decrement the next
+            # segLength because the start point is included in the total length)
+            # startPoint = previousEndPoint
+
+        # END LOOP
+
 
     def chooseMovingObjectLane(self, y, laneType, options):
         '''
@@ -441,7 +471,7 @@ class game():
             print("Frogger sailed off the edge! DEAD")
             return
 
-        #Subobject Testing - Test to see if we have collided with an obstacle or a bullet
+        #Subobject Testing - Test to see if we have collided with an obstacle or a bullet or a wall
         interactions = self.getInteractions()
         for i in interactions:
             if i in self.obstacle_id:
@@ -450,6 +480,10 @@ class game():
             elif i in self.enemy_bullet_ids:
                 print("Frogger got shot! DEAD")
                 dead = True
+            elif i in self.wall_ids:
+                froggerCurrentY = self.myBoard.getSubObject(0)['y']
+                self.myBoard.editSubObject(0, y = froggerCurrentY-1)
+
         
         #Lane testing --Test to see if we are on a dangerous lane. If we are, test to see if we are on a platform. If we are, set froggers velocity to be the velocity of the platform.
         frog_y = self.myBoard.getSubObject(self.frog_id)['y'] #The y coordinate of frogger

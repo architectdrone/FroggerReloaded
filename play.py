@@ -5,12 +5,22 @@ import sys
 import time
 import gamelogic
 
+pygame.mixer.pre_init(44100,16,2,4096)
 pygame.init()
 speed = [1, 1]
 X_SIZE = 9
 Y_SIZE = 6
 display_width = X_SIZE*79
 display_height = Y_SIZE*79
+
+#Play background music
+pygame.mixer.music.load("music/menu.mp3")
+pygame.mixer.music.set_volume(0.2)
+pygame.mixer.music.play(-1) #loop it
+
+#Game sound
+crash = pygame.mixer.Sound("music/crash.wav")
+drawning = pygame.mixer.Sound("music/drawning.wav")
 
 #Game Speed
 betweenUpdates = 30
@@ -213,6 +223,11 @@ def getSprite(type, seg, dir):
     return image
 
 def game_play():
+
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("music/game.mp3")
+    pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.music.play(-1) #loop it
     '''
     The game frame itself
     '''
@@ -292,6 +307,10 @@ def game_play():
         updateCounter-=1
 #Generl Helper Functions
 def gameOver():
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("music/gameover.mp3")
+    pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.music.play(-1) #loop it
     while True:
 
         for event in pygame.event.get():
