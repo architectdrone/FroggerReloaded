@@ -60,6 +60,10 @@ firetruck_front_left = pygame.image.load('SPRITES/firetruck_front_left.png')
 firetruck_back_left = pygame.image.load('SPRITES/firetruck_back_left.png')
 log_front_right = pygame.image.load('SPRITES/log_front_right.png')
 log_back_right = pygame.image.load('SPRITES/log_back_right.png')
+bubble = pygame.image.load('SPRITES/bubble.jpg')
+enemy = pygame.image.load('SPRITES/enemy.png')
+turtlePad = pygame.image.load('SPRITES/turtle_pad.png')
+enemyProjectile = pygame.image.load('SPRITES/enemy_projectile.png')
 
 imageDict = {
     'frog_na_down': frog_na_down,
@@ -81,7 +85,11 @@ imageDict = {
     'fireTruck_front_left': firetruck_front_left,
     'fireTruck_back_left': firetruck_back_left,
     'log_front_right': log_front_right,
-    'log_back_right': log_back_right
+    'log_back_right': log_back_right,
+    'bubble_na_na' : bubble,
+    'enemy_na_na' : enemy,
+    'turtlePad_na_na' : turtlePad,
+    'enemyProjectile_na_na' : enemyProjectile
 }
 
 #Makes the screen
