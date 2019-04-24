@@ -60,7 +60,7 @@ firetruck_front_left = pygame.image.load('SPRITES/firetruck_front_left.png')
 firetruck_back_left = pygame.image.load('SPRITES/firetruck_back_left.png')
 log_front_right = pygame.image.load('SPRITES/log_front_right.png')
 log_back_right = pygame.image.load('SPRITES/log_back_right.png')
-bubble = pygame.image.load('SPRITES/bubble.jpg')
+bubble = pygame.image.load('SPRITES/bubble.jpeg')
 enemy = pygame.image.load('SPRITES/enemy.png')
 turtlePad = pygame.image.load('SPRITES/turtle_pad.png')
 enemyProjectile = pygame.image.load('SPRITES/enemy_projectile.png')
@@ -327,11 +327,12 @@ def gameOver():
                 sys.exit()
 
         screen.fill(color_red)
+        game_button("Restart!",display_width/6,2*display_height/3,display_width/6,display_height/12,color_green,color_lightgreen,game_intro)
 
         TextSurf, TextRect = text_objects("RIP", gameTitle)
-        TextRect.center = (400, 200)
+        TextRect.center = (display_width/2, 200)
         TextSurf1, TextRect1 = text_objects("SPACE TO QUIT", smallText)
-        TextRect1.center = (400, 400)
+        TextRect1.center = (display_width/2, 400)
         screen.blit(TextSurf, TextRect)
         screen.blit(TextSurf1, TextRect1)
 
