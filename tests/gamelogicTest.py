@@ -7,6 +7,8 @@ import gamelogic
 class gamelogicTest(unittest.TestCase):
     def setUp(self):
         self.g = gamelogic.game(10, 10)
+        self.g.init_x = 1
+        self.g.init_y = 1
     
     def tearDown(self):
         self.g = gamelogic.game(10, 10)
@@ -21,6 +23,12 @@ class gamelogicTest(unittest.TestCase):
         assert 'type' in self.g.getXY(0,0) #Test if there is a subobject at the position.
         self.assertEquals(self.g.getXY(0,0)['type'][0], 'frog') #Test if the subobject there is frog.
 
+        self.g.init_x = 1
+        self.g.init_y = 1
+        self.g.frogDown()
+        assert 'type' in self.g.getXY(1,0) #Test if there is a subobject at the position.
+        self.assertEquals(self.g.getXY(1,0)['type'][0], 'frog') #Test if the subobject there is frog.
+
     def test_frogRight(self):
         self.g.frogRight()
         assert 'type' in self.g.getXY(1,0) #Test if there is a subobject at the position.
@@ -31,6 +39,11 @@ class gamelogicTest(unittest.TestCase):
         assert 'type' in self.g.getXY(0,0) #Test if there is a subobject at the position.
         self.assertEquals(self.g.getXY(0,0)['type'][0], 'frog') #Test if the subobject there is frog.
 
+        self.g.init_x = 1
+        self.g.init_y = 1
+        self.g.frogDown()
+        assert 'type' in self.g.getXY(0,1) #Test if there is a subobject at the position.
+        self.assertEquals(self.g.getXY(0,1)['type'][0], 'frog') #Test if the subobject there is frog.
     '''
     def test_score(self):
         self.g.myBoard.addSubObject(0,"frog", 0, 9)
