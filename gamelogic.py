@@ -354,9 +354,13 @@ class game():
                 numEnemies-=1
 
     def generateMaze(self):
+        SEG_LENGTH_MIN = 2
+        SEG_LENGTH_MAX = 3
+        x_start = random.randrange(0, size - 1)
+        y_start = 0
+        orient_option = ['h', 'v']
         # set the type of mini game
         self.currentMinigame = "lilypads"
-
         # iterate y times
         # set lane's land type
         for y in range(self.y_size - 1):
@@ -366,24 +370,27 @@ class game():
             # case(s) covered: middle lanes set to swamp
             else:
                 self.myBoard.setLane(y, "swamp")
-        # set bounds for range of segLength
-        # SEG_LENGTH_MIN = 2, SEG_LENGTH_MAX = 3
+        x_start = random.randrange(0, self.x_size - 1)
+        y_start = 0
+        allSeg = []
+        prevSeg = []
+        while y < self.y_size:
+            seg_len = random.randrange(SEG_LENGTH_MIN, SEG_LENGTH_MAX)
+            seg_ori = random.choice(orient_option)
 
-        # START LOOP
-            # randomly choose segmentLength
-            # segLength = random.randrange(SEG_LENGTH_MIN, SEG_LENGTH_MAX)
-
-            # create lilypad subObject and decrement the current segLength
-            # variable after each lilypad is created
-
-            # once segLength == 0, start process over with end point of
-            # previous segment as start point for next segment(decrement the next
-            # segLength because the start point is included in the total length)
-            # startPoint = previousEndPoint
-
-        # END LOOP
-
-
+        # x_start = random.randrange(0, size - 1)
+        # y_start = 0
+        # allSeg = []
+        # prevSeg = []
+        # LOOP: randomize next segment properties
+            #
+            # seg_len
+            # seg_ori
+            # LOOP: decrement seg_len while placing lilypads
+            #       along the same orientation for the whole line segment
+                # find viable options store in array
+                # randomly select option from array
+                # place lilypad
     def chooseMovingObjectLane(self, y, laneType, options):
         '''
         Chooses a moving object lane that works with the lane from the options, and adds it to the moving object lane variable.
