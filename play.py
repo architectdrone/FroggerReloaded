@@ -307,12 +307,15 @@ def game_play():
         if g.isDead:
             #Do something, I guess? idk lol
             run = False
-            gameOver()
+            
             
         #Update the screen using pygame methods
         pygame.display.update()
 
         updateCounter-=1
+    gameOver()
+
+
 #Generl Helper Functions
 def gameOver():
     pygame.mixer.music.stop()
@@ -327,7 +330,7 @@ def gameOver():
                 sys.exit()
 
         screen.fill(color_red)
-        game_button("Restart!",display_width/6,2*display_height/3,display_width/6,display_height/12,color_green,color_lightgreen,game_intro)
+        game_button("Restart!",display_width/5,2*display_height/5,display_width/6,display_height/12,color_green,color_lightgreen,game_intro)
 
         TextSurf, TextRect = text_objects("RIP", gameTitle)
         TextRect.center = (display_width/2, 200)
