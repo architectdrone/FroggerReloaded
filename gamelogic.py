@@ -40,7 +40,7 @@ class game():
         self.myBoard = b.Board(self.x_size, self.y_size)
         self.myBoard.addSubObject(self.frog_id, "frog", x = self.init_x, y = self.init_y, direction="up")
 
-        self.generateBasic() #Runs the board generator.
+        self.generateInvaders() #Runs the board generator.
 
     def update(self):
         '''
@@ -156,7 +156,7 @@ class game():
         '''
         Shoots a projectile - if we are in the right mode for projectile shooting
         '''
-        FROG_BULLET_TYPE = "bullet"
+        FROG_BULLET_TYPE = "bubble"
         BULLET_VELOCITY = (0, 1)
         self.myBoard.addSubObject(self.next_id, FROG_BULLET_TYPE, x = self.myBoard.getSubObject(0)['x'], y=self.myBoard.getSubObject(0)['y'], velocity=BULLET_VELOCITY)
         self.frog_bullet_ids.append(self.next_id)
@@ -326,7 +326,7 @@ class game():
         BACKGROUND = "grass" #The lane for all non-wall areas.
         ENEMY_TYPE = "enemy" #The type for the enemies.
         MAX_ENEMY = 10 #Total number of enemies.
-        WALL_TYPE = "wall" #The type for the wall.
+        WALL_TYPE = "turtle_pad" #The type for the wall.
 
         self.currentMinigame = "invaders"
 
@@ -347,11 +347,12 @@ class game():
             x = random.randrange(0, self.x_size-1)
             y = random.randrange(wallY+1, self.y_size-1)
             velocity = random.choice([(1,0),(-1,0),(0,1),(0,-1)])
-            if self.myBoard.getXY(0,0)['id'] == []:
+            if self.myBoard.getXY(x,y)['id'] == None:
                 self.myBoard.addSubObject(self.next_id, ENEMY_TYPE, x = x, y = y, velocity=velocity)
                 self.enemy_ids.append(self.next_id)
                 self.next_id+=1
                 numEnemies-=1
+            else:
 
     def generateMaze(self):
         SEG_LENGTH_MIN = 2
@@ -391,6 +392,7 @@ class game():
                 # find viable options store in array
                 # randomly select option from array
                 # place lilypad
+
     def chooseMovingObjectLane(self, y, laneType, options):
         '''
         Chooses a moving object lane that works with the lane from the options, and adds it to the moving object lane variable.
@@ -519,7 +521,7 @@ class game():
         FIRING_CHANCE = 0.4 #Chance of a given enemy firing.
         MAX_SHOOTERS = 4 #Maximum amount of enemies that can fire in a given tick.
         BULLET_VELOCITY = (0, -1) #Velocity of a bullet. Make sure the Y coordinate is negative!
-        BULLET_TYPE = "enemy_bullet"
+        BULLET_TYPE = "enemy_projectile"
 
         current_shooters = MAX_SHOOTERS
         enemyCollisions = []
