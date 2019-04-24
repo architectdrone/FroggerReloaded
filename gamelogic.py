@@ -520,7 +520,7 @@ class game():
         FIRING_CHANCE = 0.4 #Chance of a given enemy firing.
         MAX_SHOOTERS = 4 #Maximum amount of enemies that can fire in a given tick.
         BULLET_VELOCITY = (0, -1) #Velocity of a bullet. Make sure the Y coordinate is negative!
-        BULLET_TYPE = "enemy_projectile"
+        BULLET_TYPE = "enemyProjectile"
 
         current_shooters = MAX_SHOOTERS
         enemyCollisions = []
