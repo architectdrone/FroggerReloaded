@@ -13,11 +13,6 @@ Y_SIZE = 6
 display_width = X_SIZE*79
 display_height = Y_SIZE*79
 
-#Play background music
-pygame.mixer.music.load("music/menu.mp3")
-pygame.mixer.music.set_volume(0.2)
-pygame.mixer.music.play(-1) #loop it
-
 #Game sound
 crash = pygame.mixer.Sound("music/crash.wav")
 drawning = pygame.mixer.Sound("music/drawning.wav")
@@ -148,6 +143,12 @@ def game_intro():
     '''
     intro = True
 
+    #Play menu background music
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("music/menu.mp3")
+    pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.music.play(-1) #loop it
+
     frog_rect = frog_image.get_rect()
     frames_per_sec = 100
     #fps_clock = pygame.time.Clock()
@@ -236,6 +237,7 @@ def getSprite(type, seg, dir):
 
 def game_play():
 
+    #Play background music
     pygame.mixer.music.stop()
     pygame.mixer.music.load("music/game.mp3")
     pygame.mixer.music.set_volume(0.2)
@@ -319,10 +321,13 @@ def game_play():
         updateCounter-=1
 #Generl Helper Functions
 def gameOver():
+
+    #Game over background music
     pygame.mixer.music.stop()
     pygame.mixer.music.load("music/gameover.mp3")
     pygame.mixer.music.set_volume(0.2)
     pygame.mixer.music.play(-1) #loop it
+    
     while True:
 
         for event in pygame.event.get():
