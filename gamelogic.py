@@ -537,14 +537,16 @@ class game():
                 new_velocity = (0,1)
             elif y == self.y_size-1 and theSubObject['velocity'] == (0,1):
                 new_velocity = (0,-1)
-            else:
+            
             '''
+            else:
             if x == 0 or x == self.x_size-1:                    
                 new_velocity = (new_velocity[0]*-1, new_velocity[1])
                 print(f"")
             elif y == math.floor(self.y_size/2) or y == self.y_size-1:
                 new_velocity = (new_velocity[0], new_velocity[1]*-1)
             '''
+            
             self.myBoard.editSubObject(i, velocity=new_velocity)
 
             #Fire, potentially.
