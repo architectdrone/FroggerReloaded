@@ -325,7 +325,7 @@ class game():
         '''
         BACKGROUND = "grass" #The lane for all non-wall areas.
         ENEMY_TYPE = "enemy" #The type for the enemies.
-        MAX_ENEMY = 10 #Total number of enemies.
+        MAX_ENEMY = 5 #Total number of enemies.
         WALL_TYPE = "turtlePad" #The type for the wall.
 
         self.currentMinigame = "invaders"
@@ -495,7 +495,6 @@ class game():
         
         #Lane testing --Test to see if we are on a dangerous lane. If we are, test to see if we are on a platform. If we are, set froggers velocity to be the velocity of the platform.
         frog_y = self.myBoard.getSubObject(self.frog_id)['y'] #The y coordinate of frogger
-        print(frog_y)
         self.myBoard.editSubObject(self.frog_id, velocity=(0,0)) #Pre set the velocity to 0.
         if frog_y in self.dangerous_lane: #If frogger is in a dangerous lane, check if we are on a plaform.
             laneDead = True
@@ -530,10 +529,22 @@ class game():
             x = theSubObject['x']
             y = theSubObject['y']
             new_velocity = theSubObject['velocity']
-            if x == 0 or x == self.x_size-1:
+            if x == 0 and theSubObject['velocity'] == (-1,0):
+                new_velocity = (1,0)
+            elif x == self.x_size-1 and theSubObject['velocity'] == (1,0):
+                new_velocity = (-1,0)
+            elif y == math.floor(self.y_size/2)+1 and theSubObject['velocity'] == (0,-1):
+                new_velocity = (0,1)
+            elif y == self.y_size-1 and theSubObject['velocity'] == (0,1):
+                new_velocity = (0,-1)
+            else:
+            '''
+            if x == 0 or x == self.x_size-1:                    
                 new_velocity = (new_velocity[0]*-1, new_velocity[1])
+                print(f"")
             elif y == math.floor(self.y_size/2) or y == self.y_size-1:
                 new_velocity = (new_velocity[0], new_velocity[1]*-1)
+            '''
             self.myBoard.editSubObject(i, velocity=new_velocity)
 
             #Fire, potentially.

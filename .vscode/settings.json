@@ -1,12 +1,12 @@
 {
     "python.pythonPath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\Python36_64\\python.exe",
-    "python.unitTest.nosetestArgs": [
+    "python.testing.nosetestArgs": [
         "Documentation"
     ],
-    "python.unitTest.pyTestEnabled": false,
-    "python.unitTest.unittestEnabled": true,
-    "python.unitTest.nosetestsEnabled": false,
-    "python.unitTest.unittestArgs": [
+    "python.testing.pyTestEnabled": false,
+    "python.testing.unittestEnabled": true,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.unittestArgs": [
         "-v",
         "-s",
         "./tests",
