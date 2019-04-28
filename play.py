@@ -281,6 +281,8 @@ def game_play():
             nextCommand = "left"
         elif keys[pygame.K_RIGHT]:
             nextCommand = "right"
+        elif keys[pygame.K_SPACE]:
+            nextCommand = "launch"
         if keys[pygame.K_ESCAPE]:
                 run = False
 
@@ -298,6 +300,8 @@ def game_play():
                 g.frogLeft()
             if nextCommand == "right":
                 g.frogRight()
+            if nextCommand == "launch":
+                g.frogShoot()
             nextCommand = ""
 
             

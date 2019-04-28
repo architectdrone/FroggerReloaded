@@ -1,16 +1,4 @@
 {
-    "python.pythonPath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\Python36_64\\python.exe",
-    "python.testing.nosetestArgs": [
-        "Documentation"
-    ],
-    "python.testing.pyTestEnabled": false,
-    "python.testing.unittestEnabled": true,
-    "python.testing.nosetestsEnabled": false,
-    "python.testing.unittestArgs": [
-        "-v",
-        "-s",
-        "./tests",
-        "-p",
-        "*test.py"
-    ]
+    "python.pythonPath": "~\\AppData\\Local\\Programs\\Python\\Python36-32\\python.exe",
+
 }

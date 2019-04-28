@@ -157,7 +157,7 @@ class game():
         Shoots a projectile - if we are in the right mode for projectile shooting
         '''
         FROG_BULLET_TYPE = "bubble"
-        BULLET_VELOCITY = (0, 1)
+        BULLET_VELOCITY = (0, 2)
         self.myBoard.addSubObject(self.next_id, FROG_BULLET_TYPE, x = self.myBoard.getSubObject(0)['x'], y=self.myBoard.getSubObject(0)['y'], velocity=BULLET_VELOCITY)
         self.frog_bullet_ids.append(self.next_id)
         self.next_id+=1
@@ -533,7 +533,7 @@ class game():
                 new_velocity = (1,0)
             elif x == self.x_size-1 and theSubObject['velocity'] == (1,0):
                 new_velocity = (-1,0)
-            elif y == math.floor(self.y_size/2)+1 and theSubObject['velocity'] == (0,-1):
+            elif y <= math.floor(self.y_size/2)+1 and theSubObject['velocity'] == (0,-1):
                 new_velocity = (0,1)
             elif y == self.y_size-1 and theSubObject['velocity'] == (0,1):
                 new_velocity = (0,-1)
@@ -546,7 +546,7 @@ class game():
             elif y == math.floor(self.y_size/2) or y == self.y_size-1:
                 new_velocity = (new_velocity[0], new_velocity[1]*-1)
             '''
-            
+
             self.myBoard.editSubObject(i, velocity=new_velocity)
 
             #Fire, potentially.
@@ -561,17 +561,21 @@ class game():
             for c in self.myBoard.getCollisionsSinceLastUpdate():
                 if i in c:
                     enemyCollisions.append(c)
-        
+        if enemyCollisions != []:
+            print(enemyCollisions)
         #Check to see if enemy is dead
         for collision in enemyCollisions:
             for subObjectID in collision:
                 if subObjectID in self.frog_bullet_ids:
-                    self.frog_bullet_ids.remove(subObjectID) #Destroy Bullet
-                    enemy_id = 0
-                    if collision[0] != subObjectID:
-                        enemy_id = collision[0]
-                    else:
-                        enemy_id = collision[1]
-                    self.enemy_ids.remove(enemy_id) #Destroy Enemy
-                    self.myBoard.deleteSubObject(enemy_id)
-                    self.myBoard.deleteSubObject(subObjectID)
+                    try:
+                        self.frog_bullet_ids.remove(subObjectID) #Destroy Bullet
+                        enemy_id = 0
+                        if collision[0] != subObjectID:
+                            enemy_id = collision[0]
+                        else:
+                            enemy_id = collision[1]
+                        self.enemy_ids.remove(enemy_id) #Destroy Enemy
+                        self.myBoard.deleteSubObject(enemy_id)
+                        self.myBoard.deleteSubObject(subObjectID)
+                    except:
+                        continue
