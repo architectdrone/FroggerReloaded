@@ -565,7 +565,6 @@ class game():
             for c in self.myBoard.getCollisionsSinceLastUpdate():
                 if i in c:
                     enemyCollisions.append(c)
-        if enemyCollisions != []:
         #Check to see if enemy is dead
         for collision in enemyCollisions:
             for subObjectID in collision:
