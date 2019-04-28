@@ -339,8 +339,8 @@ def gameOver():
 
         #screen.fill(color_red)
         screen.blit(gameover_image, [0,0])
-        game_button("Restart!",3*display_width/12,8*display_height/9,display_width/6,display_height/12,color_black,color_lightgreen,game_intro)
-        game_button("Quit!",7*display_width/12,8*display_height/9,display_width/6,display_height/12,color_black,color_gray,game_quit)
+        game_button("Restart!",3*display_width/12,8*display_height/9,display_width/6,display_height/12,color_red,color_lightgreen,game_intro)
+        game_button("Quit!",7*display_width/12,8*display_height/9,display_width/6,display_height/12,color_red,color_gray,game_quit)
 
         #TextSurf, TextRect = text_objects("RIP", gameTitle)
         #TextRect.center = (display_width/2, display_height/3)

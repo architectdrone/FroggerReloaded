@@ -93,9 +93,13 @@ class game():
                     lane['entering'] = True #In that case we start entering mode.
                     lane['whichSegment'] = 0 #We also reset whichSegment.
 
-        #Do an enemy check
+        #Do an enemy check, and see if we have won.
         if self.currentMinigame == "invaders":
             self.updateEnemies()
+            if self.enemy_ids == []:
+                for i in self.wall_ids:
+                    self.myBoard.deleteSubObject(i)
+                self.wall_ids = []
 
     def frogUp(self):
         '''
@@ -342,7 +346,7 @@ class game():
             self.next_id += 1
         
         #Place enemies.
-        numEnemies = random.randrange(1, MAX_ENEMY)
+        numEnemies = random.randrange(1, 2)
         while numEnemies > 0:
             x = random.randrange(0, self.x_size-1)
             y = random.randrange(wallY+1, self.y_size-1)
@@ -562,7 +566,6 @@ class game():
                 if i in c:
                     enemyCollisions.append(c)
         if enemyCollisions != []:
-            print(enemyCollisions)
         #Check to see if enemy is dead
         for collision in enemyCollisions:
             for subObjectID in collision:
