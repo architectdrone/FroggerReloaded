@@ -28,6 +28,7 @@ betweenUpdates = 30
 #Colors
 color_white = (255,255,255)
 color_black = (0,0,0)
+color_gray = (125,125,125)
 color_red = (200,0,0)
 color_green = (0,200,0) 
 color_lightred = (255,0,0)
@@ -64,6 +65,9 @@ bubble = pygame.image.load('SPRITES/bubble.jpeg')
 enemy = pygame.image.load('SPRITES/enemy.png')
 turtlePad = pygame.image.load('SPRITES/turtle_pad.png')
 enemyProjectile = pygame.image.load('SPRITES/enemy_projectile.png')
+gameover_image = pygame.image.load('over.png')
+background_image = pygame.transform.scale(background_image,(display_width,display_height))
+gameover_image = pygame.transform.scale(gameover_image,(display_width,display_height))
 
 imageDict = {
     'frog_na_down': frog_na_down,
@@ -333,19 +337,21 @@ def gameOver():
                 pygame.quit()
                 sys.exit()
 
-        screen.fill(color_red)
-        game_button("Restart!",display_width/5,2*display_height/5,display_width/6,display_height/12,color_green,color_lightgreen,game_intro)
+        #screen.fill(color_red)
+        screen.blit(gameover_image, [0,0])
+        game_button("Restart!",3*display_width/12,8*display_height/9,display_width/6,display_height/12,color_black,color_lightgreen,game_intro)
+        game_button("Quit!",7*display_width/12,8*display_height/9,display_width/6,display_height/12,color_black,color_gray,game_quit)
 
-        TextSurf, TextRect = text_objects("RIP", gameTitle)
-        TextRect.center = (display_width/2, 200)
-        TextSurf1, TextRect1 = text_objects("SPACE TO QUIT", smallText)
-        TextRect1.center = (display_width/2, 400)
-        screen.blit(TextSurf, TextRect)
-        screen.blit(TextSurf1, TextRect1)
+        #TextSurf, TextRect = text_objects("RIP", gameTitle)
+        #TextRect.center = (display_width/2, display_height/3)
+        #TextSurf1, TextRect1 = text_objects("SPACE TO QUIT", smallText)
+        #TextRect1.center = (display_width/2, 400)
+        #screen.blit(TextSurf, TextRect)
+        #screen.blit(TextSurf1, TextRect1)
 
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE]:
-            game_quit()
+        #keys = pygame.key.get_pressed()
+        #if keys[pygame.K_SPACE]:
+        #    game_quit()
 
         pygame.display.update()
 
