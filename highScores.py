@@ -1,52 +1,75 @@
 #will store top 10 high scores to text file after game over
-'''
-scores_list = []#holds list of names and associated scores
-class HighScores():   
-    def __init__(self, name, score):
-        '''
-        @param name username
-        @param score 
-        '''
-        self.name = name
-        self.score = score
 
-
-    def addEntry(self, name, score):  
-        '''
-        adds entry to scores
-        @param name username
-        @param score 
-        '''
-        newEntry = {
-            'name' : name,
-            'score' : score
-        }
-        scores_list.append(newEntry)
-'''
 
 def readFromFileAndPrint(file_name):
-	    file = open(file_name, 'r')
-	    lines = file.readlines()
-	    file.close
+    '''
+    Reads entries from the score file and prints the entries
+    @param file_name Name of file
+    '''
+    file = open(file_name, 'r')
+    lines = file.readlines()
+    file.close
 
-	    for line in lines:
-	        entry = line.strip().split(",") #format in file will be name,score
-	        print(entry[0] , entry[1]) #entry[0] is name, entry[1] is score
+    for line in lines:
+	    entry = line.strip().split(",") #format in file will be name,score
+	    print(entry[0] , entry[1]) #entry[0] is name, entry[1] is score
         
-def writeToFileAndSort(file_name, name, score):
+def writeToFile(file_name, name, score):
+    '''
+    Adds new entry to the file
+    @param name Username to be added
+    @param score User score to be added
+    '''
     file = open(file_name, 'a')
-	file.write(name + ',' + score)
-	file.close
+    file.write(name + ',' + str(score)+"\n")
+    file.close()
 
+def SortAndCompareScores(file_name, user_score):
+    '''
+    Sorts all entries by score in the file and returns True if user score is within top 10 scores
+    @param file_name Name of score file
+    @param user_score Score of the user 
+    '''
+    highScore = False
     userScores_list = []
     file = open(file_name, 'r')
-	lines = file.readlines()
+    lines = file.readlines()
     for line in lines:
-        entry = line.strip().split(",")
-        name = entry[0]
-        score = int(entry[1])
-        userScores_list.append(score, name)
+        if line != "":
+            entry = line.strip().split(",")
+            score = int(entry[1])
+            userScores_list.append(score)
         
     userScores_list.sort(reverse=True) #sort user scores descending order
+    userScores_list = userScores_list[:10] #limit to top 10 entries
+
+    for score in userScores_list:
+        if user_score >= score:
+            highScore = True
+    
+    return highScore
+
+filename = "highscores.txt"
+writeToFile(filename, "Owen", 34)
+writeToFile(filename,"Gwen", 78)
+writeToFile(filename, "Jack", 12)
+writeToFile(filename, "Steve", 41)
+writeToFile(filename, "Bob", 13)
+writeToFile(filename, "Jack", 2)
+writeToFile(filename, "Jack", 5)
+writeToFile(filename, "Jack", 2)
+writeToFile(filename, "Jack", 89)
+writeToFile(filename, "Jack", 34)
+writeToFile(filename, "Jack", 5)
+writeToFile(filename, "Jack", 12)
+print(SortAndCompareScores(filename, 77))
+readFromFileAndPrint(filename)
+
+
+
+
+
+
+
     
 
