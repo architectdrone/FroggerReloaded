@@ -214,50 +214,54 @@ class Board():
         self.collisionsSinceLastUpdate = []
 
         allDone = False #Tells us if we are done. This is False when movement is possible.
+        positionLog = [{"pos":(i['current_x'],i['current_y']),"id":i['id']} for i in particles] #Records every single position where an ID has been. A list of dictionaries. Initializes to initial conditions.{"pos":(x,y),"id":id}
         #x and y overlaps are lists of lists. Each element represents an x or y coordinate. For example, everything at x=3 is stored in x_overlaps[3].
         out_of_bounds = []
         while not allDone: #We do this until we determine that no more movement is possible.
             allDone = True #Assume that we are done
-            x_overlaps = [[] for i in range(self.size[0])]
-            y_overlaps = [[] for i in range(self.size[1])]
 
             #Move everything
+            newParticles = []
             for index, element in enumerate(particles): 
                 #Move in the x direction
+                new_x = element['current_x']
+                new_y = element['current_y']
+                new_remaining_x_movement = element['remaining_x_movement']
+                new_remaining_y_movement = element['remaining_y_movement']
+                    
                 if element['remaining_x_movement'] != 0:
                     allDone = False #Movement is still possible in this case.
                     if element['remaining_x_movement'] > 0:
-                        particles[index]['current_x']+=1
-                        particles[index]['remaining_x_movement']-=1
+                        new_x+=1
+                        new_remaining_x_movement-=1
                     else:
-                        particles[index]['current_x']-=1
-                        particles[index]['remaining_x_movement']+=1
+                        new_x-=1
+                        new_remaining_x_movement+=1
                 #Move in the y direction
                 if element['remaining_y_movement'] != 0:
                     allDone = False #Movement is still possible in this case.
                     if element['remaining_y_movement'] > 0:
-                        particles[index]['current_y']+=1
-                        particles[index]['remaining_y_movement']-=1
+                        new_y+=1
+                        new_remaining_y_movement-=1
                     else:
-                        particles[index]['current_y']-=1
-                        particles[index]['remaining_y_movement']+=1
-                #Add both to x and y overlaps
+                        new_y-=1
+                        new_remaining_y_movement+=1
+                #Add to position log
                 if not (particles[index]['current_x'] >= self.size[0] or particles[index]['current_x'] < 0 or particles[index]['current_y'] >= self.size[1] or particles[index]['current_y'] < 0):
-                    x_overlaps[particles[index]['current_x']].append(element['id'])
-                    y_overlaps[particles[index]['current_y']].append(element['id'])
+                    positionLog.append({"pos":(new_x, new_y), "id":element['id']})
                 else:
                     out_of_bounds.append(element['id'])
-            
-            #Check for collisions (This is the best runtime complexity I could do.)
-            #The algorithim works like this. We create two lists The first list associates x coordinates with ids, and the second associtates y coordinates with ids.
-            #Then we look at each x coordinate in our first list. If there exist a y-coordinate that has two ids in it that are also in 
-                        
-            #Now, find collisions
-            for x_ids in x_overlaps:
-                for y_ids in y_overlaps:
-                    new_collisions = tuple(set(x_ids).intersection(y_ids)) #Find everything that is common between the two lists.
-                    self.collisionsSinceLastUpdate.append(new_collisions) #Add it to the list of collisions.
-        
+                
+                #Append to new list
+                newParticles.append({"id":element['id'],"current_x":new_x, "current_y":new_y, "remaining_x_movement":new_remaining_x_movement, "remaining_y_movement":new_remaining_y_movement})
+            particles = newParticles
+        #Check for collisions.
+        for toCheck in positionLog:
+            for checkAgainst in positionLog:
+                if checkAgainst['pos'] == toCheck['pos'] and toCheck['id'] != checkAgainst['id']: #If they were at the same position, and if they were different objects.
+                    if (checkAgainst['id'], toCheck['id']) not in self.collisionsSinceLastUpdate and (toCheck['id'], checkAgainst['id']) not in self.collisionsSinceLastUpdate:
+                        self.collisionsSinceLastUpdate.append((checkAgainst['id'], toCheck['id']))
+
         #Now, we must update the positions
         for i in particles:
             self.editSubObject(i['id'], x=i['current_x'], y=i['current_y'])
@@ -269,7 +273,7 @@ class Board():
             except:
                 continue
         
-        #Remove non-collisions from list of collisions. (Yes, this is neccesary)
+        """ #Remove non-collisions from list of collisions. (Yes, this is neccesary)
         i = 0
         while True:
             if i == len(self.collisionsSinceLastUpdate)-1:
@@ -277,7 +281,7 @@ class Board():
             if self.collisionsSinceLastUpdate[i] == () or len(self.collisionsSinceLastUpdate[i]) != 2:
                 self.collisionsSinceLastUpdate.pop(i)
             else:
-                i+=1
+                i+=1 """
 
 
     def getSubObjectAtPosition(self, x, y):
