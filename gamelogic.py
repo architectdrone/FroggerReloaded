@@ -52,7 +52,6 @@ class game():
         -Causes new moving objects to enter lanes.
         -If applicable, do checks for enemies.
         '''
-        print(self.events)
         #Reset events
         self.events = []
 
@@ -98,7 +97,7 @@ class game():
                     lane['whichSegment'] = 0 #We also reset whichSegment.
 
         #Do an enemy check, and see if we have won.
-        if self.currentMinigame == "invaders":
+
             self.updateEnemies()
             if self.enemy_ids == []:
                 for i in self.wall_ids:
