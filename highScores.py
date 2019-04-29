@@ -1,18 +1,26 @@
 #will store top 10 high scores to text file after game over
 
 
-def readFromFileAndPrint(file_name):
+def findHighestScore(file_name):
     '''
-    Reads entries from the score file and prints the entries
+    Reads entries from the score file and returns highest score
     @param file_name Name of file
     '''
     file = open(file_name, 'r')
     lines = file.readlines()
     file.close
 
+    highest_score = 0
+
     for line in lines:
-	    entry = line.strip().split(",") #format in file will be name,score
-	    print(entry[0] , entry[1]) #entry[0] is name, entry[1] is score
+        entry = line.strip().split(",") #format in file will be name,score so name=entry[0] and score=entry[1]
+        #print(entry[0] , entry[1]) #entry[0] is name, entry[1] is score
+        score = int(entry[1])
+        if score > highest_score:
+            highest_score = score
+
+    return highest_score
+
         
 def writeToFile(file_name, name, score):
     '''
