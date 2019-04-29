@@ -16,6 +16,7 @@ class game():
         self.init_x = init_x
         self.init_y = init_y
         self.currentMinigame = "basic" #The minigame we are currently on. Allowed values are "basic", "lilypads", "invaders".
+        self.events = [] #For usage with sounds. Basically a list of strings. Please see the getEvents() function for more documentation.
         self.initialize()
         self.displayCount = 0 #counts change in display
 
@@ -51,7 +52,10 @@ class game():
         -Causes new moving objects to enter lanes.
         -If applicable, do checks for enemies.
         '''
-        
+        print(self.events)
+        #Reset events
+        self.events = []
+
         #Do a frog check.
         self.frogCheck()
 
@@ -105,7 +109,6 @@ class game():
         '''
         Moves the frog up.
         '''
-
         theSubObject = self.myBoard.getSubObject(self.frog_id)
         current_x = theSubObject['x']
         current_y = theSubObject['y']
@@ -195,6 +198,18 @@ class game():
         Returns score as number of display changes
         '''
         return self.displayCount
+
+    def getEvents(self):
+        '''
+        Returns a list of events that have happened since the last update. For use in playing sounds.
+        -"enemy_shoot": Enemy has shot a bullet.
+        -"enemy_dead" : Enemy has been killed.
+        -"death_crash": Frog has died b/c something crashed into him.
+        -"death_shot" : Frog was shot.
+        -"death_swamp": Frog entered a lane that killed him (aka, a swamp)
+        -"death_sailaway": Frog sailed off of the edge of the board.
+        '''
+        return self.events
 
     #PRIVATE FUNCTIONS
     #No touchy
@@ -491,6 +506,7 @@ class game():
             self.myBoard.getSubObject(self.frog_id)
         except:
             self.isDead = True
+            self.events.append("death_sailaway")
             print("Frogger sailed off the edge! DEAD")
             return
 
@@ -499,8 +515,10 @@ class game():
         for i in interactions:
             if i in self.obstacle_id:
                 print("Frogger hit an obstacle! DEAD")
+                self.events.append("death_crash")
                 dead = True
             elif i in self.enemy_bullet_ids:
+                self.events.append("death_shot")
                 print("Frogger got shot! DEAD")
                 dead = True
             elif i in self.wall_ids:
@@ -520,6 +538,7 @@ class game():
                     self.myBoard.editSubObject(self.frog_id, velocity=platformVelocity) #Set our velocity to the velocity of the platform.
                     break
             if laneDead:
+                self.events.append("death_swamp")
                 print(f"You are in a killing lane! DEAD Y = {frog_y} Dangerous = {self.dangerous_lane}")
                 dead = True
         
@@ -567,6 +586,8 @@ class game():
             #Fire, potentially.
             if random.randrange(1, 100) < FIRING_CHANCE*100:
                 if current_shooters > 0:
+                    if "enemy_shoot" not in self.events:
+                        self.events.append("enemy_shoot")
                     self.myBoard.addSubObject(self.next_id, BULLET_TYPE, x = x, y = y, velocity=BULLET_VELOCITY)
                     self.enemy_bullet_ids.append(self.next_id)
                     self.next_id+=1
@@ -581,6 +602,7 @@ class game():
             for subObjectID in collision:
                 if subObjectID in self.frog_bullet_ids:
                     try:
+                        self.events.append("enemy_dead")
                         self.frog_bullet_ids.remove(subObjectID) #Destroy Bullet
                         enemy_id = 0
                         if collision[0] != subObjectID:
