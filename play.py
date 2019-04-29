@@ -15,9 +15,13 @@ display_width = X_SIZE*spirte_size
 display_height = Y_SIZE*spirte_size
 
 #Game sound
-crash = pygame.mixer.Sound("music/crash.wav")
-drawning = pygame.mixer.Sound("music/drawning.wav")
+pygame.mixer.init(23433,16,2,4096)
 buttonclick = pygame.mixer.Sound("music/clickbutton.wav")
+soundB = pygame.mixer.Channel(2)
+drawning = pygame.mixer.Sound("music/drawning.wav")
+crash = pygame.mixer.Sound("music/crash.wav")
+bullethit = pygame.mixer.Sound("music/bullethit.wav")
+
 
 #Game Speed
 betweenUpdates = 30
@@ -217,7 +221,21 @@ def display(g):
     #TODO define X_SIZE and Y_SIZE
     for tile_x in range(X_SIZE):
         for tile_y in range(Y_SIZE):
+            event = g.getEvents()
             atXY = g.getXY(tile_x, tile_y)
+
+            if 'death_sailaway' in event:
+                drawning.play()
+            elif 'death_crash' in event:
+                crash.play()
+            elif 'death_shot' in event:
+                bullethit.play()
+            elif 'death_swamp' in event:
+                drawning.play()
+            elif 'enemy_dead' in event:
+                bullethit.play()
+            elif 'enemy_shoot' in event:
+                buttonclick.play()
 
             segments = atXY['segment']
             types = atXY['type']
