@@ -4,7 +4,7 @@ from pygame.locals import *
 import sys
 import time
 import gamelogic
-import highScores
+#import highScores
 
 pygame.mixer.pre_init(44100,16,2,4096)
 pygame.init()
@@ -392,6 +392,7 @@ def gameOver():
         pygame.display.update()
         
         #add name and score to file after game over
+        '''
         userScore = gamelogic.game.score
         if (highScores.SortAndCompareScores('highscore.txt', userScore) == True):
             print('Congradulations, your score is within the top 10')
@@ -401,7 +402,7 @@ def gameOver():
             else:
                 highScores.writeToFile('highscore.txt', userName, userScore)
 
-            
+        '''    
 
 
 

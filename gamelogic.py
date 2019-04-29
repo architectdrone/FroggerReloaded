@@ -16,6 +16,8 @@ class game():
         self.init_x = init_x
         self.init_y = init_y
         self.currentMinigame = "basic" #The minigame we are currently on. Allowed values are "basic", "lilypads", "invaders".
+        self.sequence = ["basic", "invaders"]
+        self.sequenceIndex = 0
         self.events = [] #For usage with sounds. Basically a list of strings. Please see the getEvents() function for more documentation.
         self.initialize()
         self.displayCount = 0 #counts change in display
@@ -41,7 +43,7 @@ class game():
         self.myBoard = b.Board(self.x_size, self.y_size)
         self.myBoard.addSubObject(self.frog_id, "frog", x = self.init_x, y = self.init_y, direction="up")
 
-        self.generateBasic() #Runs the board generator.
+        self.generateNext() #Runs the board generator.
 
     def update(self):
         '''
@@ -211,6 +213,24 @@ class game():
 
     #PRIVATE FUNCTIONS
     #No touchy
+    def generateNext(self):
+        '''
+        Generates the next board in the sequence.
+        '''
+        if self.sequenceIndex == len(self.sequence):
+            self.sequenceIndex = 0
+        
+        print(self.sequenceIndex)
+        nextStage = self.sequence[self.sequenceIndex]
+        if nextStage == "basic":
+            self.generateBasic()
+        elif nextStage == "invaders":
+            self.generateInvaders()
+        elif nextStage == "maze":
+            self.generateMaze() 
+        
+        self.sequenceIndex+=1
+
     def generateBasic(self):
         '''
         Generates a basic game board. This game board has clusters of roads and swamps. Roads and swamps have moving object lanes associated with them.
