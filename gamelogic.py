@@ -2,7 +2,7 @@
 import board as b
 import random
 import math
-
+import time
 class game():
     
     def __init__(self, x_size, y_size, init_x = 0, init_y = 0):
@@ -41,7 +41,7 @@ class game():
         self.myBoard = b.Board(self.x_size, self.y_size)
         self.myBoard.addSubObject(self.frog_id, "frog", x = self.init_x, y = self.init_y, direction="up")
 
-        self.generateInvaders() #Runs the board generator.
+        self.generateBasic() #Runs the board generator.
 
     def update(self):
         '''
@@ -97,9 +97,8 @@ class game():
                     lane['whichSegment'] = 0 #We also reset whichSegment.
 
         #Do an enemy check, and see if we have won.
-
-            self.updateEnemies()
-            if self.enemy_ids == []:
+        self.updateEnemies()
+        if self.enemy_ids == []:
                 for i in self.wall_ids:
                     self.myBoard.deleteSubObject(i)
                 self.wall_ids = []
@@ -441,7 +440,6 @@ class game():
 
         availableMOLs = [i for i in options if i['lane'] == laneType] #All MOLs that fit in with the current laneType
         currentMOL = random.choice(availableMOLs) #The chosen MOL
-        random.seed()
         MOLEntry = {
             "y": y,
             "direction": random.choice(currentMOL['directions']),
@@ -524,23 +522,38 @@ class game():
                 froggerCurrentY = self.myBoard.getSubObject(0)['y']
                 self.myBoard.editSubObject(0, y = froggerCurrentY-1)
 
-        
         #Lane testing --Test to see if we are on a dangerous lane. If we are, test to see if we are on a platform. If we are, set froggers velocity to be the velocity of the platform.
         frog_y = self.myBoard.getSubObject(self.frog_id)['y'] #The y coordinate of frogger
+        frog_x = self.myBoard.getSubObject(self.frog_id)['x'] #The x coordinate of frogger
         self.myBoard.editSubObject(self.frog_id, velocity=(0,0)) #Pre set the velocity to 0.
         if frog_y in self.dangerous_lane: #If frogger is in a dangerous lane, check if we are on a plaform.
             laneDead = True
             for i in self.platform_id:
                 if i in interactions: #If we are standing on a platform...
+                    #Basic Collisions
                     laneDead = False
                     platformVelocity = self.myBoard.getSubObject(i)['velocity'] #Get the velocity of the platform.
                     self.myBoard.editSubObject(self.frog_id, velocity=platformVelocity) #Set our velocity to the velocity of the platform.
                     break
             if laneDead:
+                for i in self.platform_id:
+                    try:
+                        if frog_x == self.myBoard.getSubObject(i)['x']-1 and frog_y == self.myBoard.getSubObject(i)['y']:
+                            laneDead = False
+                            platformVelocity = self.myBoard.getSubObject(i)['velocity'] #Get the velocity of the platform.
+                            platform_back_x = self.myBoard.getSubObject(i)['x']
+                            platform_back_y = self.myBoard.getSubObject(i)['y']
+                            self.myBoard.editSubObject(self.frog_id, x=platform_back_x, y=platform_back_y, velocity=platformVelocity) #Set our velocity to the velocity of the platform.
+                            break
+                    except:
+                        continue
+                
+            
+            if laneDead:
+                #Saving Grace Rule - If off by one, put him on the back of the log.                    
                 self.events.append("death_swamp")
                 print(f"You are in a killing lane! DEAD Y = {frog_y} Dangerous = {self.dangerous_lane}")
                 dead = True
-        
         
         if dead:
             self.isDead = dead
@@ -570,15 +583,6 @@ class game():
                 new_velocity = (0,1)
             elif y == self.y_size-1 and theSubObject['velocity'] == (0,1):
                 new_velocity = (0,-1)
-            
-            '''
-            else:
-            if x == 0 or x == self.x_size-1:                    
-                new_velocity = (new_velocity[0]*-1, new_velocity[1])
-                print(f"")
-            elif y == math.floor(self.y_size/2) or y == self.y_size-1:
-                new_velocity = (new_velocity[0], new_velocity[1]*-1)
-            '''
 
             self.myBoard.editSubObject(i, velocity=new_velocity)
 

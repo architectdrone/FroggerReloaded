@@ -10,9 +10,9 @@ pygame.init()
 speed = [1, 1]
 X_SIZE = 15
 Y_SIZE = 10
-spirte_size = 50
-display_width = X_SIZE*spirte_size
-display_height = Y_SIZE*spirte_size
+sprite_size = 50
+display_width = X_SIZE*sprite_size
+display_height = Y_SIZE*sprite_size
 
 #Game sound
 crash = pygame.mixer.Sound("music/crash.wav")
@@ -65,33 +65,33 @@ enemyProjectile = pygame.image.load('SPRITES/enemy_projectile.png')
 gameover_image = pygame.image.load('over.png')
 background_image = pygame.transform.scale(background_image,(display_width,display_height))
 gameover_image = pygame.transform.scale(gameover_image,(display_width,display_height))
-grass_image = pygame.transform.scale(grass_image,(spirte_size,spirte_size))
-road_image = pygame.transform.scale(road_image,(spirte_size,spirte_size))
-water_image = pygame.transform.scale(water_image,(spirte_size,spirte_size))
-frog_na_down = pygame.transform.scale(frog_na_down,(spirte_size,spirte_size))
-frog_na_up = pygame.transform.scale(frog_na_up,(spirte_size,spirte_size))
-frog_na_left = pygame.transform.scale(frog_na_left,(spirte_size,spirte_size))
-frog_na_right = pygame.transform.scale(frog_na_right,(spirte_size,spirte_size))
-blueCar_na_right = pygame.transform.scale(blueCar_na_right,(spirte_size,spirte_size))
-blueCar_na_left = pygame.transform.scale(blueCar_na_left,(spirte_size,spirte_size))
-greenCar_na_right = pygame.transform.scale(greenCar_na_right,(spirte_size,spirte_size))
-greenCar_na_left = pygame.transform.scale(greenCar_na_left,(spirte_size,spirte_size))
-truck_front_right = pygame.transform.scale(truck_front_right,(spirte_size,spirte_size))
-truck_middle_right = pygame.transform.scale(truck_middle_right,(spirte_size,spirte_size))
-truck_back_right = pygame.transform.scale(truck_back_right,(spirte_size,spirte_size))
-truck_front_left = pygame.transform.scale(truck_front_left,(spirte_size,spirte_size))
-truck_middle_left = pygame.transform.scale(truck_back_left,(spirte_size,spirte_size))
-truck_back_left = pygame.transform.scale(truck_back_left,(spirte_size,spirte_size))
-firetruck_front_right = pygame.transform.scale(firetruck_front_right,(spirte_size,spirte_size))
-firetruck_back_right = pygame.transform.scale(firetruck_back_right,(spirte_size,spirte_size))
-firetruck_front_left = pygame.transform.scale(firetruck_front_left,(spirte_size,spirte_size))
-firetruck_back_left = pygame.transform.scale(firetruck_back_left,(spirte_size,spirte_size))
-log_front_right = pygame.transform.scale(log_front_right,(spirte_size,spirte_size))
-log_back_right = pygame.transform.scale(log_back_right,(spirte_size,spirte_size))
-bubble = pygame.transform.scale(bubble,(spirte_size,spirte_size))
-enemy = pygame.transform.scale(enemy,(spirte_size,spirte_size))
-turtlePad = pygame.transform.scale(turtlePad,(spirte_size,spirte_size))
-enemyProjectile = pygame.transform.scale(enemyProjectile,(spirte_size,spirte_size))
+grass_image = pygame.transform.scale(grass_image,(sprite_size,sprite_size))
+road_image = pygame.transform.scale(road_image,(sprite_size,sprite_size))
+water_image = pygame.transform.scale(water_image,(sprite_size,sprite_size))
+frog_na_down = pygame.transform.scale(frog_na_down,(sprite_size,sprite_size))
+frog_na_up = pygame.transform.scale(frog_na_up,(sprite_size,sprite_size))
+frog_na_left = pygame.transform.scale(frog_na_left,(sprite_size,sprite_size))
+frog_na_right = pygame.transform.scale(frog_na_right,(sprite_size,sprite_size))
+blueCar_na_right = pygame.transform.scale(blueCar_na_right,(sprite_size,sprite_size))
+blueCar_na_left = pygame.transform.scale(blueCar_na_left,(sprite_size,sprite_size))
+greenCar_na_right = pygame.transform.scale(greenCar_na_right,(sprite_size,sprite_size))
+greenCar_na_left = pygame.transform.scale(greenCar_na_left,(sprite_size,sprite_size))
+truck_front_right = pygame.transform.scale(truck_front_right,(sprite_size,sprite_size))
+truck_middle_right = pygame.transform.scale(truck_middle_right,(sprite_size,sprite_size))
+truck_back_right = pygame.transform.scale(truck_back_right,(sprite_size,sprite_size))
+truck_front_left = pygame.transform.scale(truck_front_left,(sprite_size,sprite_size))
+truck_middle_left = pygame.transform.scale(truck_back_left,(sprite_size,sprite_size))
+truck_back_left = pygame.transform.scale(truck_back_left,(sprite_size,sprite_size))
+firetruck_front_right = pygame.transform.scale(firetruck_front_right,(sprite_size,sprite_size))
+firetruck_back_right = pygame.transform.scale(firetruck_back_right,(sprite_size,sprite_size))
+firetruck_front_left = pygame.transform.scale(firetruck_front_left,(sprite_size,sprite_size))
+firetruck_back_left = pygame.transform.scale(firetruck_back_left,(sprite_size,sprite_size))
+log_front_right = pygame.transform.scale(log_front_right,(sprite_size,sprite_size))
+log_back_right = pygame.transform.scale(log_back_right,(sprite_size,sprite_size))
+bubble = pygame.transform.scale(bubble,(sprite_size,sprite_size))
+enemy = pygame.transform.scale(enemy,(sprite_size,sprite_size))
+turtlePad = pygame.transform.scale(turtlePad,(sprite_size,sprite_size))
+enemyProjectile = pygame.transform.scale(enemyProjectile,(sprite_size,sprite_size))
 
 imageDict = {
     'frog_na_down': frog_na_down,
@@ -243,8 +243,8 @@ def display(g):
                 drawSprite(i, tile_x, tile_y)
             
 def drawSprite(image,tile_x,tile_y):
-    screen.blit(image,(tile_x*spirte_size,(Y_SIZE-tile_y-
-    1)*spirte_size))
+    screen.blit(image,(tile_x*sprite_size,(Y_SIZE-tile_y-
+    1)*sprite_size))
 
 # Responsible for displaying the score in the corner of the screen
 def drawScore(score):
