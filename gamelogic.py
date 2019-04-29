@@ -346,7 +346,7 @@ class game():
             self.next_id += 1
         
         #Place enemies.
-        numEnemies = random.randrange(1, 2)
+        numEnemies = random.randrange(1, MAX_ENEMY)
         while numEnemies > 0:
             x = random.randrange(0, self.x_size-1)
             y = random.randrange(wallY+1, self.y_size-1)
