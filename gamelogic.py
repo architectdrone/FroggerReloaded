@@ -350,7 +350,18 @@ class game():
         while numEnemies > 0:
             x = random.randrange(0, self.x_size-1)
             y = random.randrange(wallY+1, self.y_size-1)
-            velocity = random.choice([(1,0),(-1,0),(0,1),(0,-1)])
+            #Choose available options for velocities
+            velocityChoices = []
+            if x != self.x_size-1:
+                velocityChoices.append((1,0))
+            if x != 0:
+                velocityChoices.append((-1,0))
+            if y != self.y_size-1:
+                velocityChoices.append((0,1))
+            if y != wallY+1:
+                velocityChoices.append((0,-1))
+
+            velocity = random.choice(velocityChoices)
             if self.myBoard.getXY(x,y)['id'] == None:
                 self.myBoard.addSubObject(self.next_id, ENEMY_TYPE, x = x, y = y, velocity=velocity)
                 self.enemy_ids.append(self.next_id)
