@@ -11,7 +11,7 @@ def readFromFileAndPrint(file_name):
     file.close
 
     for line in lines:
-	    entry = line.split(",") #format in file will be name,score
+	    entry = line.strip().split(",") #format in file will be name,score
 	    print(entry[0] , entry[1]) #entry[0] is name, entry[1] is score
         
 def writeToFile(file_name, name, score):
@@ -21,7 +21,7 @@ def writeToFile(file_name, name, score):
     @param score User score to be added
     '''
     file = open(file_name, 'a')
-    file.write("\n"+name + ',' + str(score))
+    file.write(name + ',' + str(score)+"\n")
     file.close()
 
 def SortAndCompareScores(file_name, user_score):
@@ -35,9 +35,10 @@ def SortAndCompareScores(file_name, user_score):
     file = open(file_name, 'r')
     lines = file.readlines()
     for line in lines:
-        entry = line.strip().split(",")
-        score = int(entry[1])
-        userScores_list.append(score)
+        if line != "":
+            entry = line.strip().split(",")
+            score = int(entry[1])
+            userScores_list.append(score)
         
     userScores_list.sort(reverse=True) #sort user scores descending order
     userScores_list = userScores_list[:10] #limit to top 10 entries
@@ -48,11 +49,21 @@ def SortAndCompareScores(file_name, user_score):
     
     return highScore
 
-
-
-
-
-
+filename = "highscores.txt"
+writeToFile(filename, "Owen", 34)
+writeToFile(filename,"Gwen", 78)
+writeToFile(filename, "Jack", 12)
+writeToFile(filename, "Steve", 41)
+writeToFile(filename, "Bob", 13)
+writeToFile(filename, "Jack", 2)
+writeToFile(filename, "Jack", 5)
+writeToFile(filename, "Jack", 2)
+writeToFile(filename, "Jack", 89)
+writeToFile(filename, "Jack", 34)
+writeToFile(filename, "Jack", 5)
+writeToFile(filename, "Jack", 12)
+print(SortAndCompareScores(filename, 77))
+readFromFileAndPrint(filename)
 
 
 
