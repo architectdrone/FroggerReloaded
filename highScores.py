@@ -65,6 +65,27 @@ writeToFile(filename, "Jack", 12)
 print(SortAndCompareScores(filename, 77))
 readFromFileAndPrint(filename)
 
+def displayScores(file_name, n_entries):
+    '''
+    Displays n number of users and score by descending order
+    @param file_name Name of file
+    @param n_entries Number of entries
+    '''
+    userScores_list = []
+    file = open(file_name, 'r')
+    lines = file.readlines()
+    for line in lines:
+        entry = line.strip().split(",")
+        name = entry[0]
+        score = int(entry[1])
+        userScores_list.append(score, name)
+        
+    userScores_list.sort(reverse=True) #sort user scores descending order
+    userScores_list = userScores_list[:n_entries] #limit to top 10 entries
+    userScores_list = [entries[::-1] for entries in userScores_list] #name,score format instead of score,name
+    print("Name, Score")
+    print(*userScores_list, sep = "\n") #print entries line by line
+    
 
 
 
