@@ -7,15 +7,18 @@ class HighScores():
         @param name username
         @param score 
         '''
+        '''
         self.name = name
         self.score = score
-
+'''
 
     def addEntry(self, name, score):  
+        '''
         '''
         adds entry to scores
         @param name username
         @param score 
+        '''
         '''
         newEntry = {
             'name' : name,
@@ -25,6 +28,10 @@ class HighScores():
 '''
 
 def readFromFileAndPrint(file_name):
+        '''
+        Reads entries from the score file and prints the entries
+        @param file_name Name of file
+        '''
 	    file = open(file_name, 'r')
 	    lines = file.readlines()
 	    file.close
@@ -33,11 +40,21 @@ def readFromFileAndPrint(file_name):
 	        entry = line.strip().split(",") #format in file will be name,score
 	        print(entry[0] , entry[1]) #entry[0] is name, entry[1] is score
         
-def writeToFileAndSort(file_name, name, score):
+def writeToFile(file_name, name, score):
+    '''
+    Adds new entry to the file
+    @param name Username to be added
+    @param score User score to be added
+    '''
     file = open(file_name, 'a')
 	file.write(name + ',' + score)
-	file.close
+	file.close()
 
+def SortScores(file_name):
+    '''
+    Sorts all entries by score in the file and returns the entries as a list
+    @param file_name 
+    '''
     userScores_list = []
     file = open(file_name, 'r')
 	lines = file.readlines()
@@ -48,5 +65,18 @@ def writeToFileAndSort(file_name, name, score):
         userScores_list.append(score, name)
         
     userScores_list.sort(reverse=True) #sort user scores descending order
+    return userScores_list
+
+
+
+
+
+
+
+
+
+
+
+
     
 
