@@ -49,22 +49,6 @@ def SortAndCompareScores(file_name, user_score):
     
     return highScore
 
-filename = "highscores.txt"
-writeToFile(filename, "Owen", 34)
-writeToFile(filename,"Gwen", 78)
-writeToFile(filename, "Jack", 12)
-writeToFile(filename, "Steve", 41)
-writeToFile(filename, "Bob", 13)
-writeToFile(filename, "Jack", 2)
-writeToFile(filename, "Jack", 5)
-writeToFile(filename, "Jack", 2)
-writeToFile(filename, "Jack", 89)
-writeToFile(filename, "Jack", 34)
-writeToFile(filename, "Jack", 5)
-writeToFile(filename, "Jack", 12)
-print(SortAndCompareScores(filename, 77))
-readFromFileAndPrint(filename)
-
 def displayScores(file_name, n_entries):
     '''
     Displays n number of users and score by descending order
@@ -78,13 +62,36 @@ def displayScores(file_name, n_entries):
         entry = line.strip().split(",")
         name = entry[0]
         score = int(entry[1])
-        userScores_list.append(score, name)
+        userScores_list.append((score, name))
         
     userScores_list.sort(reverse=True) #sort user scores descending order
     userScores_list = userScores_list[:n_entries] #limit to top 10 entries
     userScores_list = [entries[::-1] for entries in userScores_list] #name,score format instead of score,name
-    print("Name, Score")
-    print(*userScores_list, sep = "\n") #print entries line by line
+    print("Top " + str(n_entries) + " high scores:")
+    print("Name Score" + '\n')
+    for entry in userScores_list:
+        print(entry[0] + " "+ str(entry[1]))
+
+filename = "highscores.txt"
+'''
+writeToFile(filename, "Owen", 34)
+writeToFile(filename,"Gwen", 78)
+writeToFile(filename, "Jack", 12)
+writeToFile(filename, "Steve", 41)
+writeToFile(filename, "Bob", 13)
+writeToFile(filename, "Jack", 2)
+writeToFile(filename, "Jack", 5)
+writeToFile(filename, "Jack", 2)
+writeToFile(filename, "Jack", 89)
+writeToFile(filename, "Jack", 34)
+writeToFile(filename, "Jack", 5)
+writeToFile(filename, "Jack", 12)
+#print(SortAndCompareScores(filename, 77))
+#readFromFileAndPrint(filename)
+'''
+displayScores(filename, 5)
+
+
     
 
 
