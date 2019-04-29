@@ -40,7 +40,7 @@ class game():
         self.myBoard = b.Board(self.x_size, self.y_size)
         self.myBoard.addSubObject(self.frog_id, "frog", x = self.init_x, y = self.init_y, direction="up")
 
-        self.generateBasic() #Runs the board generator.
+        self.generateInvaders() #Runs the board generator.
 
     def update(self):
         '''
@@ -156,8 +156,8 @@ class game():
         '''
         Shoots a projectile - if we are in the right mode for projectile shooting
         '''
-        FROG_BULLET_TYPE = "bullet"
-        BULLET_VELOCITY = (0, 1)
+        FROG_BULLET_TYPE = "bubble"
+        BULLET_VELOCITY = (0, 2)
         self.myBoard.addSubObject(self.next_id, FROG_BULLET_TYPE, x = self.myBoard.getSubObject(0)['x'], y=self.myBoard.getSubObject(0)['y'], velocity=BULLET_VELOCITY)
         self.frog_bullet_ids.append(self.next_id)
         self.next_id+=1
@@ -325,8 +325,8 @@ class game():
         '''
         BACKGROUND = "grass" #The lane for all non-wall areas.
         ENEMY_TYPE = "enemy" #The type for the enemies.
-        MAX_ENEMY = 10 #Total number of enemies.
-        WALL_TYPE = "wall" #The type for the wall.
+        MAX_ENEMY = 5 #Total number of enemies.
+        WALL_TYPE = "turtlePad" #The type for the wall.
 
         self.currentMinigame = "invaders"
 
@@ -347,7 +347,7 @@ class game():
             x = random.randrange(0, self.x_size-1)
             y = random.randrange(wallY+1, self.y_size-1)
             velocity = random.choice([(1,0),(-1,0),(0,1),(0,-1)])
-            if self.myBoard.getXY(0,0)['id'] == []:
+            if self.myBoard.getXY(x,y)['id'] == None:
                 self.myBoard.addSubObject(self.next_id, ENEMY_TYPE, x = x, y = y, velocity=velocity)
                 self.enemy_ids.append(self.next_id)
                 self.next_id+=1
@@ -391,6 +391,7 @@ class game():
                 # find viable options store in array
                 # randomly select option from array
                 # place lilypad
+
     def chooseMovingObjectLane(self, y, laneType, options):
         '''
         Chooses a moving object lane that works with the lane from the options, and adds it to the moving object lane variable.
@@ -494,7 +495,6 @@ class game():
         
         #Lane testing --Test to see if we are on a dangerous lane. If we are, test to see if we are on a platform. If we are, set froggers velocity to be the velocity of the platform.
         frog_y = self.myBoard.getSubObject(self.frog_id)['y'] #The y coordinate of frogger
-        print(frog_y)
         self.myBoard.editSubObject(self.frog_id, velocity=(0,0)) #Pre set the velocity to 0.
         if frog_y in self.dangerous_lane: #If frogger is in a dangerous lane, check if we are on a plaform.
             laneDead = True
@@ -519,7 +519,7 @@ class game():
         FIRING_CHANCE = 0.4 #Chance of a given enemy firing.
         MAX_SHOOTERS = 4 #Maximum amount of enemies that can fire in a given tick.
         BULLET_VELOCITY = (0, -1) #Velocity of a bullet. Make sure the Y coordinate is negative!
-        BULLET_TYPE = "enemy_bullet"
+        BULLET_TYPE = "enemyProjectile"
 
         current_shooters = MAX_SHOOTERS
         enemyCollisions = []
@@ -529,10 +529,24 @@ class game():
             x = theSubObject['x']
             y = theSubObject['y']
             new_velocity = theSubObject['velocity']
-            if x == 0 or x == self.x_size-1:
+            if x == 0 and theSubObject['velocity'] == (-1,0):
+                new_velocity = (1,0)
+            elif x == self.x_size-1 and theSubObject['velocity'] == (1,0):
+                new_velocity = (-1,0)
+            elif y <= math.floor(self.y_size/2)+1 and theSubObject['velocity'] == (0,-1):
+                new_velocity = (0,1)
+            elif y == self.y_size-1 and theSubObject['velocity'] == (0,1):
+                new_velocity = (0,-1)
+            
+            '''
+            else:
+            if x == 0 or x == self.x_size-1:                    
                 new_velocity = (new_velocity[0]*-1, new_velocity[1])
+                print(f"")
             elif y == math.floor(self.y_size/2) or y == self.y_size-1:
                 new_velocity = (new_velocity[0], new_velocity[1]*-1)
+            '''
+
             self.myBoard.editSubObject(i, velocity=new_velocity)
 
             #Fire, potentially.
@@ -547,17 +561,21 @@ class game():
             for c in self.myBoard.getCollisionsSinceLastUpdate():
                 if i in c:
                     enemyCollisions.append(c)
-        
+        if enemyCollisions != []:
+            print(enemyCollisions)
         #Check to see if enemy is dead
         for collision in enemyCollisions:
             for subObjectID in collision:
                 if subObjectID in self.frog_bullet_ids:
-                    self.frog_bullet_ids.remove(subObjectID) #Destroy Bullet
-                    enemy_id = 0
-                    if collision[0] != subObjectID:
-                        enemy_id = collision[0]
-                    else:
-                        enemy_id = collision[1]
-                    self.enemy_ids.remove(enemy_id) #Destroy Enemy
-                    self.myBoard.deleteSubObject(enemy_id)
-                    self.myBoard.deleteSubObject(subObjectID)
+                    try:
+                        self.frog_bullet_ids.remove(subObjectID) #Destroy Bullet
+                        enemy_id = 0
+                        if collision[0] != subObjectID:
+                            enemy_id = collision[0]
+                        else:
+                            enemy_id = collision[1]
+                        self.enemy_ids.remove(enemy_id) #Destroy Enemy
+                        self.myBoard.deleteSubObject(enemy_id)
+                        self.myBoard.deleteSubObject(subObjectID)
+                    except:
+                        continue

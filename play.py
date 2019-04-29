@@ -287,6 +287,8 @@ def game_play():
             nextCommand = "left"
         elif keys[pygame.K_RIGHT]:
             nextCommand = "right"
+        elif keys[pygame.K_SPACE]:
+            nextCommand = "launch"
         if keys[pygame.K_ESCAPE]:
                 run = False
 
@@ -304,6 +306,8 @@ def game_play():
                 g.frogLeft()
             if nextCommand == "right":
                 g.frogRight()
+            if nextCommand == "launch":
+                g.frogShoot()
             nextCommand = ""
 
             
@@ -313,12 +317,15 @@ def game_play():
         if g.isDead:
             #Do something, I guess? idk lol
             run = False
-            gameOver()
+            
             
         #Update the screen using pygame methods
         pygame.display.update()
 
         updateCounter-=1
+    gameOver()
+
+
 #Generl Helper Functions
 def gameOver():
 
