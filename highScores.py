@@ -11,7 +11,7 @@ def readFromFileAndPrint(file_name):
     file.close
 
     for line in lines:
-	    entry = line.strip().split(",") #format in file will be name,score
+	    entry = line.split(",") #format in file will be name,score
 	    print(entry[0] , entry[1]) #entry[0] is name, entry[1] is score
         
 def writeToFile(file_name, name, score):
@@ -21,7 +21,7 @@ def writeToFile(file_name, name, score):
     @param score User score to be added
     '''
     file = open(file_name, 'a')
-    file.write(name + ',' + score)
+    file.write("\n"+name + ',' + str(score))
     file.close()
 
 def SortAndCompareScores(file_name, user_score):
