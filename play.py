@@ -5,10 +5,9 @@ import sys
 import time
 import gamelogic
 import highScores
+import pygame_textinput
 
-pygame.mixer.pre_init(44100,16,2,4096)
 pygame.init()
-speed = [1, 1]
 X_SIZE = 15
 Y_SIZE = 10
 sprite_size = 50
@@ -16,16 +15,18 @@ display_width = X_SIZE*sprite_size
 display_height = Y_SIZE*sprite_size
 
 #Game sound
-pygame.mixer.init(23433,16,2,4096)
 buttonclick = pygame.mixer.Sound("music/clickbutton.wav")
-soundB = pygame.mixer.Channel(2)
 drawning = pygame.mixer.Sound("music/drawning.wav")
 crash = pygame.mixer.Sound("music/crash.wav")
 bullethit = pygame.mixer.Sound("music/bullethit.wav")
+shot = pygame.mixer.Sound("music/shot.wav")
+shot.set_volume(0.05)
 
 
 #Game Speed
-betweenUpdates = 30
+betweenUpdates = 15
+msBetweenInputs = 20 #Number of MS before an input is repeated.
+pygame.key.set_repeat(0, msBetweenInputs)
 
 #Colors
 color_white = (255,255,255)
@@ -38,7 +39,6 @@ color_lightgreen = (0,255,0)
 
 #Load images
 pygame.display.set_caption('Frogger Reloaded')
-frog_image = pygame.image.load('frog.png')
 background_image = pygame.image.load("s2.jpg")
 grass_image = pygame.image.load('SPRITES/grass.png')
 road_image = pygame.image.load('SPRITES/road.png')
@@ -63,9 +63,10 @@ firetruck_front_left = pygame.image.load('SPRITES/firetruck_front_left.png')
 firetruck_back_left = pygame.image.load('SPRITES/firetruck_back_left.png')
 log_front_right = pygame.image.load('SPRITES/log_front_right.png')
 log_back_right = pygame.image.load('SPRITES/log_back_right.png')
-bubble = pygame.image.load('SPRITES/bubble.jpeg')
+bubble = pygame.image.load('SPRITES/bubble.png')
 enemy = pygame.image.load('SPRITES/enemy.png')
 turtlePad = pygame.image.load('SPRITES/turtle_pad.png')
+bush = pygame.image.load("SPRITES/bush.png")
 enemyProjectile = pygame.image.load('SPRITES/enemy_projectile.png')
 gameover_image = pygame.image.load('over.png')
 background_image = pygame.transform.scale(background_image,(display_width,display_height))
@@ -96,6 +97,7 @@ log_back_right = pygame.transform.scale(log_back_right,(sprite_size,sprite_size)
 bubble = pygame.transform.scale(bubble,(sprite_size,sprite_size))
 enemy = pygame.transform.scale(enemy,(sprite_size,sprite_size))
 turtlePad = pygame.transform.scale(turtlePad,(sprite_size,sprite_size))
+bushImage = pygame.transform.scale(bush,(sprite_size,sprite_size))
 enemyProjectile = pygame.transform.scale(enemyProjectile,(sprite_size,sprite_size))
 
 imageDict = {
@@ -122,7 +124,8 @@ imageDict = {
     'bubble_na_na' : bubble,
     'enemy_na_na' : enemy,
     'turtlePad_na_na' : turtlePad,
-    'enemyProjectile_na_na' : enemyProjectile
+    'enemyProjectile_na_na' : enemyProjectile,
+    'bush_na_na': bushImage,
 }
 
 #Makes the screen
@@ -181,10 +184,9 @@ def game_intro():
     #Play menu background music
     pygame.mixer.music.stop()
     pygame.mixer.music.load("music/menu.mp3")
-    pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1) #loop it
 
-    frog_rect = frog_image.get_rect()
     frames_per_sec = 100
     #fps_clock = pygame.time.Clock()
     
@@ -203,12 +205,6 @@ def game_intro():
         game_button("Start!",display_width/6,2*display_height/3,display_width/6,display_height/12,color_green,color_lightgreen,game_play)
         game_button("Quit", 2*display_width/3,2*display_height/3,display_width/6,display_height/12,color_red,color_lightred,game_quit)
 
-        frog_rect = frog_rect.move(speed)
-        if(frog_rect.left < 0) or (frog_rect.right > display_width):
-            speed[0] =- speed[0]
-        if (frog_rect.top < 0) or (frog_rect.bottom > display_height/2):
-            speed[1] =- speed[1]
-        screen.blit(frog_image, frog_rect)
         pygame.display.update()
         fps_clock.tick(frames_per_sec)
 
@@ -218,19 +214,6 @@ def display(g):
     Update the window according to what gamelogic tells us.
     @param g The game object to display for.
     '''
-    event = g.getEvents()
-    if 'death_sailaway' in event:
-        drawning.play()
-    if 'death_crash' in event:
-        crash.play()
-    if 'death_shot' in event:
-        bullethit.play()
-    if 'death_swamp' in event:
-        drawning.play()
-    if 'enemy_dead' in event:
-        bullethit.play()
-    if 'enemy_shoot' in event:
-        buttonclick.play()
 
     #TODO define X_SIZE and Y_SIZE
     for tile_x in range(X_SIZE):
@@ -337,6 +320,7 @@ def game_play():
             nextCommand = "right"
         elif keys[pygame.K_SPACE]:
             nextCommand = "launch"
+            shot.play()
         if keys[pygame.K_ESCAPE]:
                 run = False
 
@@ -345,7 +329,21 @@ def game_play():
         if updateCounter == 0:
 
             g.update()
-            
+            #Play sounds
+            event = g.getEvents()
+            if 'death_sailaway' in event:
+                drawning.play()
+            if 'death_crash' in event:
+                crash.play()
+            if 'death_shot' in event:
+                bullethit.play()
+            if 'death_swamp' in event:
+                drawning.play()
+            if 'enemy_dead' in event:
+                shot.play()
+            if 'enemy_shoot' in event:
+                buttonclick.play()
+
             if nextCommand == "up":
                 g.frogUp()
             if nextCommand == "down":
@@ -367,19 +365,8 @@ def game_play():
             run = False
             
             
-            #add name and score to file after game over
-            userScore = g.score()
-            highest = highScores.findHighestScore("highscores.txt")
-            if (userScore > highest):
-                print('Congradulations, you have the highest score')
-                userName = input("What is your name? ")
-                assert userName is not None
-                highScores.writeToFile("highscores.txt", userName, userScore)
-        
-            #display top scores <=10
-            highScores.displayScores("highscores.txt" , 10)
 
-            gameOver()
+            gameOver(g)
             
             
         #Update the screen using pygame methods
@@ -390,25 +377,46 @@ def game_play():
 
 
 #Generl Helper Functions
-def gameOver():
+def gameOver(g):
 
     #Game over background music
     pygame.mixer.music.stop()
     pygame.mixer.music.load("music/gameover.mp3")
     pygame.mixer.music.set_volume(0.2)
     pygame.mixer.music.play(-1) #loop it
-    
-    while True:
 
-        for event in pygame.event.get():
+    textinput = pygame_textinput.TextInput(font_size=30, cursor_color=color_red, text_color=color_red)
+    font = pygame.font.Font('freesansbold.ttf', 20)
+    text = font.render('Enter name: ', True, color_red)
+
+    enter = False
+
+    while True:
+        
+        events = pygame.event.get()
+        for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_RETURN] and not enter:
+            name = textinput.get_text()
+            highScores.writeToFile("highscore.txt", name, g.score())
+            print(name)
+            print(g.score())
+            enter = True
+            
 
         #screen.fill(color_red)
         screen.blit(gameover_image, [0,0])
         game_button("Restart!",3*display_width/12,8*display_height/9,display_width/6,display_height/12,color_red,color_lightgreen,game_intro)
         game_button("Quit!",7*display_width/12,8*display_height/9,display_width/6,display_height/12,color_red,color_gray,game_quit)
+
+        textinput.update(events)
+        if not enter:
+            screen.blit(text, (10, 30))
+            screen.blit(textinput.get_surface(), (140, 30))
 
         #TextSurf, TextRect = text_objects("RIP", gameTitle)
         #TextRect.center = (display_width/2, display_height/3)

@@ -15,10 +15,18 @@ class game():
         self.y_size = y_size
         self.init_x = init_x
         self.init_y = init_y
+
+        #Control Flow
         self.currentMinigame = "basic" #The minigame we are currently on. Allowed values are "basic", "lilypads", "invaders".
-        self.events = [] #For usage with sounds. Basically a list of strings. Please see the getEvents() function for more documentation.
-        self.initialize()
+        self.sequence = ["basic", "invaders"]
+        self.sequenceIndex = 0
         self.displayCount = 0 #counts change in display
+
+        self.events = [] #For usage with sounds. Basically a list of strings. Please see the getEvents() function for more documentation.
+        self.gunCooldown = 0 #How long until the gun can be fired again.
+        self.MAX_GUN_COOLDOWN = 3 #Updates between allowed firings.
+
+        self.initialize()
 
     #PUBLIC FUNCTIONS
     def initialize(self):
@@ -43,6 +51,7 @@ class game():
 
         self.generateMaze() #Runs the board generator.
 
+
     def update(self):
         '''
         -Moves subobjects.
@@ -52,6 +61,9 @@ class game():
         -Causes new moving objects to enter lanes.
         -If applicable, do checks for enemies.
         '''
+        if self.gunCooldown != 0:
+            self.gunCooldown-=1
+
         #Reset events
         self.events = []
 
@@ -107,55 +119,68 @@ class game():
         '''
         Moves the frog up.
         '''
-        theSubObject = self.myBoard.getSubObject(self.frog_id)
-        current_x = theSubObject['x']
-        current_y = theSubObject['y']
-        if current_y != self.y_size-1:
-            self.myBoard.editSubObject(self.frog_id, x = current_x, y = current_y+1, direction = "up")
+        try:
+            theSubObject = self.myBoard.getSubObject(self.frog_id)
+            current_x = theSubObject['x']
+            current_y = theSubObject['y']
+            if current_y != self.y_size-1:
+                self.myBoard.editSubObject(self.frog_id, x = current_x, y = current_y+1, direction = "up")
 
-        else: #will change display once frog reaches maximum y
-            self.myBoard.editSubObject(self.frog_id, x = current_x, y = self.init_y, direction = "up")
-            self.initialize()
-            self.displayCount+=1 
-            print("Display count: " + str(self.displayCount)) 
+            else: #will change display once frog reaches maximum y
+                self.myBoard.editSubObject(self.frog_id, x = current_x, y = self.init_y, direction = "up")
+                self.initialize()
+                self.displayCount+=1 
+                #print("Display count: " + str(self.displayCount)) 
 
-        self.frogCheck()
+            self.frogCheck()
+        except:
+            self.isDead = True
+            self.events.append("death_sailaway")
 
     def frogDown(self):
         '''
         Moves the frog down.
         '''
-
-        theSubObject = self.myBoard.getSubObject(self.frog_id)
-        current_x = theSubObject['x']
-        current_y = theSubObject['y']
-        if current_y != 0:
-            self.myBoard.editSubObject(self.frog_id, x = current_x, y = current_y-1, direction = "down")
-        self.frogCheck()
+        try:
+            theSubObject = self.myBoard.getSubObject(self.frog_id)
+            current_x = theSubObject['x']
+            current_y = theSubObject['y']
+            if current_y != 0:
+                self.myBoard.editSubObject(self.frog_id, x = current_x, y = current_y-1, direction = "down")
+            self.frogCheck()
+        except: #If we can't find the frog, that means that we have sailed away.
+            self.isDead = True
+            self.events.append("death_sailaway")
 
     def frogLeft(self):
         '''
         Moves the frog left.
         '''
-
-        theSubObject = self.myBoard.getSubObject(self.frog_id)
-        current_x = theSubObject['x']
-        current_y = theSubObject['y']
-        if current_x != 0:
-            self.myBoard.editSubObject(self.frog_id, x = current_x-1, y = current_y, direction = "left")
-        self.frogCheck()
+        try:
+            theSubObject = self.myBoard.getSubObject(self.frog_id)
+            current_x = theSubObject['x']
+            current_y = theSubObject['y']
+            if current_x != 0:
+                self.myBoard.editSubObject(self.frog_id, x = current_x-1, y = current_y, direction = "left")
+            self.frogCheck()
+        except:
+            self.isDead = True
+            self.events.append("death_sailaway")
 
     def frogRight(self):
         '''
         Moves the frog right.
         '''
-
-        theSubObject = self.myBoard.getSubObject(self.frog_id)
-        current_x = theSubObject['x']
-        current_y = theSubObject['y']
-        if current_x != self.x_size-1:
-            self.myBoard.editSubObject(self.frog_id, x = current_x+1, y = current_y, direction = "right")
-        self.frogCheck()
+        try:
+            theSubObject = self.myBoard.getSubObject(self.frog_id)
+            current_x = theSubObject['x']
+            current_y = theSubObject['y']
+            if current_x != self.x_size-1:
+                self.myBoard.editSubObject(self.frog_id, x = current_x+1, y = current_y, direction = "right")
+            self.frogCheck()
+        except:
+            self.isDead = True
+            self.events.append("death_sailaway")
 
     def frogShoot(self):
         '''
@@ -163,10 +188,12 @@ class game():
         '''
         FROG_BULLET_TYPE = "bubble"
         BULLET_VELOCITY = (0, 2)
-        self.myBoard.addSubObject(self.next_id, FROG_BULLET_TYPE, x = self.myBoard.getSubObject(0)['x'], y=self.myBoard.getSubObject(0)['y'], velocity=BULLET_VELOCITY)
-        self.frog_bullet_ids.append(self.next_id)
-        self.next_id+=1
-        self.frogCheck()
+        if self.gunCooldown == 0:
+            self.myBoard.addSubObject(self.next_id, FROG_BULLET_TYPE, x = self.myBoard.getSubObject(0)['x'], y=self.myBoard.getSubObject(0)['y'], velocity=BULLET_VELOCITY)
+            self.frog_bullet_ids.append(self.next_id)
+            self.next_id+=1
+            self.frogCheck()
+            self.gunCooldown = self.MAX_GUN_COOLDOWN
 
     def getXY(self, x, y):
         '''
@@ -211,6 +238,24 @@ class game():
 
     #PRIVATE FUNCTIONS
     #No touchy
+    def generateNext(self):
+        '''
+        Generates the next board in the sequence.
+        '''
+        if self.sequenceIndex == len(self.sequence):
+            self.sequenceIndex = 0
+        
+        #print(self.sequenceIndex)
+        nextStage = self.sequence[self.sequenceIndex]
+        if nextStage == "basic":
+            self.generateBasic()
+        elif nextStage == "invaders":
+            self.generateInvaders()
+        elif nextStage == "maze":
+            self.generateMaze() 
+        
+        self.sequenceIndex+=1
+
     def generateBasic(self):
         '''
         Generates a basic game board. This game board has clusters of roads and swamps. Roads and swamps have moving object lanes associated with them.
@@ -343,7 +388,7 @@ class game():
         BACKGROUND = "grass" #The lane for all non-wall areas.
         ENEMY_TYPE = "enemy" #The type for the enemies.
         MAX_ENEMY = 5 #Total number of enemies.
-        WALL_TYPE = "turtlePad" #The type for the wall.
+        WALL_TYPE = "bush" #The type for the wall.
 
         self.currentMinigame = "invaders"
 
@@ -385,7 +430,7 @@ class game():
         # declare variables
         SEG_LENGTH_MIN = 2
         SEG_LENGTH_MAX = 3
-        LILYPAD_TYPE = "lilypad"
+        LILYPAD_TYPE = "turtlePad"
         x_start = random.randrange(0, self.x_size - 1)
         y_start = 0
         curr_x = x_start
@@ -397,7 +442,7 @@ class game():
 
         # iterate y times
         # set lane's land type
-        for y in range(self.y_size - 1):
+        for y in range(self.y_size):
             # case(s) covered: first lane set grass AND last lane set to grass
             if (y == 0) or (y == (self.y_size - 1)):
                 self.myBoard.setLane(y, "grass")
@@ -422,30 +467,81 @@ class game():
         #             # place
         #             # saveCoords
 
-        #Randomized segments to confuse player
-        numberOfRandomSegments = 5
-        while numberOfRandomSegments > 0:
-            numberOfRandomSegments-=1
+        initial_x = random.randrange(0, self.x_size-1)
+        initial_y = 1
+        last_vertical_endpoint_x = 0
+        last_vertical_endpoint_y = 0
+        length = random.randrange(SEG_LENGTH_MIN, SEG_LENGTH_MAX)
+        prev_seg = []
+        print(f"Placing Vertical Segment. ({initial_x}, {initial_y})")
+        input(">")
+        #Initial Veritcal
+        for y_inc in range(length):
+            self.myBoard.addSubObject(self.next_id, LILYPAD_TYPE, x=initial_x, y=initial_y + y_inc)
+            self.platform_id.append(self.next_id)
+            self.next_id += 1
+            last_vertical_endpoint_x = initial_x
+            last_vertical_endpoint_y = initial_y+y_inc
+        print(f"Last Endpoint: ({last_vertical_endpoint_x}, {last_vertical_endpoint_y}")
+        while last_vertical_endpoint_y != self.y_size-2:
+            #Place horizontal
             length = random.randrange(SEG_LENGTH_MIN, SEG_LENGTH_MAX)
-            x = random.randrange(0, self.x_size-1)
-            y = random.randrange(1, self.y_size-2)
-            direction = random.choice(["v", "h"])
-            if direction == 'v':
-                for y_inc in range(length):
-                    if (y+y_inc) < self.y_size-2:
-                        self.myBoard.addSubObject(self.next_id, LILYPAD_TYPE, x = x, y = y+y_inc)
-                        self.platform_id.append(self.next_id)
-                        self.next_id+=1
-                    else:
-                        break
-            if direction == 'h':
-                for x_inc in range(length):
-                    if (x+x_inc) < self.x_size-1:
-                        self.myBoard.addSubObject(self.next_id, LILYPAD_TYPE, x = x+x_inc, y = y)
-                        self.platform_id.append(self.next_id)
-                        self.next_id+=1
-                    else:
-                        break
+            length_after = random.randrange(0, length)
+            initial_x = last_vertical_endpoint_x-(length-length_after)
+            initial_y = last_vertical_endpoint_y
+            print(f"Placing Horizontal Segment. ({initial_x}, {initial_y})")
+            input(">")
+            for x_inc in range(length):
+                if initial_x+x_inc < self.x_size-1:
+                    self.myBoard.addSubObject(self.next_id, LILYPAD_TYPE, x=initial_x+x_inc, y=initial_y)
+                    self.platform_id.append(self.next_id)
+                    self.next_id += 1
+                    prev_seg.append((initial_x+x_inc, initial_y))
+                else:
+                    break
+
+            #Place Vertical
+            startingCoord = random.choice(prev_seg)
+            initial_x = startingCoord[0]
+            initial_y = startingCoord[1]
+            length = random.randrange(SEG_LENGTH_MIN, SEG_LENGTH_MAX)
+            print(f"Placing Vertical Segment. ({initial_x}, {initial_y})")
+            input(">")
+            for y_inc in range(length):
+                if initial_y+y_inc < self.y_size-2:
+                    self.myBoard.addSubObject(self.next_id, LILYPAD_TYPE, x=initial_x, y=initial_y + y_inc)
+                    self.platform_id.append(self.next_id)
+                    self.next_id += 1
+                    last_vertical_endpoint_x = initial_x
+                    last_vertical_endpoint_y = initial_y + y_inc
+                else:
+                    break
+
+
+        # #Randomized segments to confuse player
+        # numberOfRandomSegments = 30
+        # while numberOfRandomSegments > 0:
+        #     numberOfRandomSegments-=1
+        #     length = random.randrange(SEG_LENGTH_MIN, SEG_LENGTH_MAX)
+        #     x = random.randrange(0, self.x_size-1)
+        #     y = random.randrange(1, self.y_size-2)
+        #     direction = random.choice(["v", "h"])
+        #     if direction == 'v':
+        #         for y_inc in range(length):
+        #             if (y+y_inc) < self.y_size-2:
+        #                 self.myBoard.addSubObject(self.next_id, LILYPAD_TYPE, x = x, y = y+y_inc)
+        #                 self.platform_id.append(self.next_id)
+        #                 self.next_id+=1
+        #             else:
+        #                 break
+        #     if direction == 'h':
+        #         for x_inc in range(length):
+        #             if (x+x_inc) < self.x_size-1:
+        #                 self.myBoard.addSubObject(self.next_id, LILYPAD_TYPE, x = x+x_inc, y = y)
+        #                 self.platform_id.append(self.next_id)
+        #                 self.next_id+=1
+        #             else:
+        #                 break
 
 
 
