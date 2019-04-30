@@ -4,7 +4,7 @@ from pygame.locals import *
 import sys
 import time
 import gamelogic
-#import highScores
+import highScores
 
 pygame.mixer.pre_init(44100,16,2,4096)
 pygame.init()
@@ -218,19 +218,6 @@ def display(g):
     Update the window according to what gamelogic tells us.
     @param g The game object to display for.
     '''
-    event = g.getEvents()
-    if 'death_sailaway' in event:
-        drawning.play()
-    if 'death_crash' in event:
-        crash.play()
-    if 'death_shot' in event:
-        bullethit.play()
-    if 'death_swamp' in event:
-        drawning.play()
-    if 'enemy_dead' in event:
-        bullethit.play()
-    if 'enemy_shoot' in event:
-        buttonclick.play()
 
     #TODO define X_SIZE and Y_SIZE
     for tile_x in range(X_SIZE):
@@ -345,7 +332,21 @@ def game_play():
         if updateCounter == 0:
 
             g.update()
-            
+            #Play sounds
+            event = g.getEvents()
+            if 'death_sailaway' in event:
+                drawning.play()
+            if 'death_crash' in event:
+                crash.play()
+            if 'death_shot' in event:
+                bullethit.play()
+            if 'death_swamp' in event:
+                drawning.play()
+            if 'enemy_dead' in event:
+                bullethit.play()
+            if 'enemy_shoot' in event:
+                buttonclick.play()
+
             if nextCommand == "up":
                 g.frogUp()
             if nextCommand == "down":
