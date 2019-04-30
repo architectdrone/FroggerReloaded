@@ -367,9 +367,10 @@ def game_play():
             highest = highScores.findHighestScore("highscores.txt")
             if (userScore > highest):
                 print('Congradulations, you have the highest score')
-                userName = input("What is your name? ")
-                assert userName is not None
-                highScores.writeToFile("highscores.txt", userName, userScore)
+
+            userName = input("What is your name? ")
+            assert userName is not None
+            highScores.writeToFile("highscores.txt", userName, userScore)
         
             #display top scores <=10
             highScores.displayScores("highscores.txt" , 10)
