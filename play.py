@@ -39,7 +39,6 @@ color_lightgreen = (0,255,0)
 
 #Load images
 pygame.display.set_caption('Frogger Reloaded')
-frog_image = pygame.image.load('frog.png')
 background_image = pygame.image.load("s2.jpg")
 grass_image = pygame.image.load('SPRITES/grass.png')
 road_image = pygame.image.load('SPRITES/road.png')
@@ -188,7 +187,6 @@ def game_intro():
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1) #loop it
 
-    frog_rect = frog_image.get_rect()
     frames_per_sec = 100
     #fps_clock = pygame.time.Clock()
     
@@ -367,18 +365,6 @@ def game_play():
             run = False
             
             
-            #add name and score to file after game over
-            userScore = g.score()
-            highest = highScores.findHighestScore("highscores.txt")
-            if (userScore > highest):
-                print('Congradulations, you have the highest score')
-
-            userName = input("What is your name? ")
-            assert userName is not None
-            highScores.writeToFile("highscores.txt", userName, userScore)
-        
-            #display top scores <=10
-            highScores.displayScores("highscores.txt" , 10)
 
             gameOver(g)
             
@@ -399,7 +385,9 @@ def gameOver(g):
     pygame.mixer.music.set_volume(0.2)
     pygame.mixer.music.play(-1) #loop it
 
-    textinput = pygame_textinput.TextInput(cursor_color=color_red, text_color=color_red, initial_string="Enter name: ")
+    textinput = pygame_textinput.TextInput(font_size=30, cursor_color=color_red, text_color=color_red)
+    font = pygame.font.Font('freesansbold.ttf', 20)
+    text = font.render('Enter name: ', True, color_red)
 
     enter = False
 
@@ -416,6 +404,7 @@ def gameOver(g):
             name = textinput.get_text()
             highScores.writeToFile("highscore.txt", name, g.score())
             print(name)
+            print(g.score())
             enter = True
             
 
@@ -425,7 +414,9 @@ def gameOver(g):
         game_button("Quit!",7*display_width/12,8*display_height/9,display_width/6,display_height/12,color_red,color_gray,game_quit)
 
         textinput.update(events)
-        screen.blit(textinput.get_surface(), (50, 30))
+        if not enter:
+            screen.blit(text, (10, 30))
+            screen.blit(textinput.get_surface(), (140, 30))
 
         #TextSurf, TextRect = text_objects("RIP", gameTitle)
         #TextRect.center = (display_width/2, display_height/3)
