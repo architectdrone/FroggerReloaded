@@ -6,9 +6,7 @@ import time
 import gamelogic
 import highScores
 
-pygame.mixer.pre_init(44100,16,2,4096)
 pygame.init()
-speed = [1, 1]
 X_SIZE = 15
 Y_SIZE = 10
 sprite_size = 50
