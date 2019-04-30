@@ -125,7 +125,7 @@ imageDict = {
     'enemy_na_na' : enemy,
     'turtlePad_na_na' : turtlePad,
     'enemyProjectile_na_na' : enemyProjectile,
-    'bush_na_ha': bushImage,
+    'bush_na_na': bushImage,
 }
 
 #Makes the screen
