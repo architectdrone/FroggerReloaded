@@ -382,13 +382,18 @@ class game():
                 numEnemies-=1
 
     def generateMaze(self):
+        # declare variables
         SEG_LENGTH_MIN = 2
         SEG_LENGTH_MAX = 3
-        x_start = random.randrange(0, size - 1)
+        x_start = random.randrange(0, self.x_size - 1)
         y_start = 0
+        curr_x = x_start
+        curr_y = y_start
         orient_option = ['h', 'v']
+
         # set the type of mini game
         self.currentMinigame = "lilypads"
+
         # iterate y times
         # set lane's land type
         for y in range(self.y_size - 1):
@@ -398,6 +403,7 @@ class game():
             # case(s) covered: middle lanes set to swamp
             else:
                 self.myBoard.setLane(y, "swamp")
+
         x_start = random.randrange(0, self.x_size - 1)
         y_start = 0
         allSeg = []
