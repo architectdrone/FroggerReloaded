@@ -15,3 +15,14 @@ Zach Davis
 # Libraries
 
 We used the PYGAME library. (https://www.pygame.org/news)
+
+#Assets
+
+Menu Image:
+
+Game Over Image: 
+
+Game Sprites: 
+
+Sounds: 
+

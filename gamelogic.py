@@ -387,7 +387,7 @@ class game():
         BACKGROUND = "grass" #The lane for all non-wall areas.
         ENEMY_TYPE = "enemy" #The type for the enemies.
         MAX_ENEMY = 5 #Total number of enemies.
-        WALL_TYPE = "turtlePad" #The type for the wall.
+        WALL_TYPE = "bush" #The type for the wall.
 
         self.currentMinigame = "invaders"
 
