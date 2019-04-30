@@ -5,6 +5,7 @@ import sys
 import time
 import gamelogic
 import highScores
+import pygame_textinput
 
 pygame.init()
 X_SIZE = 15
@@ -374,7 +375,7 @@ def game_play():
             #display top scores <=10
             highScores.displayScores("highscores.txt" , 10)
 
-            gameOver()
+            gameOver(g)
             
             
         #Update the screen using pygame methods
@@ -385,25 +386,41 @@ def game_play():
 
 
 #Generl Helper Functions
-def gameOver():
+def gameOver(g):
 
     #Game over background music
     pygame.mixer.music.stop()
     pygame.mixer.music.load("music/gameover.mp3")
     pygame.mixer.music.set_volume(0.2)
     pygame.mixer.music.play(-1) #loop it
-    
-    while True:
 
-        for event in pygame.event.get():
+    textinput = pygame_textinput.TextInput(cursor_color=color_red, text_color=color_red, initial_string="Enter name: ")
+
+    enter = False
+
+    while True:
+        
+        events = pygame.event.get()
+        for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_RETURN] and not enter:
+            name = textinput.get_text()
+            highScores.writeToFile("highscore.txt", name, g.score())
+            print(name)
+            enter = True
+            
 
         #screen.fill(color_red)
         screen.blit(gameover_image, [0,0])
         game_button("Restart!",3*display_width/12,8*display_height/9,display_width/6,display_height/12,color_red,color_lightgreen,game_intro)
         game_button("Quit!",7*display_width/12,8*display_height/9,display_width/6,display_height/12,color_red,color_gray,game_quit)
+
+        textinput.update(events)
+        screen.blit(textinput.get_surface(), (50, 30))
 
         #TextSurf, TextRect = text_objects("RIP", gameTitle)
         #TextRect.center = (display_width/2, display_height/3)
