@@ -15,12 +15,18 @@ class game():
         self.y_size = y_size
         self.init_x = init_x
         self.init_y = init_y
+
+        #Control Flow
         self.currentMinigame = "basic" #The minigame we are currently on. Allowed values are "basic", "lilypads", "invaders".
         self.sequence = ["basic", "invaders"]
         self.sequenceIndex = 0
-        self.events = [] #For usage with sounds. Basically a list of strings. Please see the getEvents() function for more documentation.
-        self.initialize()
         self.displayCount = 0 #counts change in display
+
+        self.events = [] #For usage with sounds. Basically a list of strings. Please see the getEvents() function for more documentation.
+        self.gunCooldown = 0 #How long until the gun can be fired again.
+        self.MAX_GUN_COOLDOWN = 3 #Updates between allowed firings.
+
+        self.initialize()
 
     #PUBLIC FUNCTIONS
     def initialize(self):
@@ -54,6 +60,9 @@ class game():
         -Causes new moving objects to enter lanes.
         -If applicable, do checks for enemies.
         '''
+        if self.gunCooldown != 0:
+            self.gunCooldown-=1
+
         #Reset events
         self.events = []
 
@@ -165,10 +174,12 @@ class game():
         '''
         FROG_BULLET_TYPE = "bubble"
         BULLET_VELOCITY = (0, 2)
-        self.myBoard.addSubObject(self.next_id, FROG_BULLET_TYPE, x = self.myBoard.getSubObject(0)['x'], y=self.myBoard.getSubObject(0)['y'], velocity=BULLET_VELOCITY)
-        self.frog_bullet_ids.append(self.next_id)
-        self.next_id+=1
-        self.frogCheck()
+        if self.gunCooldown == 0:
+            self.myBoard.addSubObject(self.next_id, FROG_BULLET_TYPE, x = self.myBoard.getSubObject(0)['x'], y=self.myBoard.getSubObject(0)['y'], velocity=BULLET_VELOCITY)
+            self.frog_bullet_ids.append(self.next_id)
+            self.next_id+=1
+            self.frogCheck()
+            self.gunCooldown = self.MAX_GUN_COOLDOWN
 
     def getXY(self, x, y):
         '''

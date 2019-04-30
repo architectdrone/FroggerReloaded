@@ -21,7 +21,7 @@ drawning = pygame.mixer.Sound("music/drawning.wav")
 buttonclick = pygame.mixer.Sound("music/clickbutton.wav")
 
 #Game Speed
-betweenUpdates = 30
+betweenUpdates = 15
 
 #Colors
 color_white = (255,255,255)
