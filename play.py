@@ -218,25 +218,24 @@ def display(g):
     Update the window according to what gamelogic tells us.
     @param g The game object to display for.
     '''
-    
+    event = g.getEvents()
+    if 'death_sailaway' in event:
+        drawning.play()
+    if 'death_crash' in event:
+        crash.play()
+    if 'death_shot' in event:
+        bullethit.play()
+    if 'death_swamp' in event:
+        drawning.play()
+    if 'enemy_dead' in event:
+        bullethit.play()
+    if 'enemy_shoot' in event:
+        buttonclick.play()
+
     #TODO define X_SIZE and Y_SIZE
     for tile_x in range(X_SIZE):
         for tile_y in range(Y_SIZE):
-            event = g.getEvents()
             atXY = g.getXY(tile_x, tile_y)
-
-            if 'death_sailaway' in event:
-                drawning.play()
-            elif 'death_crash' in event:
-                crash.play()
-            elif 'death_shot' in event:
-                bullethit.play()
-            elif 'death_swamp' in event:
-                drawning.play()
-            elif 'enemy_dead' in event:
-                bullethit.play()
-            elif 'enemy_shoot' in event:
-                buttonclick.play()
 
             segments = atXY['segment']
             types = atXY['type']
