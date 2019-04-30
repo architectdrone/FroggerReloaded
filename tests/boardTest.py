@@ -67,7 +67,7 @@ class boardTest(unittest.TestCase):
         self.b.addSubObject(2, "movingObject", x = 0, y = 0, velocity=(2, 0)) #Create a moving object. As an added bonus, we have double velocity so as to test interpolation.
         self.assertEqual(self.b.getCollisionsSinceLastUpdate(), []) #SURELY there are no collisions yet, right?
         self.b.update() #Okay, now we move things.
-        self.assertIn((1,2), self.b.getCollisionsSinceLastUpdate()) #Now, we check that they have collided.
+        self.assertIn((2,1), self.b.getCollisionsSinceLastUpdate()) #Now, we check that they have collided.
 
         self.setUp()
         #Next, we test the collision of two moving object.
@@ -75,7 +75,7 @@ class boardTest(unittest.TestCase):
         self.b.addSubObject(4, "movingObject2", x = 0, y = 1, velocity=(2,0))
         self.assertEqual(self.b.getCollisionsSinceLastUpdate(), []) #SURELY there are no collisions yet, right?
         self.b.update() #Now move things
-        self.assertIn((3,4),self.b.getCollisionsSinceLastUpdate()) #Now there should be a collision.
+        self.assertIn((4,3),self.b.getCollisionsSinceLastUpdate()) #Now there should be a collision.
 
 if __name__ == '__main__':
     unittest.main()
