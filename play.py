@@ -6,9 +6,7 @@ import time
 import gamelogic
 import highScores
 
-pygame.mixer.pre_init(44100,16,2,4096)
 pygame.init()
-speed = [1, 1]
 X_SIZE = 15
 Y_SIZE = 10
 sprite_size = 50
@@ -26,6 +24,8 @@ shot.set_volume(0.05)
 
 #Game Speed
 betweenUpdates = 15
+msBetweenInputs = 20 #Number of MS before an input is repeated.
+pygame.key.set_repeat(0, msBetweenInputs)
 
 #Colors
 color_white = (255,255,255)
@@ -63,7 +63,7 @@ firetruck_front_left = pygame.image.load('SPRITES/firetruck_front_left.png')
 firetruck_back_left = pygame.image.load('SPRITES/firetruck_back_left.png')
 log_front_right = pygame.image.load('SPRITES/log_front_right.png')
 log_back_right = pygame.image.load('SPRITES/log_back_right.png')
-bubble = pygame.image.load('SPRITES/bubble.jpeg')
+bubble = pygame.image.load('SPRITES/bubble.png')
 enemy = pygame.image.load('SPRITES/enemy.png')
 turtlePad = pygame.image.load('SPRITES/turtle_pad.png')
 enemyProjectile = pygame.image.load('SPRITES/enemy_projectile.png')
@@ -203,12 +203,6 @@ def game_intro():
         game_button("Start!",display_width/6,2*display_height/3,display_width/6,display_height/12,color_green,color_lightgreen,game_play)
         game_button("Quit", 2*display_width/3,2*display_height/3,display_width/6,display_height/12,color_red,color_lightred,game_quit)
 
-        frog_rect = frog_rect.move(speed)
-        if(frog_rect.left < 0) or (frog_rect.right > display_width):
-            speed[0] =- speed[0]
-        if (frog_rect.top < 0) or (frog_rect.bottom > display_height/2):
-            speed[1] =- speed[1]
-        screen.blit(frog_image, frog_rect)
         pygame.display.update()
         fps_clock.tick(frames_per_sec)
 
