@@ -16,9 +16,13 @@ display_width = X_SIZE*sprite_size
 display_height = Y_SIZE*sprite_size
 
 #Game sound
-crash = pygame.mixer.Sound("music/crash.wav")
-drawning = pygame.mixer.Sound("music/drawning.wav")
+pygame.mixer.init(23433,16,2,4096)
 buttonclick = pygame.mixer.Sound("music/clickbutton.wav")
+soundB = pygame.mixer.Channel(2)
+drawning = pygame.mixer.Sound("music/drawning.wav")
+crash = pygame.mixer.Sound("music/crash.wav")
+bullethit = pygame.mixer.Sound("music/bullethit.wav")
+
 
 #Game Speed
 betweenUpdates = 30
@@ -214,7 +218,20 @@ def display(g):
     Update the window according to what gamelogic tells us.
     @param g The game object to display for.
     '''
-    
+    event = g.getEvents()
+    if 'death_sailaway' in event:
+        drawning.play()
+    if 'death_crash' in event:
+        crash.play()
+    if 'death_shot' in event:
+        bullethit.play()
+    if 'death_swamp' in event:
+        drawning.play()
+    if 'enemy_dead' in event:
+        bullethit.play()
+    if 'enemy_shoot' in event:
+        buttonclick.play()
+
     #TODO define X_SIZE and Y_SIZE
     for tile_x in range(X_SIZE):
         for tile_y in range(Y_SIZE):
