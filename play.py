@@ -68,6 +68,7 @@ log_back_right = pygame.image.load('SPRITES/log_back_right.png')
 bubble = pygame.image.load('SPRITES/bubble.png')
 enemy = pygame.image.load('SPRITES/enemy.png')
 turtlePad = pygame.image.load('SPRITES/turtle_pad.png')
+bush = pygame.image.load("SPRITES/bush.png")
 enemyProjectile = pygame.image.load('SPRITES/enemy_projectile.png')
 gameover_image = pygame.image.load('over.png')
 background_image = pygame.transform.scale(background_image,(display_width,display_height))
@@ -98,6 +99,7 @@ log_back_right = pygame.transform.scale(log_back_right,(sprite_size,sprite_size)
 bubble = pygame.transform.scale(bubble,(sprite_size,sprite_size))
 enemy = pygame.transform.scale(enemy,(sprite_size,sprite_size))
 turtlePad = pygame.transform.scale(turtlePad,(sprite_size,sprite_size))
+bushImage = pygame.transform.scale(bush,(sprite_size,sprite_size))
 enemyProjectile = pygame.transform.scale(enemyProjectile,(sprite_size,sprite_size))
 
 imageDict = {
@@ -124,7 +126,8 @@ imageDict = {
     'bubble_na_na' : bubble,
     'enemy_na_na' : enemy,
     'turtlePad_na_na' : turtlePad,
-    'enemyProjectile_na_na' : enemyProjectile
+    'enemyProjectile_na_na' : enemyProjectile,
+    'bush_na_ha': bushImage,
 }
 
 #Makes the screen
