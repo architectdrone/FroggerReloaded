@@ -41,7 +41,7 @@ class game():
         self.myBoard = b.Board(self.x_size, self.y_size)
         self.myBoard.addSubObject(self.frog_id, "frog", x = self.init_x, y = self.init_y, direction="up")
 
-        self.generateBasic() #Runs the board generator.
+        self.generateMaze() #Runs the board generator.
 
     def update(self):
         '''
@@ -385,6 +385,7 @@ class game():
         # declare variables
         SEG_LENGTH_MIN = 2
         SEG_LENGTH_MAX = 3
+        LILYPAD_TYPE = "lilypad"
         x_start = random.randrange(0, self.x_size - 1)
         y_start = 0
         curr_x = x_start
@@ -392,7 +393,7 @@ class game():
         orient_option = ['h', 'v']
 
         # set the type of mini game
-        self.currentMinigame = "lilypads"
+        self.currentMinigame = "maze"
 
         # iterate y times
         # set lane's land type
@@ -404,13 +405,49 @@ class game():
             else:
                 self.myBoard.setLane(y, "swamp")
 
-        x_start = random.randrange(0, self.x_size - 1)
-        y_start = 0
-        allSeg = []
-        prevSeg = []
-        while y < self.y_size:
-            seg_len = random.randrange(SEG_LENGTH_MIN, SEG_LENGTH_MAX)
-            seg_ori = random.choice(orient_option)
+        # x_start = random.randrange(0, self.x_size - 1)
+        # y_start = 0
+        # prevSeg = []
+        # while y_start < self.y_size:
+        #     seg_len = random.randrange(SEG_LENGTH_MIN, SEG_LENGTH_MAX)
+        #     seg_ori = random.choice(orient_option)
+        #     if y_start == 0:
+        #         x_start = random.randrange(0, self.x_size - 1)
+        #     else
+        #         xyTuple = random.choice(prevSeg)
+        #         x_start = xyTuple[0]
+        #         y_start = xyTuple[1]
+        #         while seg_len > 0:
+        #             # choose
+        #             # place
+        #             # saveCoords
+
+        #Randomized segments to confuse player
+        numberOfRandomSegments = 5
+        while numberOfRandomSegments > 0:
+            numberOfRandomSegments-=1
+            length = random.randrange(SEG_LENGTH_MIN, SEG_LENGTH_MAX)
+            x = random.randrange(0, self.x_size-1)
+            y = random.randrange(1, self.y_size-2)
+            direction = random.choice(["v", "h"])
+            if direction == 'v':
+                for y_inc in range(length):
+                    if (y+y_inc) < self.y_size-2:
+                        self.myBoard.addSubObject(self.next_id, LILYPAD_TYPE, x = x, y = y+y_inc)
+                        self.platform_id.append(self.next_id)
+                        self.next_id+=1
+                    else:
+                        break
+            if direction == 'h':
+                for x_inc in range(length):
+                    if (x+x_inc) < self.x_size-1:
+                        self.myBoard.addSubObject(self.next_id, LILYPAD_TYPE, x = x+x_inc, y = y)
+                        self.platform_id.append(self.next_id)
+                        self.next_id+=1
+                    else:
+                        break
+
+
 
         # x_start = random.randrange(0, size - 1)
         # y_start = 0
@@ -425,7 +462,7 @@ class game():
                 # find viable options store in array
                 # randomly select option from array
                 # place lilypad
-
+                # 
     def chooseMovingObjectLane(self, y, laneType, options):
         '''
         Chooses a moving object lane that works with the lane from the options, and adds it to the moving object lane variable.
