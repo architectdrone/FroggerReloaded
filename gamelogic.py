@@ -129,7 +129,7 @@ class game():
                 self.myBoard.editSubObject(self.frog_id, x = current_x, y = self.init_y, direction = "up")
                 self.initialize()
                 self.displayCount+=1 
-                print("Display count: " + str(self.displayCount)) 
+                #print("Display count: " + str(self.displayCount)) 
 
             self.frogCheck()
         except:
@@ -244,7 +244,7 @@ class game():
         if self.sequenceIndex == len(self.sequence):
             self.sequenceIndex = 0
         
-        print(self.sequenceIndex)
+        #print(self.sequenceIndex)
         nextStage = self.sequence[self.sequenceIndex]
         if nextStage == "basic":
             self.generateBasic()
