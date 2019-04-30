@@ -15,12 +15,12 @@ display_width = X_SIZE*sprite_size
 display_height = Y_SIZE*sprite_size
 
 #Game sound
-pygame.mixer.init(23433,16,2,4096)
 buttonclick = pygame.mixer.Sound("music/clickbutton.wav")
-soundB = pygame.mixer.Channel(2)
 drawning = pygame.mixer.Sound("music/drawning.wav")
 crash = pygame.mixer.Sound("music/crash.wav")
 bullethit = pygame.mixer.Sound("music/bullethit.wav")
+shot = pygame.mixer.Sound("music/shot.wav")
+shot.set_volume(0.05)
 
 
 #Game Speed
@@ -67,6 +67,7 @@ log_back_right = pygame.image.load('SPRITES/log_back_right.png')
 bubble = pygame.image.load('SPRITES/bubble.png')
 enemy = pygame.image.load('SPRITES/enemy.png')
 turtlePad = pygame.image.load('SPRITES/turtle_pad.png')
+bush = pygame.image.load("SPRITES/bush.png")
 enemyProjectile = pygame.image.load('SPRITES/enemy_projectile.png')
 gameover_image = pygame.image.load('over.png')
 background_image = pygame.transform.scale(background_image,(display_width,display_height))
@@ -97,6 +98,7 @@ log_back_right = pygame.transform.scale(log_back_right,(sprite_size,sprite_size)
 bubble = pygame.transform.scale(bubble,(sprite_size,sprite_size))
 enemy = pygame.transform.scale(enemy,(sprite_size,sprite_size))
 turtlePad = pygame.transform.scale(turtlePad,(sprite_size,sprite_size))
+bushImage = pygame.transform.scale(bush,(sprite_size,sprite_size))
 enemyProjectile = pygame.transform.scale(enemyProjectile,(sprite_size,sprite_size))
 
 imageDict = {
@@ -123,7 +125,8 @@ imageDict = {
     'bubble_na_na' : bubble,
     'enemy_na_na' : enemy,
     'turtlePad_na_na' : turtlePad,
-    'enemyProjectile_na_na' : enemyProjectile
+    'enemyProjectile_na_na' : enemyProjectile,
+    'bush_na_na': bushImage,
 }
 
 #Makes the screen
@@ -182,7 +185,7 @@ def game_intro():
     #Play menu background music
     pygame.mixer.music.stop()
     pygame.mixer.music.load("music/menu.mp3")
-    pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1) #loop it
 
     frog_rect = frog_image.get_rect()
@@ -318,6 +321,7 @@ def game_play():
         elif keys[pygame.K_RIGHT]:
             nextCommand = "right"
         elif keys[pygame.K_SPACE]:
+            shot.play()
             nextCommand = "launch"
         if keys[pygame.K_ESCAPE]:
                 run = False
@@ -338,7 +342,7 @@ def game_play():
             if 'death_swamp' in event:
                 drawning.play()
             if 'enemy_dead' in event:
-                bullethit.play()
+                shot.play()
             if 'enemy_shoot' in event:
                 buttonclick.play()
 
@@ -368,9 +372,10 @@ def game_play():
             highest = highScores.findHighestScore("highscores.txt")
             if (userScore > highest):
                 print('Congradulations, you have the highest score')
-                userName = input("What is your name? ")
-                assert userName is not None
-                highScores.writeToFile("highscores.txt", userName, userScore)
+
+            userName = input("What is your name? ")
+            assert userName is not None
+            highScores.writeToFile("highscores.txt", userName, userScore)
         
             #display top scores <=10
             highScores.displayScores("highscores.txt" , 10)

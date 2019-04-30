@@ -33,30 +33,6 @@ def writeToFile(file_name, name, score):
     file.write(name + ',' + str(score)+"\n")
     file.close()
 
-def SortAndCompareScores(file_name, user_score):
-    '''
-    Sorts all entries by score in the file and returns True if user score is within top 10 scores
-    @param file_name Name of score file
-    @param user_score Score of the user 
-    '''
-    highScore = False
-    userScores_list = []
-    file = open(file_name, 'r')
-    lines = file.readlines()
-    for line in lines:
-        if line != "":
-            entry = line.strip().split(",")
-            score = int(entry[1])
-            userScores_list.append(score)
-        
-    userScores_list.sort(reverse=True) #sort user scores descending order
-    userScores_list = userScores_list[:10] #limit to top 10 entries
-
-    for score in userScores_list:
-        if user_score >= score:
-            highScore = True
-    
-    return highScore
 
 def displayScores(file_name, n_entries):
     '''
