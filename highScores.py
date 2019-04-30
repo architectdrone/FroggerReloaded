@@ -12,12 +12,13 @@ def findHighestScore(file_name):
 
     highest_score = 0
 
-    for line in lines:
-        entry = line.strip().split(",") #format in file will be name,score so name=entry[0] and score=entry[1]
-        #print(entry[0] , entry[1]) #entry[0] is name, entry[1] is score
-        score = int(entry[1])
-        if score > highest_score:
-            highest_score = score
+    if len(lines) > 0:
+        for line in lines:
+            entry = line.strip().split(",") #format in file will be name,score so name=entry[0] and score=entry[1]
+            #print(entry[0] , entry[1]) #entry[0] is name, entry[1] is score
+            score = int(entry[1])
+            if score > highest_score:
+                highest_score = score
 
     return highest_score
 
@@ -66,6 +67,7 @@ def displayScores(file_name, n_entries):
     userScores_list = []
     file = open(file_name, 'r')
     lines = file.readlines()
+    
     for line in lines:
         entry = line.strip().split(",")
         name = entry[0]
@@ -73,9 +75,11 @@ def displayScores(file_name, n_entries):
         userScores_list.append((score, name))
         
     userScores_list.sort(reverse=True) #sort user scores descending order
+    if len(lines) < n_entries:
+        n_entries = len(lines)
     userScores_list = userScores_list[:n_entries] #limit to n number of entries
     userScores_list = [entries[::-1] for entries in userScores_list] #name,score format instead of score,name
-    print("Top " + str(n_entries) + " high scores:")
+    print("Top scores:")
     print("Name Score" + '\n')
     for entry in userScores_list:
         print(entry[0] + " "+ str(entry[1]))
@@ -97,7 +101,7 @@ writeToFile(filename, "Jack", 12)
 #print(SortAndCompareScores(filename, 77))
 #readFromFileAndPrint(filename)
 '''
-displayScores(filename, 5)
+#displayScores(filename, 5)
 
 
     
