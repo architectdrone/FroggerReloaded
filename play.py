@@ -14,12 +14,12 @@ display_width = X_SIZE*sprite_size
 display_height = Y_SIZE*sprite_size
 
 #Game sound
-pygame.mixer.init(23433,16,2,4096)
 buttonclick = pygame.mixer.Sound("music/clickbutton.wav")
-soundB = pygame.mixer.Channel(2)
 drawning = pygame.mixer.Sound("music/drawning.wav")
 crash = pygame.mixer.Sound("music/crash.wav")
 bullethit = pygame.mixer.Sound("music/bullethit.wav")
+shot = pygame.mixer.Sound("music/shot.wav")
+shot.set_volume(0.05)
 
 
 #Game Speed
@@ -184,7 +184,7 @@ def game_intro():
     #Play menu background music
     pygame.mixer.music.stop()
     pygame.mixer.music.load("music/menu.mp3")
-    pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1) #loop it
 
     frog_rect = frog_image.get_rect()
@@ -320,6 +320,7 @@ def game_play():
         elif keys[pygame.K_RIGHT]:
             nextCommand = "right"
         elif keys[pygame.K_SPACE]:
+            shot.play()
             nextCommand = "launch"
         if keys[pygame.K_ESCAPE]:
                 run = False
@@ -340,7 +341,7 @@ def game_play():
             if 'death_swamp' in event:
                 drawning.play()
             if 'enemy_dead' in event:
-                bullethit.play()
+                shot.play()
             if 'enemy_shoot' in event:
                 buttonclick.play()
 
@@ -370,9 +371,10 @@ def game_play():
             highest = highScores.findHighestScore("highscores.txt")
             if (userScore > highest):
                 print('Congradulations, you have the highest score')
-                userName = input("What is your name? ")
-                assert userName is not None
-                highScores.writeToFile("highscores.txt", userName, userScore)
+
+            userName = input("What is your name? ")
+            assert userName is not None
+            highScores.writeToFile("highscores.txt", userName, userScore)
         
             #display top scores <=10
             highScores.displayScores("highscores.txt" , 10)
