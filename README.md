@@ -18,11 +18,21 @@ We used the PYGAME library. (https://www.pygame.org/news)
 
 #Assets
 
-Menu Image:
+Menu Image: 
+Vecteezy: "https://www.vecteezy.com/vector-art/103667-swamp-vector-illustration"
 
 Game Over Image: 
+Larry Barnet: "http://sonomasun.com/2016/12/05/game-over/"
 
 Game Sprites: 
 
 Sounds: 
+米茶的第二頻道: "https://www.youtube.com/watch?v=quiWcPk99_c&list=PLllz9-5pJKVymAJFU0t9dmhqsB0XhZ-oK&index=7"
+fan zhang: "https://www.youtube.com/watch?v=nCD4bJQgTwU"
+fan zhang: "https://www.youtube.com/watch?v=UzN4_H8en_M"
+fan zhang: "https://www.youtube.com/watch?v=QDWRhJrQPwc"
+gmaster2647: "https://www.youtube.com/watch?v=fQqcwhklct4&list=PLi-jQY80rpqC3uNk9NlwREOmlib-4xYPC&index=22"
+La musique de jeu vidéo: "https://www.youtube.com/watch?v=br3OzOrARh4"
+justsoundfx: "https://www.youtube.com/watch?v=Jr45XZVspPg"
+DS1 Productions: "https://www.youtube.com/watch?v=b8ksBRQnumk&list=PLDgv8nHxCzL2h_tGwhPL5HSR9xWq5tXIU&index=3"
 
