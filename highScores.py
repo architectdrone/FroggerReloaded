@@ -1,4 +1,4 @@
-#will store top 10 high scores to text file after game over
+#will store high scores to text file after game over
 
 
 def findHighestScore(file_name):
@@ -73,7 +73,7 @@ def displayScores(file_name, n_entries):
         userScores_list.append((score, name))
         
     userScores_list.sort(reverse=True) #sort user scores descending order
-    userScores_list = userScores_list[:n_entries] #limit to top 10 entries
+    userScores_list = userScores_list[:n_entries] #limit to n number of entries
     userScores_list = [entries[::-1] for entries in userScores_list] #name,score format instead of score,name
     print("Top " + str(n_entries) + " high scores:")
     print("Name Score" + '\n')

@@ -393,13 +393,14 @@ def gameOver():
         
         #add name and score to file after game over
         userScore = gamelogic.game.score
-        if (highScores.SortAndCompareScores('highscore.txt', userScore) == True):
-            print('Congradulations, your score is within the top 10')
+        if (userScore > highScores.findHighestScore("highscore.txt")):
+            print('Congradulations, you have the highest score')
+            assert userName is not None
             userName = input("What is your name? ")
-            if userName == None:
-                return
-            else:
-                highScores.writeToFile('highscore.txt', userName, userScore)
+            highScores.writeToFile("highscores.txt", userName, userScore)
+        
+        #display top ten scores
+        highScores.displayScores("highscores.txt" , 10)
 
             
 
