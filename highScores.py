@@ -84,6 +84,33 @@ def displayScores(file_name, n_entries):
     for entry in userScores_list:
         print(entry[0] + " "+ str(entry[1]))
 
+def getScores(file_name, n_entries):
+    '''
+    Gets n number of users and score by descending order
+    @param file_name Name of file
+    @param n_entries Number of entries
+    @return a list of entries. The entries are formatted as tuples, like so: (name, score)
+    '''
+    userScores_list = []
+    file = open(file_name, 'r')
+    lines = file.readlines()
+    
+    for line in lines:
+        entry = line.strip().split(",")
+        name = entry[0]
+        score = int(entry[1])
+        userScores_list.append((score, name))
+        
+    userScores_list.sort(reverse=True) #sort user scores descending order
+    if len(lines) < n_entries:
+        n_entries = len(lines)
+    userScores_list = userScores_list[:n_entries] #limit to n number of entries
+    userScores_list = [entries[::-1] for entries in userScores_list] #name,score format instead of score,name
+
+    toReturn = []
+    for entry in userScores_list:
+        toReturn.append((entry[0],entry[1]))
+
 filename = "highscores.txt"
 '''
 writeToFile(filename, "Owen", 34)

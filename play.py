@@ -26,6 +26,8 @@ bullethit = pygame.mixer.Sound("music/bullethit.wav")
 
 #Game Speed
 betweenUpdates = 15
+msBetweenInputs = 20 #Number of MS before an input is repeated.
+pygame.key.set_repeat(0, msBetweenInputs)
 
 #Colors
 color_white = (255,255,255)
@@ -203,12 +205,6 @@ def game_intro():
         game_button("Start!",display_width/6,2*display_height/3,display_width/6,display_height/12,color_green,color_lightgreen,game_play)
         game_button("Quit", 2*display_width/3,2*display_height/3,display_width/6,display_height/12,color_red,color_lightred,game_quit)
 
-        frog_rect = frog_rect.move(speed)
-        if(frog_rect.left < 0) or (frog_rect.right > display_width):
-            speed[0] =- speed[0]
-        if (frog_rect.top < 0) or (frog_rect.bottom > display_height/2):
-            speed[1] =- speed[1]
-        screen.blit(frog_image, frog_rect)
         pygame.display.update()
         fps_clock.tick(frames_per_sec)
 
