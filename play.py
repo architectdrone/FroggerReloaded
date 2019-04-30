@@ -39,7 +39,6 @@ color_lightgreen = (0,255,0)
 
 #Load images
 pygame.display.set_caption('Frogger Reloaded')
-frog_image = pygame.image.load('frog.png')
 background_image = pygame.image.load("s2.jpg")
 grass_image = pygame.image.load('SPRITES/grass.png')
 road_image = pygame.image.load('SPRITES/road.png')
@@ -188,8 +187,7 @@ def game_intro():
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1) #loop it
 
-    frog_rect = frog_image.get_rect()
-    frames_per_sec = 100
+    #frames_per_sec = 100
     #fps_clock = pygame.time.Clock()
     
     while intro:        
@@ -208,7 +206,7 @@ def game_intro():
         game_button("Quit", 2*display_width/3,2*display_height/3,display_width/6,display_height/12,color_red,color_lightred,game_quit)
 
         pygame.display.update()
-        fps_clock.tick(frames_per_sec)
+        #fps_clock.tick(frames_per_sec)
 
 #Game Frame Helper Functions
 def display(g):
