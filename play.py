@@ -350,11 +350,26 @@ def game_play():
             run = False
             
             
+            #add name and score to file after game over
+            userScore = g.score()
+            highest = highScores.findHighestScore("highscores.txt")
+            if (userScore > highest):
+                print('Congradulations, you have the highest score')
+                userName = input("What is your name? ")
+                assert userName is not None
+                highScores.writeToFile("highscores.txt", userName, userScore)
+        
+            #display top scores <=10
+            highScores.displayScores("highscores.txt" , 10)
+
+            gameOver()
+            
+            
         #Update the screen using pygame methods
         pygame.display.update()
 
         updateCounter-=1
-    gameOver()
+
 
 
 #Generl Helper Functions
@@ -390,19 +405,7 @@ def gameOver():
         #    game_quit()
 
         pygame.display.update()
-        
-        #add name and score to file after game over
-        userScore = gamelogic.game.score
-        if (userScore > highScores.findHighestScore("highscore.txt")):
-            print('Congradulations, you have the highest score')
-            assert userName is not None
-            userName = input("What is your name? ")
-            highScores.writeToFile("highscores.txt", userName, userScore)
-        
-        #display top ten scores
-        highScores.displayScores("highscores.txt" , 10)
-
-            
+    
 
 
 
