@@ -118,55 +118,68 @@ class game():
         '''
         Moves the frog up.
         '''
-        theSubObject = self.myBoard.getSubObject(self.frog_id)
-        current_x = theSubObject['x']
-        current_y = theSubObject['y']
-        if current_y != self.y_size-1:
-            self.myBoard.editSubObject(self.frog_id, x = current_x, y = current_y+1, direction = "up")
+        try:
+            theSubObject = self.myBoard.getSubObject(self.frog_id)
+            current_x = theSubObject['x']
+            current_y = theSubObject['y']
+            if current_y != self.y_size-1:
+                self.myBoard.editSubObject(self.frog_id, x = current_x, y = current_y+1, direction = "up")
 
-        else: #will change display once frog reaches maximum y
-            self.myBoard.editSubObject(self.frog_id, x = current_x, y = self.init_y, direction = "up")
-            self.initialize()
-            self.displayCount+=1 
-            print("Display count: " + str(self.displayCount)) 
+            else: #will change display once frog reaches maximum y
+                self.myBoard.editSubObject(self.frog_id, x = current_x, y = self.init_y, direction = "up")
+                self.initialize()
+                self.displayCount+=1 
+                print("Display count: " + str(self.displayCount)) 
 
-        self.frogCheck()
+            self.frogCheck()
+        except:
+            self.isDead = True
+            self.events.append("death_sailaway")
 
     def frogDown(self):
         '''
         Moves the frog down.
         '''
-
-        theSubObject = self.myBoard.getSubObject(self.frog_id)
-        current_x = theSubObject['x']
-        current_y = theSubObject['y']
-        if current_y != 0:
-            self.myBoard.editSubObject(self.frog_id, x = current_x, y = current_y-1, direction = "down")
-        self.frogCheck()
+        try:
+            theSubObject = self.myBoard.getSubObject(self.frog_id)
+            current_x = theSubObject['x']
+            current_y = theSubObject['y']
+            if current_y != 0:
+                self.myBoard.editSubObject(self.frog_id, x = current_x, y = current_y-1, direction = "down")
+            self.frogCheck()
+        except: #If we can't find the frog, that means that we have sailed away.
+            self.isDead = True
+            self.events.append("death_sailaway")
 
     def frogLeft(self):
         '''
         Moves the frog left.
         '''
-
-        theSubObject = self.myBoard.getSubObject(self.frog_id)
-        current_x = theSubObject['x']
-        current_y = theSubObject['y']
-        if current_x != 0:
-            self.myBoard.editSubObject(self.frog_id, x = current_x-1, y = current_y, direction = "left")
-        self.frogCheck()
+        try:
+            theSubObject = self.myBoard.getSubObject(self.frog_id)
+            current_x = theSubObject['x']
+            current_y = theSubObject['y']
+            if current_x != 0:
+                self.myBoard.editSubObject(self.frog_id, x = current_x-1, y = current_y, direction = "left")
+            self.frogCheck()
+        except:
+            self.isDead = True
+            self.events.append("death_sailaway")
 
     def frogRight(self):
         '''
         Moves the frog right.
         '''
-
-        theSubObject = self.myBoard.getSubObject(self.frog_id)
-        current_x = theSubObject['x']
-        current_y = theSubObject['y']
-        if current_x != self.x_size-1:
-            self.myBoard.editSubObject(self.frog_id, x = current_x+1, y = current_y, direction = "right")
-        self.frogCheck()
+        try:
+            theSubObject = self.myBoard.getSubObject(self.frog_id)
+            current_x = theSubObject['x']
+            current_y = theSubObject['y']
+            if current_x != self.x_size-1:
+                self.myBoard.editSubObject(self.frog_id, x = current_x+1, y = current_y, direction = "right")
+            self.frogCheck()
+        except:
+            self.isDead = True
+            self.events.append("death_sailaway")
 
     def frogShoot(self):
         '''
