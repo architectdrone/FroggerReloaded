@@ -320,8 +320,8 @@ def game_play():
         elif keys[pygame.K_RIGHT]:
             nextCommand = "right"
         elif keys[pygame.K_SPACE]:
-            shot.play()
             nextCommand = "launch"
+            shot.play()
         if keys[pygame.K_ESCAPE]:
                 run = False
 
