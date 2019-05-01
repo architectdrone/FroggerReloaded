@@ -187,7 +187,7 @@ def game_intro():
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1) #loop it
 
-    #frames_per_sec = 100
+    frames_per_sec = 100
     #fps_clock = pygame.time.Clock()
     
     while intro:        
