@@ -8,7 +8,7 @@ def findHighestScore(file_name):
     '''
     file = open(file_name, 'r')
     lines = file.readlines()
-    file.close
+    file.close()
 
     highest_score = 0
 
@@ -59,6 +59,7 @@ def displayScores(file_name, n_entries):
     print("Name Score" + '\n')
     for entry in userScores_list:
         print(entry[0] + " "+ str(entry[1]))
+    file.close()
 
 def getScores(file_name, n_entries):
     '''
@@ -87,6 +88,7 @@ def getScores(file_name, n_entries):
     for entry in userScores_list:
         toReturn.append((entry[0],entry[1]))
 
+    file.close()
     return toReturn
 
 filename = "highscores.txt"
