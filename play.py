@@ -393,7 +393,7 @@ def gameOver(g):
     font = pygame.font.Font('freesansbold.ttf', 20)
     bigFont = pygame.font.Font('freesansbold.ttf', 30)
     text = font.render('Enter name: ', True, color_red)
-    scores = highScores.getScores('highscores.txt', 5)
+    
 
     enter = False
     high_score = False
@@ -428,6 +428,7 @@ def gameOver(g):
             screen.blit(textinput.get_surface(), (140, 30))
         
         if high_score:
+            scores = highScores.getScores('highscores.txt', 5)
             screen.fill(color_black)
             title = bigFont.render('High Scores!', True, color_red)
             screen.blit(title, (280, 20))
