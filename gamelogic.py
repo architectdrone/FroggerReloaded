@@ -18,7 +18,7 @@ class game():
 
         #Control Flow
         self.currentMinigame = "basic" #The minigame we are currently on. Allowed values are "basic", "lilypads", "invaders".
-        self.sequence = ["basic", "invaders"]
+        self.sequence = ["basic", "invaders","basic","maze"]
         self.sequenceIndex = 0
         self.displayCount = 0 #counts change in display
 
@@ -51,7 +51,7 @@ class game():
         self.myBoard = b.Board(self.x_size, self.y_size)
         self.myBoard.addSubObject(self.frog_id, "frog", x = self.init_x, y = self.init_y, direction="up")
 
-        self.generateMaze() #Runs the board generator.
+        self.generateNext() #Runs the board generator.
 
     def update(self):
         '''
