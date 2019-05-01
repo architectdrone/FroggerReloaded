@@ -62,12 +62,15 @@ class game():
         -Causes new moving objects to enter lanes.
         -If applicable, do checks for enemies.
         '''
-        '''
-        if self.currentMinigame == "maze" and self.frog_prev_y < self.y_size-2 and self.prev_y > 1:
-            prev_lily_pad_id = self.myBoard.getSubObjectAtPosition(self.prev_frog_x, self.prev_frog_y)
-            self.myBoard.deleteSubObject(prev_lily_pad_id)
-        '''
 
+        if self.currentMinigame == "maze" and self.prev_frog_y < self.y_size-2 and self.prev_frog_y > 1:
+            try:
+                prev_lily_pad_ids = self.myBoard.getSubObjectAtPosition(self.prev_frog_x, self.prev_frog_y)['id']
+                for i in prev_lily_pad_ids:
+                    self.myBoard.deleteSubObject(i)
+            except:
+                pass
+        
         if self.gunCooldown != 0:
             self.gunCooldown-=1
 
