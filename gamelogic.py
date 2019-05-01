@@ -18,7 +18,7 @@ class game():
 
         #Control Flow
         self.currentMinigame = "basic" #The minigame we are currently on. Allowed values are "basic", "lilypads", "invaders".
-        self.sequence = ["basic", "invaders"]
+        self.sequence = ["basic", "invaders","basic","maze"]
         self.sequenceIndex = 0
         self.displayCount = 0 #counts change in display
 
@@ -51,7 +51,7 @@ class game():
         self.myBoard = b.Board(self.x_size, self.y_size)
         self.myBoard.addSubObject(self.frog_id, "frog", x = self.init_x, y = self.init_y, direction="up")
 
-        self.generateMaze() #Runs the board generator.
+        self.generateNext() #Runs the board generator.
 
     def update(self):
         '''
@@ -62,12 +62,15 @@ class game():
         -Causes new moving objects to enter lanes.
         -If applicable, do checks for enemies.
         '''
-        if self.currentMinigame == "maze":
+
+        if self.currentMinigame == "maze" and self.prev_frog_y < self.y_size-2 and self.prev_frog_y > 1:
             try:
-                self.myBoard.deleteSubObject(self.myBoard.getSubObjectAtPosition(self.prev_frog_x, self.prev_frog_y))
+                prev_lily_pad_ids = self.myBoard.getSubObjectAtPosition(self.prev_frog_x, self.prev_frog_y)['id']
+                for i in prev_lily_pad_ids:
+                    self.myBoard.deleteSubObject(i)
             except:
                 pass
-
+        
         if self.gunCooldown != 0:
             self.gunCooldown-=1
 
@@ -445,7 +448,7 @@ class game():
         # declare variables
         SEG_LENGTH_MIN = 2
         SEG_LENGTH_MAX = 3
-        LILYPAD_TYPE = "turtlePad"
+        LILYPAD_TYPE = "lilyPad"
         x_start = random.randrange(0, self.x_size - 1)
         y_start = 0
         curr_x = x_start
@@ -672,7 +675,8 @@ class game():
                     platformVelocity = self.myBoard.getSubObject(i)['velocity'] #Get the velocity of the platform.
                     self.myBoard.editSubObject(self.frog_id, velocity=platformVelocity) #Set our velocity to the velocity of the platform.
                     break
-            if laneDead:
+            #Saving Grace Rule - If off by one, put him on the back of the log.
+            if laneDead and self.currentMinigame != "maze":
                 for i in self.platform_id:
                     try:
                         if frog_x == self.myBoard.getSubObject(i)['x']-1 and frog_y == self.myBoard.getSubObject(i)['y']:
@@ -687,7 +691,7 @@ class game():
                 
             
             if laneDead:
-                #Saving Grace Rule - If off by one, put him on the back of the log.                    
+                                    
                 self.events.append("death_swamp")
                 print(f"You are in a killing lane! DEAD Y = {frog_y} Dangerous = {self.dangerous_lane}")
                 dead = True

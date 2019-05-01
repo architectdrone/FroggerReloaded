@@ -2,6 +2,7 @@ Owen,1
 Owen,2
 SuperOwen,5
 The Incredible O,6
+<<<<<<< HEAD
 guanyu,1
 l,0
 dfsd,1
@@ -31,3 +32,6 @@ WoopieGold,0
 ,0
 ,1
 Hurdururudur,0
+=======
+Death,0
+>>>>>>> ba54f8ebdae8be49099a19315f5e62bf7aa11960
