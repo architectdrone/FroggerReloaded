@@ -22,10 +22,9 @@ Menu Image: Vecteezy (https://www.vecteezy.com/vector-art/103667-swamp-vector-il
 
 Game Over Image: Larry Barnet (http://sonomasun.com/2016/12/05/game-over/)
 
-Game Sprites: 
+Game Sprites: herrrattentod (http://www.classicgaming.cc/classics/frogger/graphics), Skathi (https://www.vectorstock.com/royalty-free-vectors/bubble-sprite-vectors), (https://mobilegamegraphics.com/product/vector-game-assets/)
 
 # Sounds: 
-filename.wav: Uploader (URL)
 bullethit.wav: 米茶的第二頻道 (https://www.youtube.com/watch?v=quiWcPk99_c&list=PLllz9-5pJKVymAJFU0t9dmhqsB0XhZ-oK&index=7)
 clickbutton.wav: fan zhang (https://www.youtube.com/watch?v=nCD4bJQgTwU)
 crash.wav: fan zhang (https://www.youtube.com/watch?v=UzN4_H8en_M)
