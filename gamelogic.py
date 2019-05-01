@@ -22,6 +22,8 @@ class game():
         self.sequenceIndex = 0
         self.displayCount = 0 #counts change in display
 
+        self.prev_frog_x = 0
+        self.prev_frog_y = 0
         self.events = [] #For usage with sounds. Basically a list of strings. Please see the getEvents() function for more documentation.
         self.gunCooldown = 0 #How long until the gun can be fired again.
         self.MAX_GUN_COOLDOWN = 3 #Updates between allowed firings.
@@ -51,7 +53,6 @@ class game():
 
         self.generateMaze() #Runs the board generator.
 
-
     def update(self):
         '''
         -Moves subobjects.
@@ -61,6 +62,12 @@ class game():
         -Causes new moving objects to enter lanes.
         -If applicable, do checks for enemies.
         '''
+        if self.currentMinigame == "maze":
+            try:
+                self.myBoard.deleteSubObject(self.myBoard.getSubObjectAtPosition(self.prev_frog_x, self.prev_frog_y))
+            except:
+                pass
+
         if self.gunCooldown != 0:
             self.gunCooldown-=1
 
@@ -124,6 +131,8 @@ class game():
             current_x = theSubObject['x']
             current_y = theSubObject['y']
             if current_y != self.y_size-1:
+                self.prev_frog_x = current_x
+                self.prev_frog_y = current_y
                 self.myBoard.editSubObject(self.frog_id, x = current_x, y = current_y+1, direction = "up")
 
             else: #will change display once frog reaches maximum y
@@ -146,6 +155,8 @@ class game():
             current_x = theSubObject['x']
             current_y = theSubObject['y']
             if current_y != 0:
+                self.prev_frog_x = current_x
+                self.prev_frog_y = current_y
                 self.myBoard.editSubObject(self.frog_id, x = current_x, y = current_y-1, direction = "down")
             self.frogCheck()
         except: #If we can't find the frog, that means that we have sailed away.
@@ -161,6 +172,8 @@ class game():
             current_x = theSubObject['x']
             current_y = theSubObject['y']
             if current_x != 0:
+                self.prev_frog_x = current_x
+                self.prev_frog_y = current_y
                 self.myBoard.editSubObject(self.frog_id, x = current_x-1, y = current_y, direction = "left")
             self.frogCheck()
         except:
@@ -176,6 +189,8 @@ class game():
             current_x = theSubObject['x']
             current_y = theSubObject['y']
             if current_x != self.x_size-1:
+                self.prev_frog_x = current_x
+                self.prev_frog_y = current_y
                 self.myBoard.editSubObject(self.frog_id, x = current_x+1, y = current_y, direction = "right")
             self.frogCheck()
         except:
@@ -448,6 +463,7 @@ class game():
                 self.myBoard.setLane(y, "grass")
             # case(s) covered: middle lanes set to swamp
             else:
+                self.dangerous_lane.append(y)
                 self.myBoard.setLane(y, "swamp")
 
         # x_start = random.randrange(0, self.x_size - 1)
@@ -473,8 +489,6 @@ class game():
         last_vertical_endpoint_y = 0
         length = random.randrange(SEG_LENGTH_MIN, SEG_LENGTH_MAX)
         prev_seg = []
-        print(f"Placing Vertical Segment. ({initial_x}, {initial_y})")
-        input(">")
         #Initial Veritcal
         for y_inc in range(length):
             self.myBoard.addSubObject(self.next_id, LILYPAD_TYPE, x=initial_x, y=initial_y + y_inc)
@@ -482,15 +496,16 @@ class game():
             self.next_id += 1
             last_vertical_endpoint_x = initial_x
             last_vertical_endpoint_y = initial_y+y_inc
-        print(f"Last Endpoint: ({last_vertical_endpoint_x}, {last_vertical_endpoint_y}")
+
         while last_vertical_endpoint_y != self.y_size-2:
             #Place horizontal
             length = random.randrange(SEG_LENGTH_MIN, SEG_LENGTH_MAX)
-            length_after = random.randrange(0, length)
+            length_after = random.randrange(0, length-1)
             initial_x = last_vertical_endpoint_x-(length-length_after)
+            prev_seg = []
+            if initial_x < 0:
+                initial_x = 0
             initial_y = last_vertical_endpoint_y
-            print(f"Placing Horizontal Segment. ({initial_x}, {initial_y})")
-            input(">")
             for x_inc in range(length):
                 if initial_x+x_inc < self.x_size-1:
                     self.myBoard.addSubObject(self.next_id, LILYPAD_TYPE, x=initial_x+x_inc, y=initial_y)
@@ -504,11 +519,9 @@ class game():
             startingCoord = random.choice(prev_seg)
             initial_x = startingCoord[0]
             initial_y = startingCoord[1]
-            length = random.randrange(SEG_LENGTH_MIN, SEG_LENGTH_MAX)
-            print(f"Placing Vertical Segment. ({initial_x}, {initial_y})")
-            input(">")
+            length = random.randrange(SEG_LENGTH_MIN, SEG_LENGTH_MAX)+1
             for y_inc in range(length):
-                if initial_y+y_inc < self.y_size-2:
+                if initial_y+y_inc <= self.y_size-2:
                     self.myBoard.addSubObject(self.next_id, LILYPAD_TYPE, x=initial_x, y=initial_y + y_inc)
                     self.platform_id.append(self.next_id)
                     self.next_id += 1
@@ -516,49 +529,34 @@ class game():
                     last_vertical_endpoint_y = initial_y + y_inc
                 else:
                     break
+            continue
 
 
-        # #Randomized segments to confuse player
-        # numberOfRandomSegments = 30
-        # while numberOfRandomSegments > 0:
-        #     numberOfRandomSegments-=1
-        #     length = random.randrange(SEG_LENGTH_MIN, SEG_LENGTH_MAX)
-        #     x = random.randrange(0, self.x_size-1)
-        #     y = random.randrange(1, self.y_size-2)
-        #     direction = random.choice(["v", "h"])
-        #     if direction == 'v':
-        #         for y_inc in range(length):
-        #             if (y+y_inc) < self.y_size-2:
-        #                 self.myBoard.addSubObject(self.next_id, LILYPAD_TYPE, x = x, y = y+y_inc)
-        #                 self.platform_id.append(self.next_id)
-        #                 self.next_id+=1
-        #             else:
-        #                 break
-        #     if direction == 'h':
-        #         for x_inc in range(length):
-        #             if (x+x_inc) < self.x_size-1:
-        #                 self.myBoard.addSubObject(self.next_id, LILYPAD_TYPE, x = x+x_inc, y = y)
-        #                 self.platform_id.append(self.next_id)
-        #                 self.next_id+=1
-        #             else:
-        #                 break
+        #Randomized segments to confuse player
+        numberOfRandomSegments = 30
+        while numberOfRandomSegments > 0:
+            numberOfRandomSegments-=1
+            length = random.randrange(SEG_LENGTH_MIN, SEG_LENGTH_MAX)
+            x = random.randrange(0, self.x_size-1)
+            y = random.randrange(1, self.y_size-2)
+            direction = random.choice(["v", "h"])
+            if direction == 'v':
+                for y_inc in range(length):
+                    if (y+y_inc) < self.y_size-2:
+                        self.myBoard.addSubObject(self.next_id, LILYPAD_TYPE, x = x, y = y+y_inc)
+                        self.platform_id.append(self.next_id)
+                        self.next_id+=1
+                    else:
+                        break
+            if direction == 'h':
+                for x_inc in range(length):
+                    if (x+x_inc) < self.x_size-1:
+                        self.myBoard.addSubObject(self.next_id, LILYPAD_TYPE, x = x+x_inc, y = y)
+                        self.platform_id.append(self.next_id)
+                        self.next_id+=1
+                    else:
+                        break
 
-
-
-        # x_start = random.randrange(0, size - 1)
-        # y_start = 0
-        # allSeg = []
-        # prevSeg = []
-        # LOOP: randomize next segment properties
-            #
-            # seg_len
-            # seg_ori
-            # LOOP: decrement seg_len while placing lilypads
-            #       along the same orientation for the whole line segment
-                # find viable options store in array
-                # randomly select option from array
-                # place lilypad
-                # 
     def chooseMovingObjectLane(self, y, laneType, options):
         '''
         Chooses a moving object lane that works with the lane from the options, and adds it to the moving object lane variable.
