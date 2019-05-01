@@ -87,6 +87,8 @@ def getScores(file_name, n_entries):
     for entry in userScores_list:
         toReturn.append((entry[0],entry[1]))
 
+    return toReturn
+
 filename = "highscores.txt"
 '''
 writeToFile(filename, "Owen", 34)

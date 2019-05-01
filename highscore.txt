@@ -1,3 +1,0 @@
-Enter name: zach,0
-Zach,0
-Zach,6
