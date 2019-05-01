@@ -409,11 +409,12 @@ def gameOver(g):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RETURN] and not enter:
             name = textinput.get_text()
-            highScores.writeToFile("highscores.txt", name, g.score())
-            print(name)
-            print(g.score())
-            enter = True
-            high_score = True
+            if name != "" and name.isspace() == False: #name must not be empty or blank
+                highScores.writeToFile("highscores.txt", name, g.score())
+                print(name)
+                print(g.score())
+                enter = True
+                high_score = True
             
 
         #screen.fill(color_red)
