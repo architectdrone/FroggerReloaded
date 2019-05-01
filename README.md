@@ -25,7 +25,6 @@ Game Over Image: Larry Barnet (http://sonomasun.com/2016/12/05/game-over/)
 Game Sprites: 
 
 Sounds: 
-filename.wav: Uploader (URL)
 bullethit.wav: 米茶的第二頻道 (https://www.youtube.com/watch?v=quiWcPk99_c&list=PLllz9-5pJKVymAJFU0t9dmhqsB0XhZ-oK&index=7)
 clickbutton.wav: fan zhang (https://www.youtube.com/watch?v=nCD4bJQgTwU)
 crash.wav: fan zhang (https://www.youtube.com/watch?v=UzN4_H8en_M)
