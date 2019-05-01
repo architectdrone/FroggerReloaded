@@ -206,7 +206,7 @@ def game_intro():
         game_button("Quit", 2*display_width/3,2*display_height/3,display_width/6,display_height/12,color_red,color_lightred,game_quit)
 
         pygame.display.update()
-        fps_clock.tick(frames_per_sec)
+        #fps_clock.tick(frames_per_sec)
 
 #Game Frame Helper Functions
 def display(g):
@@ -388,9 +388,12 @@ def gameOver(g):
 
     textinput = pygame_textinput.TextInput(font_size=30, cursor_color=color_red, text_color=color_red)
     font = pygame.font.Font('freesansbold.ttf', 20)
+    bigFont = pygame.font.Font('freesansbold.ttf', 30)
     text = font.render('Enter name: ', True, color_red)
+    scores = highScores.getScores('highscores.txt', 5)
 
     enter = False
+    high_score = False
 
     while True:
         
@@ -403,10 +406,11 @@ def gameOver(g):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RETURN] and not enter:
             name = textinput.get_text()
-            highScores.writeToFile("highscore.txt", name, g.score())
+            highScores.writeToFile("highscores.txt", name, g.score())
             print(name)
             print(g.score())
             enter = True
+            high_score = True
             
 
         #screen.fill(color_red)
@@ -418,6 +422,18 @@ def gameOver(g):
         if not enter:
             screen.blit(text, (10, 30))
             screen.blit(textinput.get_surface(), (140, 30))
+        
+        if high_score:
+            screen.fill(color_black)
+            title = bigFont.render('High Scores!', True, color_red)
+            screen.blit(title, (280, 20))
+            game_button("Restart!",3*display_width/12,8*display_height/9,display_width/6,display_height/12,color_red,color_lightgreen,game_intro)
+            game_button("Quit!",7*display_width/12,8*display_height/9,display_width/6,display_height/12,color_red,color_gray,game_quit)
+            for index, element in enumerate(scores):
+                n = font.render(element[0], True, color_red)
+                screen.blit(n, (250, 75*(index+1)))
+                s = font.render(str(element[1]), True, color_red)
+                screen.blit(s, (450, 75*(index+1)))
 
         #TextSurf, TextRect = text_objects("RIP", gameTitle)
         #TextRect.center = (display_width/2, display_height/3)
@@ -432,9 +448,6 @@ def gameOver(g):
 
         pygame.display.update()
     
-
-
-
 def game_quit(): 
     '''
     Quits the game
