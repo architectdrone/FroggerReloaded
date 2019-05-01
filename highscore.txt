@@ -1,0 +1,7 @@
+<<<<<<< HEAD
+Enter name: Guanyu,3
+=======
+Enter name: zach,0
+Zach,0
+Zach,6
+>>>>>>> b3ebc8a730d2fbfa306ece89c495b4439c1e68a8

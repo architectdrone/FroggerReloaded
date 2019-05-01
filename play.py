@@ -187,7 +187,11 @@ def game_intro():
     pygame.mixer.music.set_volume(0.5)
     pygame.mixer.music.play(-1) #loop it
 
+<<<<<<< HEAD
+    #frames_per_sec = 100
+=======
     frames_per_sec = 100
+>>>>>>> b3ebc8a730d2fbfa306ece89c495b4439c1e68a8
     #fps_clock = pygame.time.Clock()
     
     while intro:        
@@ -206,7 +210,7 @@ def game_intro():
         game_button("Quit", 2*display_width/3,2*display_height/3,display_width/6,display_height/12,color_red,color_lightred,game_quit)
 
         pygame.display.update()
-        fps_clock.tick(frames_per_sec)
+        #fps_clock.tick(frames_per_sec)
 
 #Game Frame Helper Functions
 def display(g):
