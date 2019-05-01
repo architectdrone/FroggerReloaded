@@ -27,3 +27,7 @@ hello,0
 ,0
 ,0
 ,0
+WoopieGold,0
+,0
+,1
+Hurdururudur,0
