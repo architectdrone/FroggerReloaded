@@ -69,6 +69,7 @@ turtlePad = pygame.image.load('SPRITES/turtle_pad.png')
 bush = pygame.image.load("SPRITES/bush.png")
 enemyProjectile = pygame.image.load('SPRITES/enemy_projectile.png')
 gameover_image = pygame.image.load('over.png')
+lilyPad = pygame.image.load('lily_pad.png')
 background_image = pygame.transform.scale(background_image,(display_width,display_height))
 gameover_image = pygame.transform.scale(gameover_image,(display_width,display_height))
 grass_image = pygame.transform.scale(grass_image,(sprite_size,sprite_size))
@@ -99,6 +100,7 @@ enemy = pygame.transform.scale(enemy,(sprite_size,sprite_size))
 turtlePad = pygame.transform.scale(turtlePad,(sprite_size,sprite_size))
 bushImage = pygame.transform.scale(bush,(sprite_size,sprite_size))
 enemyProjectile = pygame.transform.scale(enemyProjectile,(sprite_size,sprite_size))
+lilyPad = pygame.transform.scale(lilyPad, (sprite_size, sprite_size))
 
 imageDict = {
     'frog_na_down': frog_na_down,
@@ -126,6 +128,7 @@ imageDict = {
     'turtlePad_na_na' : turtlePad,
     'enemyProjectile_na_na' : enemyProjectile,
     'bush_na_na': bushImage,
+    'lilyPad_na_na': lilyPad
 }
 
 #Makes the screen
