@@ -675,7 +675,8 @@ class game():
                     platformVelocity = self.myBoard.getSubObject(i)['velocity'] #Get the velocity of the platform.
                     self.myBoard.editSubObject(self.frog_id, velocity=platformVelocity) #Set our velocity to the velocity of the platform.
                     break
-            if laneDead:
+            #Saving Grace Rule - If off by one, put him on the back of the log.
+            if laneDead and self.currentMinigame != "maze":
                 for i in self.platform_id:
                     try:
                         if frog_x == self.myBoard.getSubObject(i)['x']-1 and frog_y == self.myBoard.getSubObject(i)['y']:
@@ -690,7 +691,7 @@ class game():
                 
             
             if laneDead:
-                #Saving Grace Rule - If off by one, put him on the back of the log.                    
+                                    
                 self.events.append("death_swamp")
                 print(f"You are in a killing lane! DEAD Y = {frog_y} Dangerous = {self.dangerous_lane}")
                 dead = True
