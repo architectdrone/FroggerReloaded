@@ -12,6 +12,13 @@ Zach Freund
 
 Zach Davis
 
+# Usage
+
+
+Type "python play.py". 
+
+(If pygame is not installed, do "pip install pygame")
+
 # Libraries
 
 We used the PYGAME library. (https://www.pygame.org/news)

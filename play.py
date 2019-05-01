@@ -201,8 +201,8 @@ def game_intro():
 
         #screen.fill(color_white)
         screen.blit(background_image, [0,0])
-        TextSurf, TextRect = text_objects("Frogger", gameTitle)
-        TextRect.center = (400, 200)
+        TextSurf, TextRect = text_objects("Frogger Reloaded", gameTitle)
+        TextRect.center = (370, 200)
         screen.blit(TextSurf, TextRect)
 
         game_button("Start!",display_width/6,2*display_height/3,display_width/6,display_height/12,color_green,color_lightgreen,game_play)
