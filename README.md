@@ -16,6 +16,8 @@ Zach Davis
 
 We used the PYGAME library. (https://www.pygame.org/news)
 
+Pygame Text Input - (https://github.com/Nearoo/pygame-text-input)
+
 #Assets
 
 Menu Image: Vecteezy (https://www.vecteezy.com/vector-art/103667-swamp-vector-illustration)
