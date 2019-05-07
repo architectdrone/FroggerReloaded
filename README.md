@@ -19,6 +19,10 @@ Type "python play.py".
 
 (If pygame is not installed, do "pip install pygame")
 
+# Tests
+
+To launch tests, navigate to the tests directory, and run "python test.py" from the command line.
+
 # Libraries
 
 We used the PYGAME library. (https://www.pygame.org/news)
