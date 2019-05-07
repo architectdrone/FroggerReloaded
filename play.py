@@ -322,9 +322,10 @@ def game_play():
         elif keys[pygame.K_RIGHT]:
             nextCommand = "right"
         elif keys[pygame.K_SPACE]:
-            if g.score() % 2 == 1:
-                nextCommand = "launch"
-                shot.play()
+            nextCommand = "launch"
+            shot.play()
+        elif keys[pygame.K_c]:
+            nextCommand = "cheat"
         if keys[pygame.K_ESCAPE]:
                 run = False
 
@@ -358,6 +359,8 @@ def game_play():
                 g.frogRight()
             if nextCommand == "launch":
                 g.frogShoot()
+            if nextCommand == "cheat":
+                g.initialize()
             nextCommand = ""
 
             

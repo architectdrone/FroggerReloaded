@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module gamelogic</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>gamelogic</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Ctheeu%5Cdesktop%5Ceecs448%5Cfroggerreloaded%5Cgamelogic.py">c:\users\theeu\desktop\eecs448\froggerreloaded\gamelogic.py</a></font></td></tr></table>
+    <p><tt>#<a href="#game">game</a>&nbsp;logic&nbsp;for&nbsp;Frogger</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="board.html">board</a><br>
+</td><td width="25%" valign=top><a href="math.html">math</a><br>
+</td><td width="25%" valign=top><a href="random.html">random</a><br>
+</td><td width="25%" valign=top><a href="time.html">time</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="gamelogic.html#game">game</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="game">class <strong>game</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#game">game</a>(x_size,&nbsp;y_size,&nbsp;init_x=0,&nbsp;init_y=0)<br>
+&nbsp;<br>
+<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="game-__init__"><strong>__init__</strong></a>(self, x_size, y_size, init_x=0, init_y=0)</dt><dd><tt>Creates&nbsp;the&nbsp;<a href="#game">game</a>&nbsp;<a href="builtins.html#object">object</a>.&nbsp;Sets&nbsp;up&nbsp;all&nbsp;non-strictly&nbsp;<a href="#game">game</a>&nbsp;related&nbsp;features&nbsp;(such&nbsp;as&nbsp;score)&nbsp;and&nbsp;creates&nbsp;the&nbsp;board.<br>
+@param&nbsp;x_size&nbsp;The&nbsp;number&nbsp;of&nbsp;squares&nbsp;in&nbsp;the&nbsp;x&nbsp;direction.<br>
+@param&nbsp;y_size&nbsp;The&nbsp;number&nbsp;of&nbsp;squares&nbsp;in&nbsp;the&nbsp;y&nbsp;direction.</tt></dd></dl>
+
+<dl><dt><a name="game-chooseMovingObjectLane"><strong>chooseMovingObjectLane</strong></a>(self, y, laneType, options)</dt><dd><tt>Chooses&nbsp;a&nbsp;moving&nbsp;<a href="builtins.html#object">object</a>&nbsp;lane&nbsp;that&nbsp;works&nbsp;with&nbsp;the&nbsp;lane&nbsp;from&nbsp;the&nbsp;options,&nbsp;and&nbsp;adds&nbsp;it&nbsp;to&nbsp;the&nbsp;moving&nbsp;<a href="builtins.html#object">object</a>&nbsp;lane&nbsp;variable.<br>
+Structure&nbsp;of&nbsp;a&nbsp;moving&nbsp;<a href="builtins.html#object">object</a>&nbsp;lane:<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'y':&nbsp;The&nbsp;y&nbsp;coordinate&nbsp;of&nbsp;the&nbsp;lane.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'direction':&nbsp;The&nbsp;direction&nbsp;of&nbsp;the&nbsp;objects&nbsp;in&nbsp;the&nbsp;lane.&nbsp;left&nbsp;or&nbsp;right.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'speed':&nbsp;The&nbsp;speed&nbsp;of&nbsp;the&nbsp;objects&nbsp;in&nbsp;the&nbsp;lane.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'segments':&nbsp;The&nbsp;segments&nbsp;in&nbsp;the&nbsp;<a href="builtins.html#object">object</a>.&nbsp;This&nbsp;is&nbsp;a&nbsp;list.&nbsp;The&nbsp;first&nbsp;element&nbsp;is&nbsp;the&nbsp;one&nbsp;to&nbsp;emerge&nbsp;first.&nbsp;Example:&nbsp;['front',&nbsp;'middle','back']<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'type':&nbsp;The&nbsp;type&nbsp;of&nbsp;the&nbsp;<a href="builtins.html#object">object</a>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'cooldown':&nbsp;How&nbsp;long&nbsp;to&nbsp;wait&nbsp;until&nbsp;the&nbsp;next&nbsp;<a href="builtins.html#object">object</a>&nbsp;emerges.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'untilNext':&nbsp;How&nbsp;long&nbsp;until&nbsp;the&nbsp;next&nbsp;<a href="builtins.html#object">object</a>&nbsp;emerges.&nbsp;(USED&nbsp;ONLY&nbsp;BY&nbsp;UPDATE)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'entering':&nbsp;Whether&nbsp;or&nbsp;not&nbsp;the&nbsp;<a href="builtins.html#object">object</a>&nbsp;is&nbsp;entering.&nbsp;(USED&nbsp;ONLY&nbsp;BY&nbsp;UPDATE)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'whichSegment':&nbsp;The&nbsp;index&nbsp;of&nbsp;segments&nbsp;that&nbsp;is&nbsp;emerging.&nbsp;(USED&nbsp;ONLY&nbsp;BY&nbsp;UPDATE)<br>
+}</tt></dd></dl>
+
+<dl><dt><a name="game-frogCheck"><strong>frogCheck</strong></a>(self)</dt><dd><tt>Do&nbsp;all&nbsp;checks.&nbsp;Sees&nbsp;if&nbsp;we&nbsp;are&nbsp;dead,&nbsp;and&nbsp;sets&nbsp;the&nbsp;frog's&nbsp;velocity&nbsp;based&nbsp;off&nbsp;of&nbsp;the&nbsp;platform&nbsp;that&nbsp;he&nbsp;is&nbsp;(or&nbsp;isn't)&nbsp;on.</tt></dd></dl>
+
+<dl><dt><a name="game-frogDown"><strong>frogDown</strong></a>(self)</dt><dd><tt>Moves&nbsp;the&nbsp;frog&nbsp;down.</tt></dd></dl>
+
+<dl><dt><a name="game-frogLeft"><strong>frogLeft</strong></a>(self)</dt><dd><tt>Moves&nbsp;the&nbsp;frog&nbsp;left.</tt></dd></dl>
+
+<dl><dt><a name="game-frogRight"><strong>frogRight</strong></a>(self)</dt><dd><tt>Moves&nbsp;the&nbsp;frog&nbsp;right.</tt></dd></dl>
+
+<dl><dt><a name="game-frogShoot"><strong>frogShoot</strong></a>(self)</dt><dd><tt>Shoots&nbsp;a&nbsp;projectile&nbsp;-&nbsp;if&nbsp;we&nbsp;are&nbsp;in&nbsp;the&nbsp;right&nbsp;mode&nbsp;for&nbsp;projectile&nbsp;shooting</tt></dd></dl>
+
+<dl><dt><a name="game-frogUp"><strong>frogUp</strong></a>(self)</dt><dd><tt>Moves&nbsp;the&nbsp;frog&nbsp;up.</tt></dd></dl>
+
+<dl><dt><a name="game-generateBasic"><strong>generateBasic</strong></a>(self)</dt><dd><tt>Generates&nbsp;a&nbsp;basic&nbsp;<a href="#game">game</a>&nbsp;board.&nbsp;This&nbsp;<a href="#game">game</a>&nbsp;board&nbsp;has&nbsp;clusters&nbsp;of&nbsp;roads&nbsp;and&nbsp;swamps.&nbsp;Roads&nbsp;and&nbsp;swamps&nbsp;have&nbsp;moving&nbsp;<a href="builtins.html#object">object</a>&nbsp;lanes&nbsp;associated&nbsp;with&nbsp;them.</tt></dd></dl>
+
+<dl><dt><a name="game-generateInvaders"><strong>generateInvaders</strong></a>(self)</dt><dd><tt>Generates&nbsp;the&nbsp;space&nbsp;invaders&nbsp;<a href="#game">game</a>.&nbsp;The&nbsp;space&nbsp;invaders&nbsp;board&nbsp;is&nbsp;split&nbsp;in&nbsp;half,&nbsp;by&nbsp;a&nbsp;wall.&nbsp;Also,&nbsp;enemies&nbsp;are&nbsp;placed&nbsp;on&nbsp;the&nbsp;board&nbsp;with&nbsp;random&nbsp;velocities.</tt></dd></dl>
+
+<dl><dt><a name="game-generateMaze"><strong>generateMaze</strong></a>(self)</dt></dl>
+
+<dl><dt><a name="game-generateNext"><strong>generateNext</strong></a>(self)</dt><dd><tt>Generates&nbsp;the&nbsp;next&nbsp;board&nbsp;in&nbsp;the&nbsp;sequence.</tt></dd></dl>
+
+<dl><dt><a name="game-getEvents"><strong>getEvents</strong></a>(self)</dt><dd><tt>Returns&nbsp;a&nbsp;list&nbsp;of&nbsp;events&nbsp;that&nbsp;have&nbsp;happened&nbsp;since&nbsp;the&nbsp;last&nbsp;update.&nbsp;For&nbsp;use&nbsp;in&nbsp;playing&nbsp;sounds.<br>
+-"enemy_shoot":&nbsp;Enemy&nbsp;has&nbsp;shot&nbsp;a&nbsp;bullet.<br>
+-"enemy_dead"&nbsp;:&nbsp;Enemy&nbsp;has&nbsp;been&nbsp;killed.<br>
+-"death_crash":&nbsp;Frog&nbsp;has&nbsp;died&nbsp;b/c&nbsp;something&nbsp;crashed&nbsp;into&nbsp;him.<br>
+-"death_shot"&nbsp;:&nbsp;Frog&nbsp;was&nbsp;shot.<br>
+-"death_swamp":&nbsp;Frog&nbsp;entered&nbsp;a&nbsp;lane&nbsp;that&nbsp;killed&nbsp;him&nbsp;(aka,&nbsp;a&nbsp;swamp)<br>
+-"death_sailaway":&nbsp;Frog&nbsp;sailed&nbsp;off&nbsp;of&nbsp;the&nbsp;edge&nbsp;of&nbsp;the&nbsp;board.</tt></dd></dl>
+
+<dl><dt><a name="game-getFrogCollisions"><strong>getFrogCollisions</strong></a>(self)</dt><dd><tt>@return&nbsp;The&nbsp;list&nbsp;of&nbsp;things&nbsp;that&nbsp;have&nbsp;collided&nbsp;with&nbsp;the&nbsp;frog.</tt></dd></dl>
+
+<dl><dt><a name="game-getFrogIntersect"><strong>getFrogIntersect</strong></a>(self)</dt><dd><tt>@return&nbsp;The&nbsp;list&nbsp;of&nbsp;all&nbsp;things&nbsp;that&nbsp;intersect&nbsp;with&nbsp;the&nbsp;frog</tt></dd></dl>
+
+<dl><dt><a name="game-getInteractions"><strong>getInteractions</strong></a>(self)</dt><dd><tt>@return&nbsp;A&nbsp;list&nbsp;of&nbsp;all&nbsp;ids&nbsp;that&nbsp;frogger&nbsp;has&nbsp;either&nbsp;collided&nbsp;with&nbsp;or&nbsp;is&nbsp;on&nbsp;top&nbsp;of.</tt></dd></dl>
+
+<dl><dt><a name="game-getXY"><strong>getXY</strong></a>(self, x, y)</dt><dd><tt>Get&nbsp;the&nbsp;sprite&nbsp;that&nbsp;should&nbsp;be&nbsp;at&nbsp;X&nbsp;and&nbsp;Y.&nbsp;Returns&nbsp;in&nbsp;the&nbsp;following&nbsp;format:<br>
+{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'segment':&nbsp;The&nbsp;segment&nbsp;of&nbsp;the&nbsp;subobject&nbsp;at&nbsp;the&nbsp;XY.&nbsp;Present&nbsp;only&nbsp;if&nbsp;there&nbsp;is&nbsp;a&nbsp;subobject&nbsp;at&nbsp;XY.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'type':&nbsp;The&nbsp;type&nbsp;of&nbsp;the&nbsp;subobject&nbsp;at&nbsp;the&nbsp;XY.&nbsp;Present&nbsp;only&nbsp;if&nbsp;there&nbsp;is&nbsp;a&nbsp;subobject&nbsp;at&nbsp;XY.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'direction':&nbsp;The&nbsp;direction&nbsp;of&nbsp;the&nbsp;subobject&nbsp;at&nbsp;the&nbsp;XY.&nbsp;Present&nbsp;only&nbsp;if&nbsp;there&nbsp;is&nbsp;a&nbsp;subobject&nbsp;at&nbsp;XY.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;'lane':&nbsp;The&nbsp;lane&nbsp;at&nbsp;XY.<br>
+}<br>
+@return&nbsp;Information&nbsp;about&nbsp;the&nbsp;X&nbsp;and&nbsp;Y&nbsp;position,&nbsp;formatted&nbsp;as&nbsp;written&nbsp;above.</tt></dd></dl>
+
+<dl><dt><a name="game-initialize"><strong>initialize</strong></a>(self)</dt><dd><tt>Resets&nbsp;and&nbsp;initializes&nbsp;<a href="#game">game</a>&nbsp;board.&nbsp;Size&nbsp;is&nbsp;determined&nbsp;by&nbsp;global&nbsp;variables.</tt></dd></dl>
+
+<dl><dt><a name="game-score"><strong>score</strong></a>(self)</dt><dd><tt>Returns&nbsp;score&nbsp;as&nbsp;number&nbsp;of&nbsp;display&nbsp;changes</tt></dd></dl>
+
+<dl><dt><a name="game-update"><strong>update</strong></a>(self)</dt><dd><tt>-Moves&nbsp;subobjects.<br>
+-Checks&nbsp;if&nbsp;frog&nbsp;is&nbsp;still&nbsp;alive.<br>
+-Move&nbsp;frog&nbsp;if&nbsp;on&nbsp;platform.<br>
+-Move&nbsp;frog&nbsp;out&nbsp;of&nbsp;walls.&nbsp;(For&nbsp;use&nbsp;with&nbsp;the&nbsp;invaders&nbsp;minigame.)<br>
+-Causes&nbsp;new&nbsp;moving&nbsp;objects&nbsp;to&nbsp;enter&nbsp;lanes.<br>
+-If&nbsp;applicable,&nbsp;do&nbsp;checks&nbsp;for&nbsp;enemies.</tt></dd></dl>
+
+<dl><dt><a name="game-updateEnemies"><strong>updateEnemies</strong></a>(self)</dt><dd><tt>Move&nbsp;enemies.&nbsp;Have&nbsp;some&nbsp;of&nbsp;them&nbsp;shoot&nbsp;projectiles.&nbsp;Check&nbsp;if&nbsp;enemies&nbsp;have&nbsp;died.&nbsp;Only&nbsp;for&nbsp;usage&nbsp;in&nbsp;invaders.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>
