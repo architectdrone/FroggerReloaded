@@ -1,3 +1,4 @@
 1. Game runs at different speeds on different computers
 2. Game may get to a place where it becomes unbeatable.
 3. Frogger can fire projectiles when in unrelated screens.
+4. Deleting all contents in highscores.txt with empty rows produces an error in display
