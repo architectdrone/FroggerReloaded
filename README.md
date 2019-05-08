@@ -21,7 +21,7 @@ Type "python play.py".
 
 # Tests
 
-To launch tests, navigate to the tests directory, and run "python test.py" from the command line.
+To launch tests, navigate to the tests directory, and double click on "runTests.bat".
 
 # Libraries
 
