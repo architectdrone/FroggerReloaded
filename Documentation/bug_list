@@ -1,3 +1,6 @@
 1. Game runs at different speeds on different computers
 2. Game may get to a place where it becomes unbeatable.
 3. Frogger can fire projectiles when in unrelated screens.
+4. Frogger cannot jump off from left side of log.
+5. When player hit esc, the window will go back to menu but it keeps playing in game music.
+6. The drawning death sound effect may not working everytime.
